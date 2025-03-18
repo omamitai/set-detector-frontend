@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
@@ -41,9 +42,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         .ios-bg {
           background-attachment: fixed;
           background-image: 
-            radial-gradient(at 10% 20%, rgba(151, 71, 255, 0.45) 0px, transparent 70%), 
-            radial-gradient(at 90% 30%, rgba(66, 206, 180, 0.45) 0px, transparent 70%),
-            radial-gradient(at 50% 80%, rgba(255, 92, 135, 0.38) 0px, transparent 65%);
+            radial-gradient(at 10% 20%, rgba(151, 71, 255, 0.35) 0px, transparent 70%), 
+            radial-gradient(at 90% 30%, rgba(66, 206, 180, 0.35) 0px, transparent 70%),
+            radial-gradient(at 50% 80%, rgba(255, 92, 135, 0.3) 0px, transparent 65%);
         }
         
         .ios-card {
@@ -176,7 +177,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </p>
           <div className="flex items-center gap-3">
             <p className="text-xs text-muted-foreground sf-pro-text">
-              © Cannei, LLC. All rights reserved.
+              SET Detector © Omamitai. All rights reserved.
             </p>
             <a
               href="https://github.com/omamitai/set-detector"
@@ -196,4 +197,3 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 };
 
 export default Layout;
-

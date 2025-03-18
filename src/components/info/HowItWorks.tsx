@@ -1,84 +1,80 @@
 
-import { Info, Camera, Search, Check } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useIsMobile } from "@/hooks/use-mobile";
+import React from "react";
+import { Camera, Cpu, Eye } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 const HowItWorks = () => {
-  const isMobile = useIsMobile();
-  
   return (
-    <Card className="ios-card bg-white/40 backdrop-blur-md">
-      <CardHeader className="p-3 md:p-4 pb-0">
-        <CardTitle className="text-base md:text-lg sf-pro-display flex items-center">
-          <Info className="h-4 w-4 text-primary mr-2" />
-          How It Works
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="p-3 md:p-4">
-        <div className="space-y-6">
-          <Card className="overflow-hidden border-0 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5">
-            <div className="bg-white/80 p-4 rounded-xl">
-              <div className="flex gap-3">
-                <div className="mt-0.5">
-                  <div className="bg-set-purple/15 p-2 rounded-full">
-                    <Camera className="h-4 w-4 text-set-purple" />
-                  </div>
-                </div>
-                <div>
-                  <h3 className="text-sm md:text-base font-medium mb-1 sf-pro-display text-gray-900">Capture</h3>
-                  <p className="text-muted-foreground text-xs md:text-sm sf-pro-text">
-                    Take a clear photo of your SET game cards laid out on a surface from above. Try to ensure good lighting and minimal shadows for best results.
-                  </p>
-                </div>
+    <div className="w-full">
+      <motion.div 
+        className="text-center mb-6"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1, duration: 0.5 }}
+      >
+        <h2 className="text-xl md:text-2xl font-semibold mb-2 sf-pro-display text-gray-900">How It Works</h2>
+        <p className="text-muted-foreground text-sm md:text-base sf-pro-text max-w-xl mx-auto">
+          Instantly detect all valid SET combinations in three simple steps
+        </p>
+      </motion.div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+        >
+          <Card className="border-0 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 p-8 h-full bg-white/75 backdrop-blur-sm">
+            <div className="flex flex-col items-center text-center">
+              <div className="bg-set-purple/15 rounded-full p-4 mb-5">
+                <Camera className="h-6 w-6 text-set-purple" />
               </div>
+              <h3 className="text-lg font-medium mb-3 sf-pro-display text-gray-900">Capture</h3>
+              <p className="text-muted-foreground sf-pro-text">
+                Take a clear, overhead photo with good lighting and all cards visible
+              </p>
             </div>
           </Card>
-          
-          <Card className="overflow-hidden border-0 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5">
-            <div className="bg-white/80 p-4 rounded-xl">
-              <div className="flex gap-3">
-                <div className="mt-0.5">
-                  <div className="bg-set-red/15 p-2 rounded-full">
-                    <Search className="h-4 w-4 text-set-red" />
-                  </div>
-                </div>
-                <div>
-                  <h3 className="text-sm md:text-base font-medium mb-1 sf-pro-display text-gray-900">Analyze</h3>
-                  <p className="text-muted-foreground text-xs md:text-sm sf-pro-text">
-                    Our advanced computer vision algorithm identifies all cards in the image, analyzing their color, shape, number, and fill pattern to locate valid SETs.
-                  </p>
-                </div>
+        </motion.div>
+        
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+        >
+          <Card className="border-0 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 p-8 h-full bg-white/75 backdrop-blur-sm">
+            <div className="flex flex-col items-center text-center">
+              <div className="bg-set-green/15 rounded-full p-4 mb-5">
+                <Cpu className="h-6 w-6 text-set-green" />
               </div>
+              <h3 className="text-lg font-medium mb-3 sf-pro-display text-gray-900">Process</h3>
+              <p className="text-muted-foreground sf-pro-text">
+                Our AI algorithms identify each card's color, shape, number, and pattern
+              </p>
             </div>
           </Card>
-          
-          <Card className="overflow-hidden border-0 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5">
-            <div className="bg-white/80 p-4 rounded-xl">
-              <div className="flex gap-3">
-                <div className="mt-0.5">
-                  <div className="bg-set-green/15 p-2 rounded-full">
-                    <Check className="h-4 w-4 text-set-green" />
-                  </div>
-                </div>
-                <div>
-                  <h3 className="text-sm md:text-base font-medium mb-1 sf-pro-display text-gray-900">View Results</h3>
-                  <p className="text-muted-foreground text-xs md:text-sm sf-pro-text">
-                    See all valid SETs highlighted in the image along with detailed card information. A valid SET has three cards where each feature is either all the same or all different.
-                  </p>
-                </div>
+        </motion.div>
+        
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+        >
+          <Card className="border-0 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 p-8 h-full bg-white/75 backdrop-blur-sm">
+            <div className="flex flex-col items-center text-center">
+              <div className="bg-set-red/15 rounded-full p-4 mb-5">
+                <Eye className="h-6 w-6 text-set-red" />
               </div>
+              <h3 className="text-lg font-medium mb-3 sf-pro-display text-gray-900">Discover</h3>
+              <p className="text-muted-foreground sf-pro-text">
+                View all valid SETs where features are either all same or all different
+              </p>
             </div>
           </Card>
-          
-          <div className="bg-gray-100/80 backdrop-blur-sm rounded-xl p-3 md:p-4 hover:bg-gray-50/90 transition-colors">
-            <p className="font-medium sf-pro-display text-gray-900 mb-1">What makes a valid SET?</p>
-            <p className="text-muted-foreground sf-pro-text text-xs md:text-sm">
-              A valid SET consists of three cards where each feature (color, shape, number, and fill) is either all the same OR all different across all three cards.
-            </p>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+        </motion.div>
+      </div>
+    </div>
   );
 };
 

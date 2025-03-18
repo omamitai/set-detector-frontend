@@ -94,7 +94,7 @@ const Index = () => {
         
         <div className="max-w-5xl mx-auto">
           {activeTab === "upload" ? (
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-8 md:gap-16">
               <div className="max-w-md mx-auto w-full">
                 <ImageUpload 
                   onImageSelected={handleImageSelected}
@@ -102,7 +102,7 @@ const Index = () => {
                 />
               </div>
               
-              <div className="mt-8 md:mt-12 max-w-3xl mx-auto">
+              <div className="mt-8 md:mt-12 max-w-4xl mx-auto w-full">
                 <HowItWorks />
               </div>
             </div>
