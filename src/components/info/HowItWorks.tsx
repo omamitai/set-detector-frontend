@@ -15,10 +15,10 @@ const HowItWorks = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="p-3 md:p-4">
-        <div className="space-y-5">
-          <div className="flex gap-3 bg-white/60 p-3 rounded-xl">
+        <div className="space-y-4">
+          <div className="flex gap-3 bg-white/70 p-3 rounded-xl hover:bg-white/80 transition-colors">
             <div className="mt-0.5">
-              <div className="bg-set-purple/10 p-2 rounded-full">
+              <div className="bg-set-purple/15 p-2 rounded-full">
                 <Camera className="h-4 w-4 text-set-purple" />
               </div>
             </div>
@@ -30,9 +30,9 @@ const HowItWorks = () => {
             </div>
           </div>
           
-          <div className="flex gap-3 bg-white/60 p-3 rounded-xl">
+          <div className="flex gap-3 bg-white/70 p-3 rounded-xl hover:bg-white/80 transition-colors">
             <div className="mt-0.5">
-              <div className="bg-set-red/10 p-2 rounded-full">
+              <div className="bg-set-red/15 p-2 rounded-full">
                 <Search className="h-4 w-4 text-set-red" />
               </div>
             </div>
@@ -44,9 +44,9 @@ const HowItWorks = () => {
             </div>
           </div>
           
-          <div className="flex gap-3 bg-white/60 p-3 rounded-xl">
+          <div className="flex gap-3 bg-white/70 p-3 rounded-xl hover:bg-white/80 transition-colors">
             <div className="mt-0.5">
-              <div className="bg-set-green/10 p-2 rounded-full">
+              <div className="bg-set-green/15 p-2 rounded-full">
                 <Check className="h-4 w-4 text-set-green" />
               </div>
             </div>
@@ -58,7 +58,7 @@ const HowItWorks = () => {
             </div>
           </div>
           
-          <div className={`bg-gray-50 rounded-xl p-3 md:p-4 mt-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+          <div className={`bg-gray-100 rounded-xl p-3 md:p-4 mt-2 hover:bg-gray-50 transition-colors ${isMobile ? 'text-xs' : 'text-sm'}`}>
             <p className="font-medium sf-pro-display text-gray-900 mb-1">What makes a valid SET?</p>
             <p className="text-muted-foreground sf-pro-text">
               A valid SET consists of three cards where each feature (color, shape, number, and fill) is either all the same OR all different across all three cards.

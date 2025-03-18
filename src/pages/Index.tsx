@@ -92,30 +92,35 @@ const Index = () => {
           </Alert>
         )}
         
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
-          <div className={`${activeTab === "upload" ? 'md:col-span-7' : 'md:col-span-7'}`}>
-            {activeTab === "upload" ? (
-              <div className="max-w-md mx-auto mb-8 md:mb-12">
+        <div className="max-w-5xl mx-auto">
+          {activeTab === "upload" ? (
+            <div className="flex flex-col gap-8">
+              <div className="max-w-md mx-auto w-full">
                 <ImageUpload 
                   onImageSelected={handleImageSelected}
                   isProcessing={isProcessing}
                 />
               </div>
-            ) : (
-              <div className="mb-8">
+              
+              <div className={`${isMobile ? 'mt-2 pb-20' : 'max-w-3xl mx-auto'}`}>
+                <HowItWorks />
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
+              <div className="md:col-span-7">
                 <ResultsDisplay
                   resultImage={resultImage}
                   sets={detectedSets}
                   onReset={handleReset}
                 />
               </div>
-            )}
-          </div>
-          
-          {/* Always show How It Works section */}
-          <div className={`md:col-span-5 ${isMobile ? 'mt-2 pb-20' : ''}`}>
-            <HowItWorks />
-          </div>
+              
+              <div className={`md:col-span-5 ${isMobile ? 'mt-2 pb-20' : ''}`}>
+                <HowItWorks />
+              </div>
+            </div>
+          )}
         </div>
       </motion.div>
     </Layout>
