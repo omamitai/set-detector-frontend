@@ -80,7 +80,7 @@ const Index = () => {
           <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-gray-900 sf-pro-display">
             SET Game Detector
           </h1>
-          <p className="text-muted-foreground mb-6 md:mb-8 max-w-lg mx-auto sf-pro-text text-sm md:text-base">
+          <p className="text-muted-foreground mb-4 max-w-lg mx-auto sf-pro-text text-sm md:text-base">
             Upload a photo of your SET game layout
           </p>
         </motion.div>
@@ -102,7 +102,7 @@ const Index = () => {
                 />
               </div>
               
-              <div className={`${isMobile ? 'mt-2 pb-20' : 'max-w-3xl mx-auto'}`}>
+              <div className="mt-8 md:mt-12 max-w-3xl mx-auto">
                 <HowItWorks />
               </div>
             </div>
@@ -116,7 +116,7 @@ const Index = () => {
                 />
               </div>
               
-              <div className={`md:col-span-5 ${isMobile ? 'mt-2 pb-20' : ''}`}>
+              <div className="md:col-span-5 mt-4 md:mt-0">
                 <HowItWorks />
               </div>
             </div>

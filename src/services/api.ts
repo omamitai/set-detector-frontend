@@ -20,7 +20,7 @@ interface DetectionResult {
 }
 
 // The actual API endpoint from render.com
-const API_ENDPOINT = "https://set-detector-api.onrender.com/detect";
+const API_ENDPOINT = "https://set-detector-api.onrender.com/api/process";
 
 export async function detectSets(image: File): Promise<DetectionResult> {
   // Create a FormData object to send the image
@@ -44,8 +44,17 @@ export async function detectSets(image: File): Promise<DetectionResult> {
       const data = await response.json();
       
       return {
-        sets: data.sets,
-        resultImage: `data:image/jpeg;base64,${data.result_image}`
+        sets: data.sets_found.map((setInfo: any) => ({
+          set_indices: setInfo.positions,
+          cards: setInfo.cards.map((card: any) => ({
+            Count: card.number,
+            Color: card.color,
+            Fill: card.shading,
+            Shape: card.shape,
+            Coordinates: card.bbox || [0, 0, 100, 100] // Fallback coordinates
+          }))
+        })),
+        resultImage: `data:image/jpeg;base64,${data.image_base64}`
       };
     } catch (apiError) {
       console.warn("API call failed, using mock implementation:", apiError);

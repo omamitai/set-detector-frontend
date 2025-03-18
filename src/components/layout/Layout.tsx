@@ -2,13 +2,14 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
+
 interface LayoutProps {
   children: React.ReactNode;
 }
-const Layout: React.FC<LayoutProps> = ({
-  children
-}) => {
-  return <div className="min-h-screen flex flex-col transition-colors duration-300 ios-bg">
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
+  return (
+    <div className="min-h-screen flex flex-col transition-colors duration-300 ios-bg">
       <style>
         {`
         @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
@@ -151,7 +152,11 @@ const Layout: React.FC<LayoutProps> = ({
           </div>
           
           <div className="flex items-center space-x-2">            
-            <a href="https://github.com/omamitai/set-detector" target="_blank" rel="noopener noreferrer">
+            <a 
+              href="https://github.com/omamitai/set-detector"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Button variant="ghost" size="icon" className="rounded-full text-indigo-800">
                 <Github className="h-5 w-5" />
               </Button>
@@ -166,10 +171,19 @@ const Layout: React.FC<LayoutProps> = ({
 
       <footer className="border-t py-4 bg-background/95 backdrop-blur-md">
         <div className="container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-xs text-muted-foreground mb-2 sm:mb-0 sf-pro-text">SET® is a registered trademark of Cannei, LLC.</p>
+          <p className="text-xs text-muted-foreground mb-2 sm:mb-0 sf-pro-text">
+            SET® is a registered trademark of Cannei, LLC.
+          </p>
           <div className="flex items-center gap-3">
-            <p className="text-xs text-muted-foreground sf-pro-text">© Oamitai, 2025. All rights reserved.</p>
-            <a href="https://github.com/omamitai/set-detector" target="_blank" rel="noopener noreferrer" className="flex items-center text-xs text-muted-foreground hover:text-foreground transition-colors">
+            <p className="text-xs text-muted-foreground sf-pro-text">
+              © Cannei, LLC. All rights reserved.
+            </p>
+            <a
+              href="https://github.com/omamitai/set-detector"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
               <Github className="h-4 w-4 mr-1" />
               View on GitHub
             </a>
@@ -177,6 +191,9 @@ const Layout: React.FC<LayoutProps> = ({
         </div>
       </footer>
       <Toaster />
-    </div>;
+    </div>
+  );
 };
+
 export default Layout;
+
