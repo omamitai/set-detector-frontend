@@ -69,24 +69,24 @@ const Index = () => {
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="max-w-6xl mx-auto px-4 py-6 md:py-8"
+        className="max-w-6xl mx-auto px-4 py-5 md:py-6"
       >
         <motion.div 
-          className="text-center mb-6 md:mb-8"
+          className="text-center mb-5 md:mb-6"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-gray-900 sf-pro-display">
+          <h1 className="text-xl md:text-2xl font-bold mb-2 text-gray-900 sf-pro-display">
             SET Game Detector
           </h1>
-          <p className="text-muted-foreground mb-4 max-w-lg mx-auto sf-pro-text text-sm md:text-base">
+          <p className="text-muted-foreground mb-3 max-w-lg mx-auto sf-pro-text text-xs md:text-sm">
             Upload a photo of your SET game layout
           </p>
         </motion.div>
         
         {error && (
-          <Alert variant="destructive" className="mb-6 max-w-md mx-auto">
+          <Alert variant="destructive" className="mb-5 max-w-md mx-auto">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>{error}</AlertDescription>
           </Alert>
@@ -94,7 +94,7 @@ const Index = () => {
         
         <div className="max-w-5xl mx-auto">
           {activeTab === "upload" ? (
-            <div className="flex flex-col gap-8 md:gap-16">
+            <div className="flex flex-col gap-6 md:gap-12">
               <div className="max-w-md mx-auto w-full">
                 <ImageUpload 
                   onImageSelected={handleImageSelected}
@@ -102,12 +102,12 @@ const Index = () => {
                 />
               </div>
               
-              <div className="mt-8 md:mt-12 max-w-4xl mx-auto w-full">
+              <div className="mt-6 md:mt-8 w-full">
                 <HowItWorks />
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
               <div className="md:col-span-7">
                 <ResultsDisplay
                   resultImage={resultImage}
@@ -116,7 +116,7 @@ const Index = () => {
                 />
               </div>
               
-              <div className="md:col-span-5 mt-4 md:mt-0">
+              <div className="md:col-span-5 mt-3 md:mt-0">
                 <HowItWorks />
               </div>
             </div>
