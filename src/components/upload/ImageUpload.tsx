@@ -1,11 +1,12 @@
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
-import { UploadCloud, X } from "lucide-react";
+import { UploadCloud, X, Camera } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface ImageUploadProps {
   onImageSelected: (file: File) => void;
@@ -16,6 +17,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelected, isProcessing
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [dragActive, setDragActive] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -69,53 +72,203 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelected, isProcessing
     setUploadProgress(0);
   };
 
+  const handleDrag = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const triggerFileInput = () => {
+    fileInputRef.current?.click();
+  };
+
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      {!previewUrl ? (
-        <div
-          {...getRootProps()}
-          className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
-            isDragActive
-              ? "border-primary bg-primary bg-opacity-5"
-              : "border-muted-foreground border-opacity-30 hover:border-primary"
-          } ${isProcessing ? "opacity-50 cursor-not-allowed" : ""}`}
-        >
-          <input {...getInputProps()} />
-          <div className="flex flex-col items-center justify-center gap-2">
-            <UploadCloud className="h-12 w-12 text-muted-foreground" />
-            <h3 className="text-lg font-medium mt-2">
-              {isDragActive ? "Drop your image here" : "Drag & drop an image here"}
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              or click to browse (JPEG, PNG, GIF)
-            </p>
-          </div>
+    <div className="w-full">
+      <AnimatePresence mode="wait">
+        {!previewUrl ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div
+              {...getRootProps()}
+              className={`ios-card transition-all ${
+                dragActive ? 'ring-2 ring-primary' : ''
+              }`}
+              onDragEnter={handleDrag}
+              onDragLeave={handleDrag}
+              onDragOver={handleDrag}
+              onDrop={handleDrag}
+            >
+              <CardContent className="flex flex-col items-center justify-center p-8">
+                <div className="mb-3">
+                  <motion.div 
+                    className="flex items-center justify-center gap-1"
+                    animate={{ y: [0, -5, 0] }}
+                    transition={{ 
+                      duration: 1.5, 
+                      repeat: Infinity,
+                      ease: "easeInOut" 
+                    }}
+                  >
+                    <div className="text-set-purple text-xl">◇</div>
+                    <div className="text-set-red text-xl">○</div>
+                    <div className="text-set-green text-xl">△</div>
+                  </motion.div>
+                </div>
+                
+                <h3 className="sf-pro-display text-lg font-medium mb-2">
+                  {isDragActive ? "Drop your SET game photo here" : "Upload SET game photo"}
+                </h3>
+                <p className="sf-pro-text text-sm text-muted-foreground mb-6 text-center max-w-sm">
+                  Take a clear photo from directly above the cards
+                </p>
+                
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  {...getInputProps()}
+                  accept="image/*"
+                  className="hidden"
+                  capture="environment"
+                />
+                
+                <Button 
+                  onClick={triggerFileInput}
+                  className="purple-button gap-2 mb-4"
+                  disabled={isProcessing}
+                >
+                  <Camera className="h-4 w-4" />
+                  <span className="sf-pro-display">Upload or Take Photo</span>
+                </Button>
+                
+                <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground sf-pro-text">
+                  <UploadCloud className="h-3 w-3" />
+                  <span>Or drag and drop image here</span>
+                </div>
+              </CardContent>
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Card className="ios-card overflow-hidden">
+              <CardContent className="p-0 relative">
+                <img
+                  src={previewUrl}
+                  alt="Preview"
+                  className="w-full h-auto object-contain max-h-[60vh]"
+                />
+                
+                {!isProcessing && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-3 right-3 rounded-full bg-background/70 backdrop-blur-sm"
+                    onClick={removeImage}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                )}
+                
+                {isProcessing && (
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="absolute inset-0"
+                  >
+                    {/* Scanning effect */}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent"
+                      animate={{
+                        y: ["0%", "100%"],
+                        opacity: [0.3, 0.7, 0.3]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "linear"
+                      }}
+                    />
+                    
+                    {/* Scanning line */}
+                    <motion.div
+                      className="absolute left-0 right-0 h-[2px] scan-line"
+                      animate={{
+                        y: ["0%", "100%"]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "linear"
+                      }}
+                    />
+                    
+                    {/* Processing indicator */}
+                    <div className="absolute top-3 right-3 bg-background/70 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+                      <span className="text-sm font-medium sf-pro-display">Processing</span>
+                    </div>
+                    
+                    {/* SET Detection grid overlay */}
+                    <motion.div
+                      className="absolute inset-0 grid grid-cols-3 grid-rows-3 gap-2 p-4"
+                      initial="hidden"
+                      animate="visible"
+                    >
+                      {Array.from({ length: 9 }).map((_, i) => (
+                        <motion.div
+                          key={i}
+                          className="border-2 border-transparent rounded-lg"
+                          variants={{
+                            hidden: { borderColor: "rgba(151, 71, 234, 0)" },
+                            visible: { borderColor: "rgba(151, 71, 234, 0.3)" }
+                          }}
+                          transition={{
+                            delay: i * 0.1,
+                            duration: 0.3,
+                            repeat: Infinity,
+                            repeatType: "reverse"
+                          }}
+                        />
+                      ))}
+                    </motion.div>
+                  </motion.div>
+                )}
+                
+                {uploadProgress < 100 && (
+                  <div className="absolute bottom-0 left-0 right-0 p-2 bg-background/70 backdrop-blur-sm">
+                    <Progress value={uploadProgress} className="h-2" />
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      {/* Mobile-only: Fixed bottom camera button */}
+      {!previewUrl && !isProcessing && (
+        <div className="md:hidden fixed-bottom-button">
+          <Button 
+            onClick={triggerFileInput}
+            className="purple-button w-full flex items-center justify-center gap-2 py-4 shadow-xl"
+            disabled={isProcessing}
+          >
+            <Camera className="w-5 h-5" />
+            <span className="sf-pro-display">Take a Photo</span>
+          </Button>
         </div>
-      ) : (
-        <Card className="overflow-hidden">
-          <CardContent className="p-0 relative">
-            <img
-              src={previewUrl}
-              alt="Preview"
-              className="w-full h-auto object-contain max-h-[60vh]"
-            />
-            {!isProcessing && (
-              <Button
-                variant="destructive"
-                size="icon"
-                className="absolute top-2 right-2 rounded-full"
-                onClick={removeImage}
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            )}
-            {uploadProgress < 100 && (
-              <div className="absolute bottom-0 left-0 right-0 p-2 bg-background bg-opacity-70">
-                <Progress value={uploadProgress} className="h-2" />
-              </div>
-            )}
-          </CardContent>
-        </Card>
       )}
     </div>
   );

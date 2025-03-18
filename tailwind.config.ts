@@ -65,11 +65,11 @@ export default {
 				},
 				// SET game specific colors
 				set: {
-					purple: '#7e69ab',
-					green: '#4ade80',
-					red: '#ef4444',
+					purple: '#9747FF',
+					green: '#42CEB4',
+					red: '#FF5C87',
 					dark: '#1A1F2C',
-					light: '#f8fafc'
+					light: '#F8FAFC'
 				}
 			},
 			borderRadius: {
@@ -109,6 +109,11 @@ export default {
 				'slide-in-down': {
 					'0%': { transform: 'translateY(-10%)', opacity: '0' },
 					'100%': { transform: 'translateY(0)', opacity: '1' }
+				},
+				'scan-line': {
+					'0%': { transform: 'translateY(0%)', opacity: '0.3' },
+					'50%': { opacity: '0.7' },
+					'100%': { transform: 'translateY(100%)', opacity: '0.3' }
 				}
 			},
 			animation: {
@@ -117,7 +122,8 @@ export default {
 				'fade-in': 'fade-in 0.3s ease-out',
 				'fade-out': 'fade-out 0.3s ease-out',
 				'slide-in-up': 'slide-in-up 0.4s ease-out',
-				'slide-in-down': 'slide-in-down 0.4s ease-out'
+				'slide-in-down': 'slide-in-down 0.4s ease-out',
+				'scan-line': 'scan-line 2s linear infinite'
 			}
 		}
 	},
