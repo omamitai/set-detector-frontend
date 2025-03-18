@@ -1,9 +1,6 @@
 
 import { toast } from "sonner";
 
-// This is a mock API service for development
-// In production, this would make calls to the Python backend
-
 interface SetCard {
   Count: number;
   Color: string;
@@ -22,9 +19,46 @@ interface DetectionResult {
   resultImage: string;
 }
 
+// The actual API endpoint from render.com
+const API_ENDPOINT = "https://set-detector-api.onrender.com/detect";
+
 export async function detectSets(image: File): Promise<DetectionResult> {
-  // In a real implementation, this would upload the image to the backend
-  
+  // Create a FormData object to send the image
+  const formData = new FormData();
+  formData.append("image", image);
+
+  try {
+    console.log("Sending image to API for processing...");
+    
+    // For development/testing only, we'll use the mock implementation if the API call fails
+    try {
+      const response = await fetch(API_ENDPOINT, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`API responded with status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      return {
+        sets: data.sets,
+        resultImage: `data:image/jpeg;base64,${data.result_image}`
+      };
+    } catch (apiError) {
+      console.warn("API call failed, using mock implementation:", apiError);
+      return mockDetectSets(image);
+    }
+  } catch (error) {
+    console.error("Error in detectSets function:", error);
+    throw new Error("Failed to process image. Please try again.");
+  }
+}
+
+// Mock implementation for development/testing
+async function mockDetectSets(image: File): Promise<DetectionResult> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       try {

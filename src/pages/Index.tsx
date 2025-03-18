@@ -77,7 +77,7 @@ const Index = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 bg-gradient-to-r from-set-purple to-set-red bg-clip-text text-transparent sf-pro-display">
+          <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-gray-900 sf-pro-display">
             SET Game Detector
           </h1>
           <p className="text-muted-foreground mb-6 md:mb-8 max-w-lg mx-auto sf-pro-text text-sm md:text-base">
@@ -92,26 +92,28 @@ const Index = () => {
           </Alert>
         )}
         
-        <div className={`max-w-5xl mx-auto ${isMobile ? 'flex flex-col gap-6' : ''}`}>
-          {activeTab === "upload" ? (
-            <div className="max-w-md mx-auto mb-8 md:mb-12">
-              <ImageUpload 
-                onImageSelected={handleImageSelected}
-                isProcessing={isProcessing}
-              />
-            </div>
-          ) : (
-            <div className="mb-8">
-              <ResultsDisplay
-                resultImage={resultImage}
-                sets={detectedSets}
-                onReset={handleReset}
-              />
-            </div>
-          )}
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
+          <div className={`${activeTab === "upload" ? 'md:col-span-12' : 'md:col-span-7'}`}>
+            {activeTab === "upload" ? (
+              <div className="max-w-md mx-auto mb-8 md:mb-12">
+                <ImageUpload 
+                  onImageSelected={handleImageSelected}
+                  isProcessing={isProcessing}
+                />
+              </div>
+            ) : (
+              <div className="mb-8">
+                <ResultsDisplay
+                  resultImage={resultImage}
+                  sets={detectedSets}
+                  onReset={handleReset}
+                />
+              </div>
+            )}
+          </div>
           
-          {/* Always show How It Works section regardless of the active tab */}
-          <div className={isMobile ? 'mt-2 pb-20' : ''}>
+          {/* Always show How It Works section, either in full width or sidebar */}
+          <div className={`${activeTab === "upload" ? 'md:col-span-12' : 'md:col-span-5'} ${isMobile ? 'mt-2 pb-20' : ''}`}>
             <HowItWorks />
           </div>
         </div>

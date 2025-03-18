@@ -1,85 +1,77 @@
 
-import React from 'react';
-import { Card, CardContent } from "@/components/ui/card";
-import { Camera, Cpu, Eye } from "lucide-react";
-import { motion } from "framer-motion";
+import { Info, Camera, Search, Check } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useIsMobile } from "@/hooks/use-mobile";
 
-const HowItWorks: React.FC = () => {
-  const steps = [
-    {
-      icon: Camera,
-      title: "Capture",
-      description: "Take a clear photo with good lighting from directly above the cards",
-      color: "text-set-purple bg-[#F8F2FF] dark:bg-[#2A1E38]"
-    },
-    {
-      icon: Cpu,
-      title: "Process",
-      description: "Our AI identifies all cards' attributes: color, shape, fill, and count",
-      color: "text-set-green bg-[#F0FCFA] dark:bg-[#1E3330]"
-    },
-    {
-      icon: Eye,
-      title: "Analyze",
-      description: "Our algorithm automatically detects all valid SETs by comparing each card's attributes",
-      color: "text-set-red bg-[#FFF2F5] dark:bg-[#3A2328]"
-    }
-  ];
-
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const item = {
-    hidden: { y: 20, opacity: 0 },
-    show: { y: 0, opacity: 1 }
-  };
-
+const HowItWorks = () => {
+  const isMobile = useIsMobile();
+  
   return (
-    <div className="py-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-6">
-          <h2 className="sf-pro-display text-xl font-medium mb-2 text-gray-900">How It Works</h2>
-          <p className="sf-pro-text text-sm text-muted-foreground max-w-sm mx-auto">
-            Detect all SET combinations in three simple steps
-          </p>
+    <Card className="ios-card">
+      <CardHeader className="p-3 md:p-4 pb-0">
+        <CardTitle className="text-base md:text-lg sf-pro-display flex items-center">
+          <Info className="h-4 w-4 text-primary mr-2" />
+          How It Works
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="p-3 md:p-4">
+        <div className="space-y-4">
+          <div className="flex gap-3">
+            <div className="mt-0.5">
+              <div className="bg-set-purple/10 p-2 rounded-full">
+                <Camera className="h-4 w-4 text-set-purple" />
+              </div>
+            </div>
+            <div>
+              <h3 className="text-sm md:text-base font-medium mb-1 sf-pro-display text-gray-900">Capture</h3>
+              <p className="text-muted-foreground text-xs md:text-sm sf-pro-text">
+                Take a clear photo of your SET game cards laid out on a surface from above. Try to ensure good lighting and minimal shadows for best results.
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex gap-3">
+            <div className="mt-0.5">
+              <div className="bg-set-red/10 p-2 rounded-full">
+                <Search className="h-4 w-4 text-set-red" />
+              </div>
+            </div>
+            <div>
+              <h3 className="text-sm md:text-base font-medium mb-1 sf-pro-display text-gray-900">Analyze</h3>
+              <p className="text-muted-foreground text-xs md:text-sm sf-pro-text">
+                Our advanced computer vision algorithm identifies all cards in the image, analyzing their color, shape, number, and fill pattern to locate valid SETs.
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex gap-3">
+            <div className="mt-0.5">
+              <div className="bg-set-green/10 p-2 rounded-full">
+                <Check className="h-4 w-4 text-set-green" />
+              </div>
+            </div>
+            <div>
+              <h3 className="text-sm md:text-base font-medium mb-1 sf-pro-display text-gray-900">View Results</h3>
+              <p className="text-muted-foreground text-xs md:text-sm sf-pro-text">
+                See all valid SETs highlighted in the image along with detailed card information. A valid SET has three cards where each feature is either all the same or all different.
+              </p>
+            </div>
+          </div>
+          
+          <div className={`bg-gray-50 rounded-xl p-3 md:p-4 mt-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+            <p className="font-medium sf-pro-display text-gray-900 mb-1">What makes a valid SET?</p>
+            <p className="text-muted-foreground sf-pro-text mb-2">
+              A valid SET consists of three cards where each feature (color, shape, number, and fill) is either all the same OR all different across all three cards.
+            </p>
+            <p className="text-set-purple sf-pro-text">
+              <a href="https://www.setgame.com/set/puzzle_rules" target="_blank" rel="noopener noreferrer" className="underline hover:text-set-purple/80">
+                View comprehensive rules
+              </a>
+            </p>
+          </div>
         </div>
-
-        <motion.div 
-          className="grid grid-cols-1 sm:grid-cols-3 gap-4"
-          variants={container}
-          initial="hidden"
-          animate="show"
-        >
-          {steps.map((step, index) => (
-            <motion.div key={index} variants={item}>
-              <Card className="ios-card h-full">
-                <CardContent className="p-6 text-center flex flex-col h-full">
-                  <div className={`w-12 h-12 mx-auto mb-4 rounded-full shadow-inner flex items-center justify-center ${step.color}`}>
-                    <step.icon className="w-5 h-5" />
-                  </div>
-                  <h3 className="sf-pro-display font-medium mb-2 text-base text-gray-900">{step.title}</h3>
-                  <p className="sf-pro-text text-muted-foreground text-sm">{step.description}</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-        
-        <div className="text-center mt-8">
-          <p className="sf-pro-text text-sm text-muted-foreground max-w-lg mx-auto">
-            <strong>What makes a valid SET?</strong> Three cards where each feature (color, shape, fill, count) is either 
-            all the same or all different across all three cards.
-          </p>
-        </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 

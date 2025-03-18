@@ -42,9 +42,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         .ios-bg {
           background-attachment: fixed;
           background-image: 
-            radial-gradient(at 10% 20%, rgba(151, 71, 255, 0.25) 0px, transparent 60%), 
-            radial-gradient(at 90% 30%, rgba(66, 206, 180, 0.25) 0px, transparent 60%),
-            radial-gradient(at 50% 80%, rgba(255, 92, 135, 0.22) 0px, transparent 55%);
+            radial-gradient(at 10% 20%, rgba(151, 71, 255, 0.45) 0px, transparent 70%), 
+            radial-gradient(at 90% 30%, rgba(66, 206, 180, 0.45) 0px, transparent 70%),
+            radial-gradient(at 50% 80%, rgba(255, 92, 135, 0.38) 0px, transparent 65%);
         }
         
         .ios-card {
@@ -152,17 +152,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
           </div>
           
-          <div className="flex items-center space-x-2">
-            <a 
-              href="https://www.setgame.com/set/puzzle_rules"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors mr-2"
-            >
-              <BookOpen className="h-4 w-4 mr-1" />
-              <span>Rules</span>
-            </a>
-            
+          <div className="flex items-center space-x-2">            
             <a 
               href="https://github.com/omamitai/set-detector"
               target="_blank"
@@ -184,6 +174,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-xs text-muted-foreground mb-2 sm:mb-0 sf-pro-text">
             SET® is a registered trademark of Marsha J. Falco. This is an unofficial project.
+            <br/>
+            <a 
+              href="https://www.setgame.com/set/puzzle_rules"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-set-purple hover:underline"
+            >
+              Learn about SET game rules
+            </a>
           </p>
           <div className="flex items-center gap-3">
             <p className="text-xs text-muted-foreground sf-pro-text">

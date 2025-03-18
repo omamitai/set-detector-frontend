@@ -113,7 +113,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
             </CardHeader>
             <CardContent className="p-3 md:p-4">
               {sets.length > 0 ? (
-                <ScrollArea className={isMobile ? "h-[300px]" : "h-[400px]"} thumbSize={4}>
+                <ScrollArea className={isMobile ? "h-[300px]" : "h-[400px]"}>
                   <div className="space-y-3 md:space-y-4 pr-2">
                     {sets.map((set, index) => (
                       <SetCard key={index} set={set} index={index} />
