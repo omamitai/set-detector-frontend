@@ -77,9 +77,9 @@
     @apply bg-background;
     background-attachment: fixed;
     background-image: 
-      radial-gradient(at 10% 20%, rgba(151, 71, 255, 0.15) 0px, transparent 50%), 
-      radial-gradient(at 90% 30%, rgba(66, 206, 180, 0.15) 0px, transparent 50%),
-      radial-gradient(at 50% 80%, rgba(255, 92, 135, 0.12) 0px, transparent 45%);
+      radial-gradient(at 10% 20%, rgba(151, 71, 255, 0.25) 0px, transparent 50%), 
+      radial-gradient(at 90% 30%, rgba(66, 206, 180, 0.25) 0px, transparent 50%),
+      radial-gradient(at 50% 80%, rgba(255, 92, 135, 0.20) 0px, transparent 45%);
   }
   
   .ios-card {
