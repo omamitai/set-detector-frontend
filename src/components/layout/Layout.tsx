@@ -1,8 +1,7 @@
 
 import React from "react";
-import { useTheme } from "@/hooks/use-theme";
 import { Button } from "@/components/ui/button";
-import { Sun, Moon, Github, BookOpen } from "lucide-react";
+import { Github, BookOpen } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 
 interface LayoutProps {
@@ -10,8 +9,6 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const { theme, setTheme } = useTheme();
-
   return (
     <div className="min-h-screen flex flex-col transition-colors duration-300 ios-bg">
       <style>
@@ -45,26 +42,17 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         .ios-bg {
           background-attachment: fixed;
           background-image: 
-            radial-gradient(at 10% 20%, rgba(151, 71, 255, 0.08) 0px, transparent 40%), 
-            radial-gradient(at 90% 30%, rgba(66, 206, 180, 0.08) 0px, transparent 40%),
-            radial-gradient(at 50% 80%, rgba(255, 92, 135, 0.07) 0px, transparent 35%);
+            radial-gradient(at 10% 20%, rgba(151, 71, 255, 0.15) 0px, transparent 50%), 
+            radial-gradient(at 90% 30%, rgba(66, 206, 180, 0.15) 0px, transparent 50%),
+            radial-gradient(at 50% 80%, rgba(255, 92, 135, 0.12) 0px, transparent 45%);
         }
         
         .ios-card {
           border-radius: 16px;
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.01);
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
           border: none;
           backdrop-filter: blur(5px);
           background-color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .dark .ios-card {
-          background-color: rgba(34, 39, 48, 0.8);
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        
-        .ios-card:hover {
-          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
         }
         
         .purple-button {
@@ -143,12 +131,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <header className="border-b bg-background/95 backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto py-3 px-4 flex justify-between items-center">
           <div className="flex items-center space-x-2 sf-pro-display">
-            <div className="flex gap-1">
-              <div className="text-set-purple">◇</div>
-              <div className="text-set-red">○</div>
-              <div className="text-set-green">△</div>
-            </div>
-            <h1 className="font-medium text-lg">SET Sleuth</h1>
+            <h1 className="font-medium text-lg">SET Detector</h1>
           </div>
           
           <div className="flex items-center space-x-2">
@@ -162,22 +145,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <span>Rules</span>
             </a>
             
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              aria-label="Toggle theme"
-              className="rounded-full"
-            >
-              {theme === "dark" ? (
-                <Sun className="h-5 w-5" />
-              ) : (
-                <Moon className="h-5 w-5" />
-              )}
-            </Button>
-            
             <a 
-              href="https://github.com/your-username/set-sleuth"
+              href="https://github.com/omamitai/set-detector"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -199,8 +168,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             SET® is a registered trademark of Marsha J. Falco. This is an unofficial project.
           </p>
           <div className="flex items-center gap-3">
+            <p className="text-xs text-muted-foreground sf-pro-text">
+              © Oamitai 2025. All rights reserved.
+            </p>
             <a
-              href="https://github.com/your-username/set-sleuth"
+              href="https://github.com/omamitai/set-detector"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center text-xs text-muted-foreground hover:text-foreground transition-colors"

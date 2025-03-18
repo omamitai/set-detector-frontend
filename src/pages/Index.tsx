@@ -81,12 +81,6 @@ const Index = () => {
           <p className="text-muted-foreground mb-8 max-w-lg mx-auto sf-pro-text">
             Upload a photo of your SET game layout and automatically find all valid SETs
           </p>
-          
-          <div className="grid grid-cols-3 gap-4 mb-8 mx-auto max-w-xs">
-            <div className="aspect-square set-card-diamond bg-set-purple"></div>
-            <div className="aspect-square set-card-oval bg-set-green"></div>
-            <div className="aspect-square set-card-squiggle bg-set-red"></div>
-          </div>
         </motion.div>
         
         {error && (
