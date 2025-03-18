@@ -1,7 +1,6 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Github, BookOpen } from "lucide-react";
+import { Github } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 
 interface LayoutProps {
@@ -173,20 +172,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <footer className="border-t py-4 bg-background/95 backdrop-blur-md">
         <div className="container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-xs text-muted-foreground mb-2 sm:mb-0 sf-pro-text">
-            SET® is a registered trademark of Marsha J. Falco. This is an unofficial project.
-            <br/>
-            <a 
-              href="https://www.setgame.com/set/puzzle_rules"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-set-purple hover:underline"
-            >
-              Learn about SET game rules
-            </a>
+            SET® is a registered trademark of Cannei, LLC.
           </p>
           <div className="flex items-center gap-3">
             <p className="text-xs text-muted-foreground sf-pro-text">
-              © Oamitai 2025. All rights reserved.
+              © Cannei, LLC. All rights reserved.
             </p>
             <a
               href="https://github.com/omamitai/set-detector"

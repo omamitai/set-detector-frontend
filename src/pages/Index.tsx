@@ -93,7 +93,7 @@ const Index = () => {
         )}
         
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
-          <div className={`${activeTab === "upload" ? 'md:col-span-12' : 'md:col-span-7'}`}>
+          <div className={`${activeTab === "upload" ? 'md:col-span-7' : 'md:col-span-7'}`}>
             {activeTab === "upload" ? (
               <div className="max-w-md mx-auto mb-8 md:mb-12">
                 <ImageUpload 
@@ -112,8 +112,8 @@ const Index = () => {
             )}
           </div>
           
-          {/* Always show How It Works section, either in full width or sidebar */}
-          <div className={`${activeTab === "upload" ? 'md:col-span-12' : 'md:col-span-5'} ${isMobile ? 'mt-2 pb-20' : ''}`}>
+          {/* Always show How It Works section */}
+          <div className={`md:col-span-5 ${isMobile ? 'mt-2 pb-20' : ''}`}>
             <HowItWorks />
           </div>
         </div>
