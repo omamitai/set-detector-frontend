@@ -14,7 +14,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div className="min-h-screen flex flex-col transition-colors duration-300 ios-bg">
-      <style jsx global>{`
+      <style>
+        {`
         @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
         
         :root {
@@ -136,7 +137,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           );
           animation: scan 2s linear infinite;
         }
-      `}</style>
+      `}
+      </style>
 
       <header className="border-b bg-background/95 backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto py-3 px-4 flex justify-between items-center">
