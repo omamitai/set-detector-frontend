@@ -42,9 +42,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         .ios-bg {
           background-attachment: fixed;
           background-image: 
-            radial-gradient(at 10% 20%, rgba(151, 71, 255, 0.15) 0px, transparent 50%), 
-            radial-gradient(at 90% 30%, rgba(66, 206, 180, 0.15) 0px, transparent 50%),
-            radial-gradient(at 50% 80%, rgba(255, 92, 135, 0.12) 0px, transparent 45%);
+            radial-gradient(at 10% 20%, rgba(151, 71, 255, 0.25) 0px, transparent 60%), 
+            radial-gradient(at 90% 30%, rgba(66, 206, 180, 0.25) 0px, transparent 60%),
+            radial-gradient(at 50% 80%, rgba(255, 92, 135, 0.22) 0px, transparent 55%);
         }
         
         .ios-card {
@@ -74,6 +74,17 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         
         .purple-button:active {
           transform: scale(0.98);
+        }
+        
+        /* SET icons styling */
+        .set-icon {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 22px;
+          height: 22px;
+          font-size: 1.2rem;
+          line-height: 1;
         }
         
         /* Mobile optimizations */
@@ -131,7 +142,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <header className="border-b bg-background/95 backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto py-3 px-4 flex justify-between items-center">
           <div className="flex items-center space-x-2 sf-pro-display">
-            <h1 className="font-medium text-lg">SET Detector</h1>
+            <div className="flex items-center">
+              <div className="flex space-x-1 mr-2">
+                <div className="set-icon text-set-purple">◇</div>
+                <div className="set-icon text-set-red">○</div>
+                <div className="set-icon text-set-green">△</div>
+              </div>
+              <h1 className="font-medium text-lg text-gray-900">SET Detector</h1>
+            </div>
           </div>
           
           <div className="flex items-center space-x-2">

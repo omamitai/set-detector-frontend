@@ -123,7 +123,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelected, isProcessing
                   </motion.div>
                 </div>
                 
-                <h3 className="sf-pro-display text-lg font-medium mb-2">
+                <h3 className="sf-pro-display text-lg font-medium mb-2 text-gray-900">
                   {isDragActive ? "Drop your SET game photo here" : "Upload SET game photo"}
                 </h3>
                 <p className="sf-pro-text text-sm text-muted-foreground mb-6 text-center max-w-sm">
@@ -256,20 +256,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelected, isProcessing
           </motion.div>
         )}
       </AnimatePresence>
-      
-      {/* Mobile-only: Fixed bottom camera button */}
-      {!previewUrl && !isProcessing && (
-        <div className="md:hidden fixed-bottom-button">
-          <Button 
-            onClick={triggerFileInput}
-            className="purple-button w-full flex items-center justify-center gap-2 py-4 shadow-xl"
-            disabled={isProcessing}
-          >
-            <Camera className="w-5 h-5" />
-            <span className="sf-pro-display">Take a Photo</span>
-          </Button>
-        </div>
-      )}
     </div>
   );
 };
