@@ -1,3 +1,4 @@
+
 import { toast } from "sonner";
 
 interface SetCard {
@@ -48,10 +49,17 @@ export async function detectSets(image: File): Promise<DetectionResult> {
   try {
     console.log("Sending image to API for processing...");
     
+    // Add a timeout to the fetch request
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 second timeout
+    
     const response = await fetch(API_ENDPOINT, {
       method: "POST",
       body: formData,
+      signal: controller.signal
     });
+    
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       // Handle different error status codes
@@ -95,6 +103,16 @@ export async function detectSets(image: File): Promise<DetectionResult> {
     };
   } catch (error) {
     console.error("Error in detectSets function:", error);
-    throw new Error(error instanceof Error ? error.message : "Failed to process image. Please try again.");
+    
+    // Provide more specific error messages based on error type
+    if (error instanceof DOMException && error.name === "AbortError") {
+      throw new Error("Request timed out. The server took too long to respond. Please try again.");
+    } else if (error instanceof TypeError && error.message.includes("NetworkError")) {
+      throw new Error("Network error. Please check your internet connection and try again.");
+    } else if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("Failed to process image. Please try again.");
+    }
   }
 }

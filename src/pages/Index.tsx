@@ -6,10 +6,11 @@ import ResultsDisplay from "@/components/results/ResultsDisplay";
 import HowItWorks from "@/components/info/HowItWorks";
 import { detectSets } from "@/services/api";
 import { toast } from "sonner";
-import { AlertCircle } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AlertCircle, RefreshCw } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
 
 interface SetCard {
   Count: number;
@@ -36,7 +37,9 @@ const Index = () => {
     try {
       setIsProcessing(true);
       setError(null);
-      toast.info("Processing image...");
+      toast.info("Processing image...", {
+        description: "This may take a few moments."
+      });
       
       const result = await detectSets(file);
       
@@ -51,8 +54,10 @@ const Index = () => {
       }
     } catch (error) {
       console.error("Error processing image:", error);
-      setError("We couldn't process your image. Please try again with a clearer photo.");
-      toast.error("Failed to process image. Please try again.");
+      setError(error instanceof Error ? error.message : "We couldn't process your image. Please try again with a clearer photo.");
+      toast.error("Failed to process image", {
+        description: error instanceof Error ? error.message : "Please try again."
+      });
     } finally {
       setIsProcessing(false);
     }
@@ -62,6 +67,7 @@ const Index = () => {
     setResultImage(null);
     setDetectedSets([]);
     setActiveTab("upload");
+    setError(null);
   };
 
   return (
@@ -88,7 +94,19 @@ const Index = () => {
         {error && (
           <Alert variant="destructive" className="mb-5 max-w-md mx-auto">
             <AlertCircle className="h-4 w-4" />
-            <AlertDescription>{error}</AlertDescription>
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription className="flex flex-col gap-3">
+              <span>{error}</span>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleReset} 
+                className="self-end flex items-center gap-1"
+              >
+                <RefreshCw className="h-3 w-3" />
+                Try again
+              </Button>
+            </AlertDescription>
           </Alert>
         )}
         
