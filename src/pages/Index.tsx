@@ -125,16 +125,14 @@ const Index = () => {
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-              <div className="md:col-span-7">
-                <ResultsDisplay
-                  resultImage={resultImage}
-                  sets={detectedSets}
-                  onReset={handleReset}
-                />
-              </div>
+            <div className="space-y-6 md:space-y-8">
+              <ResultsDisplay
+                resultImage={resultImage}
+                sets={detectedSets}
+                onReset={handleReset}
+              />
               
-              <div className="md:col-span-5 mt-3 md:mt-0">
+              <div className="mt-4 md:mt-6">
                 <HowItWorks />
               </div>
             </div>

@@ -2,7 +2,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Download, RefreshCw, Eye } from "lucide-react";
+import { Download, RefreshCw, Eye, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { motion } from "framer-motion";
@@ -53,8 +53,8 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
       transition={{ duration: 0.4 }}
       className="space-y-4 md:space-y-6"
     >
-      <div className={isMobile ? "flex flex-col gap-4" : "flex flex-col md:flex-row gap-4 md:gap-6"}>
-        <div className={isMobile ? "w-full" : "md:w-7/12"}>
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
+        <div className="md:col-span-7">
           <Card className="ios-card overflow-hidden">
             <CardHeader className="p-3 md:p-4 pb-0">
               <CardTitle className="text-base md:text-lg flex justify-between items-center sf-pro-display">
@@ -69,19 +69,19 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
             </CardHeader>
             <CardContent className="p-3 md:p-4">
               {resultImage && (
-                <div className="relative overflow-hidden rounded-md">
+                <div className="relative overflow-hidden rounded-md shadow-md">
                   <img
                     src={resultImage}
                     alt="Detected sets"
-                    className="w-full h-auto object-contain"
+                    className="w-full h-auto object-contain border border-gray-100 rounded-md"
                   />
                   
-                  <div className="absolute bottom-2 md:bottom-3 right-2 md:right-3 flex gap-2">
+                  <div className="absolute bottom-3 right-3 flex gap-2">
                     <Button
                       variant="secondary"
                       size={isMobile ? "sm" : "default"}
                       onClick={onReset}
-                      className="gap-1 rounded-full bg-background/70 backdrop-blur-sm text-xs md:text-sm"
+                      className="gap-1 rounded-full bg-background/90 backdrop-blur-sm text-xs md:text-sm shadow-md"
                     >
                       <RefreshCw className="h-3 w-3 md:h-3.5 md:w-3.5" />
                       <span className="sf-pro-text">New</span>
@@ -91,7 +91,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                       variant="default"
                       size={isMobile ? "sm" : "default"}
                       onClick={downloadImage}
-                      className="gap-1 rounded-full bg-primary/90 backdrop-blur-sm text-xs md:text-sm"
+                      className="gap-1 rounded-full bg-primary/90 backdrop-blur-sm text-xs md:text-sm shadow-md"
                     >
                       <Download className="h-3 w-3 md:h-3.5 md:w-3.5" />
                       <span className="sf-pro-text">Save</span>
@@ -103,18 +103,18 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
           </Card>
         </div>
 
-        <div className={isMobile ? "w-full" : "md:w-5/12"}>
+        <div className="md:col-span-5">
           <Card className="ios-card h-full">
             <CardHeader className="p-3 md:p-4 pb-0">
               <CardTitle className="text-base md:text-lg sf-pro-display flex items-center">
-                <Eye className="h-4 w-4 text-primary mr-2" />
+                <Sparkles className="h-4 w-4 text-primary mr-2" />
                 SET Details
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-3 md:p-4">
+            <CardContent className="p-3 md:p-4 pt-3">
               {sets.length > 0 ? (
                 <ScrollArea className={isMobile ? "h-[300px]" : "h-[400px]"}>
-                  <div className="space-y-3 md:space-y-4 pr-2">
+                  <div className="space-y-3 pr-2">
                     {sets.map((set, index) => (
                       <SetCard key={index} set={set} index={index} />
                     ))}
