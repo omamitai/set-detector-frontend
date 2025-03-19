@@ -107,7 +107,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               onDragOver={handleDrag}
               onDrop={handleDrag}
             >
-              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-8 py-20' : 'p-12 py-24'}`}>
+              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-8 py-24' : 'p-12 py-24'}`}>
                 <div className="mb-6">
                   <motion.div 
                     className="flex items-center justify-center gap-3"
@@ -132,6 +132,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   type="file"
                   {...getInputProps()}
                   accept="image/*"
+                  capture="environment"
                   className="hidden"
                 />
                 
@@ -142,9 +143,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                       className="purple-button gap-2 justify-center py-4 w-full text-base ios-button"
                       disabled={isProcessing}
                     >
-                      <Camera className="h-5 w-5" />
+                      <ImageIcon className="h-5 w-5" />
                       <span className="sf-pro-display">Choose Photo</span>
                     </Button>
+                    <p className="text-xs text-center text-muted-foreground sf-pro-text">
+                      You'll be able to select from your camera or photo library
+                    </p>
                   </div>
                 ) : (
                   <Button 

@@ -71,7 +71,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
               {sets.length > 0 && (
                 <Badge className="bg-set-purple text-white border-0 rounded-full px-3 py-1 shadow-sm text-sm inline-flex items-center gap-1.5">
                   <Sparkles className="h-3.5 w-3.5" />
-                  <span className="sf-pro-display font-medium">{sets.length} {sets.length === 1 ? "SET" : "SETs"}</span>
+                  <span className="sf-pro-display font-medium">{sets.length} {sets.length === 1 ? "SET" : "SETs"} detected</span>
                 </Badge>
               )}
             </CardTitle>
@@ -114,18 +114,18 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
         {sets.length > 0 && (
           <>
             {isMobile ? (
-              // Mobile: Sheet with button that needs to be pressed to show SET details
-              <div className="flex justify-center mt-4">
+              // Mobile: Button is now inside the page flow rather than floating
+              <div className="mt-4 px-4">
                 <Sheet>
                   <SheetTrigger asChild>
                     <Button 
-                      className="gap-1.5 rounded-full text-sm py-2.5 px-5 
-                      shadow-lg bg-set-purple border-0 hover:bg-set-purple/90 z-10 fixed-bottom-button"
+                      className="w-full gap-1.5 rounded-xl text-sm py-3 px-5 
+                      shadow-md bg-set-purple border-0 hover:bg-set-purple/90"
                       size="sm"
                     >
                       <Sparkles className="h-3.5 w-3.5" />
-                      <span className="font-medium">View {sets.length} SET{sets.length > 1 ? "s" : ""}</span>
-                      <ChevronUp className="h-3.5 w-3.5" />
+                      <span className="font-medium">View {sets.length} SET{sets.length > 1 ? "s" : ""} Details</span>
+                      <ChevronDown className="h-3.5 w-3.5" />
                     </Button>
                   </SheetTrigger>
                   <SheetContent side="bottom" className="rounded-t-xl h-[70vh] pt-6 px-4">

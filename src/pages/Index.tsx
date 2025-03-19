@@ -84,15 +84,15 @@ const Index = () => {
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="max-w-6xl mx-auto px-4 py-5 md:py-6"
+        className="max-w-6xl mx-auto px-4 md:px-4 py-5 md:py-6"
       >
         <motion.div 
-          className="text-center mb-6 md:mb-8"
+          className={`text-center mb-6 ${isMobile ? 'mt-6' : 'md:mb-8'}`}
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-2xl md:text-3xl font-bold mb-2 text-gray-900 sf-pro-display">
+          <h1 className={`${isMobile ? 'text-3xl' : 'text-2xl md:text-3xl'} font-bold mb-2 text-gray-900 sf-pro-display`}>
             SET Game Detector
           </h1>
           <p className="text-muted-foreground mb-3 max-w-lg mx-auto sf-pro-text text-sm md:text-base">
@@ -128,7 +128,7 @@ const Index = () => {
         <div className="max-w-5xl mx-auto">
           {activeTab === "upload" ? (
             <div className="flex flex-col gap-8">
-              <div className="max-w-md mx-auto w-full ios-spacing">
+              <div className={`max-w-md mx-auto w-full ${isMobile ? 'mt-4' : 'ios-spacing'}`}>
                 <ImageUpload 
                   onImageSelected={handleImageSelected}
                   isProcessing={isProcessing}
