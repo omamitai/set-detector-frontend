@@ -2,7 +2,7 @@
 import React, { useState, useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
-import { UploadCloud, X, Camera } from "lucide-react";
+import { UploadCloud, X, Camera, Image as ImageIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -23,6 +23,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const [uploadProgress, setUploadProgress] = useState(0);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -85,7 +86,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     }
   };
 
-  const triggerFileInput = () => {
+  const triggerCameraInput = () => {
+    cameraInputRef.current?.click();
+  };
+
+  const triggerGalleryInput = () => {
     fileInputRef.current?.click();
   };
 
@@ -107,7 +112,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               onDragOver={handleDrag}
               onDrop={handleDrag}
             >
-              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-8 py-12' : 'p-12 py-16'}`}>
+              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-8 py-16' : 'p-12 py-20'}`}>
                 <div className="mb-5">
                   <motion.div 
                     className="flex items-center justify-center gap-3"
@@ -133,22 +138,59 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   {...getInputProps()}
                   accept="image/*"
                   className="hidden"
-                  capture="environment"
                 />
                 
-                <Button 
-                  onClick={triggerFileInput}
-                  className={`purple-button gap-2 mb-6 ${isMobile ? 'text-sm py-3 px-6' : 'text-base py-3.5 px-8'}`}
-                  disabled={isProcessing}
-                >
-                  <Camera className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-                  <span className="sf-pro-display">Upload or Take Photo</span>
-                </Button>
+                <input 
+                  ref={cameraInputRef}
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  className="hidden"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      onDrop([e.target.files[0]]);
+                    }
+                  }}
+                />
                 
-                <div className="flex items-center justify-center gap-1.5 text-sm text-muted-foreground sf-pro-text">
-                  <UploadCloud className="h-4 w-4" />
-                  <span>Or drag and drop image here</span>
-                </div>
+                {isMobile ? (
+                  <div className="flex flex-col w-full space-y-3 px-6">
+                    <Button 
+                      onClick={triggerCameraInput}
+                      className="purple-button gap-2 justify-center py-3.5 w-full"
+                      disabled={isProcessing}
+                    >
+                      <Camera className="h-4 w-4" />
+                      <span className="sf-pro-display">Take Photo</span>
+                    </Button>
+                    
+                    <Button 
+                      onClick={triggerGalleryInput}
+                      className="gap-2 justify-center bg-white border border-gray-200 text-gray-700 py-3.5 hover:bg-gray-50 w-full"
+                      disabled={isProcessing}
+                      variant="outline"
+                    >
+                      <ImageIcon className="h-4 w-4" />
+                      <span className="sf-pro-display">Choose from Gallery</span>
+                    </Button>
+                  </div>
+                ) : (
+                  <Button 
+                    onClick={triggerGalleryInput}
+                    className="purple-button gap-2 mb-6 text-base py-3.5 px-8"
+                    disabled={isProcessing}
+                  >
+                    <UploadCloud className="h-5 w-5" />
+                    <span className="sf-pro-display">Upload Photo</span>
+                  </Button>
+                )}
+                
+                {!isMobile && (
+                  <div className="flex items-center justify-center gap-1.5 text-sm text-muted-foreground sf-pro-text mt-3">
+                    <UploadCloud className="h-4 w-4" />
+                    <span>Or drag and drop image here</span>
+                  </div>
+                )}
               </CardContent>
             </div>
           </motion.div>

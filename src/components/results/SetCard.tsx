@@ -20,7 +20,7 @@ interface SetCardProps {
 }
 
 const SetCard: React.FC<SetCardProps> = ({ set, index }) => {
-  // Colors for badges and card borders
+  // Colors for badges and card borders (simplified and less shiny)
   const setColors = [
     { badge: "bg-[#F8F2FF] text-set-purple border-0", border: "border-set-purple/20" },
     { badge: "bg-[#F0FCFA] text-set-green border-0", border: "border-set-green/20" },
@@ -33,10 +33,10 @@ const SetCard: React.FC<SetCardProps> = ({ set, index }) => {
   const colorSet = setColors[index % setColors.length];
 
   return (
-    <Card className={`ios-card overflow-hidden group transition-all hover:shadow-md hover:-translate-y-1 border ${colorSet.border}`}>
+    <Card className={`overflow-hidden shadow-sm transition-all hover:shadow border ${colorSet.border}`}>
       <CardContent className="p-3">
         <div className="flex items-center justify-between mb-2">
-          <Badge className={`${colorSet.badge} rounded-full px-3 py-0.5 shadow-sm group-hover:shadow`}>
+          <Badge className={`${colorSet.badge} rounded-full px-3 py-0.5 shadow-sm`}>
             Set {index + 1}
           </Badge>
         </div>
@@ -45,7 +45,7 @@ const SetCard: React.FC<SetCardProps> = ({ set, index }) => {
           {set.cards.map((card, cardIndex) => (
             <div
               key={cardIndex}
-              className="border rounded-lg p-1.5 bg-background/50 backdrop-blur-sm hover:bg-white transition-all"
+              className="border rounded-lg p-1.5 bg-background/50 hover:bg-white transition-all"
             >
               <div className="grid grid-cols-2 gap-1">
                 <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap">

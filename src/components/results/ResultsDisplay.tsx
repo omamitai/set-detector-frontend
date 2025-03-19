@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { 
   Download, RefreshCw, Eye, Sparkles, 
-  ChevronDown, ChevronRight, ListFilter, X 
+  ChevronDown, ChevronRight, ListFilter, X, 
+  Camera, Image as ImageIcon
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -68,20 +69,20 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
               </span>
               
               {sets.length > 0 && (
-                <Badge className="bg-gradient-to-r from-set-purple to-set-purple/80 text-white border-0 rounded-full px-3 py-1 shadow-md text-sm inline-flex items-center gap-1.5">
+                <Badge className="bg-set-purple text-white border-0 rounded-full px-3 py-1 shadow-sm text-sm inline-flex items-center gap-1.5">
                   <Sparkles className="h-3.5 w-3.5" />
                   <span className="sf-pro-display font-medium">{sets.length} {sets.length === 1 ? "SET" : "SETs"}</span>
                 </Badge>
               )}
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-3 md:p-4 relative">
+          <CardContent className="p-0 relative">
             {resultImage && (
-              <div className="relative overflow-hidden rounded-md shadow-md">
+              <div className="relative overflow-hidden">
                 <img
                   src={resultImage}
                   alt="Detected sets"
-                  className="w-full h-auto object-contain border border-gray-100 rounded-md max-h-[70vh]"
+                  className="w-full h-auto object-contain max-h-[70vh]"
                 />
                 
                 <div className="absolute bottom-3 right-3 flex gap-2">
@@ -113,16 +114,16 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
         {sets.length > 0 && (
           <>
             {isMobile ? (
-              // Mobile: Use Sheet from the bottom with improved styling
+              // Mobile: Sheet with improved styling
               <Sheet>
                 <SheetTrigger asChild>
                   <Button 
                     className="fixed bottom-6 left-1/2 transform -translate-x-1/2 gap-1.5 rounded-full text-sm py-2.5 px-5 
-                    shadow-lg bg-gradient-to-r from-set-purple to-set-purple/90 border-0 hover:shadow-xl z-10"
+                    shadow-lg bg-set-purple border-0 hover:bg-set-purple/90 z-10"
                     size="sm"
                   >
-                    <ListFilter className="h-3.5 w-3.5" />
-                    <span className="font-medium">View Sets</span>
+                    <Sparkles className="h-3.5 w-3.5" />
+                    <span className="font-medium">{sets.length} SET{sets.length > 1 ? "s" : ""} Found</span>
                     <ChevronUp className="h-3.5 w-3.5" />
                   </Button>
                 </SheetTrigger>
@@ -132,7 +133,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                       <Sparkles className="h-4 w-4 text-primary" />
                       SET Details
                     </h3>
-                    <Badge className="bg-primary/10 text-primary">
+                    <Badge variant="outline" className="bg-set-purple/10 text-set-purple border-set-purple/20">
                       {sets.length} Set{sets.length > 1 ? "s" : ""}
                     </Badge>
                   </div>
@@ -148,73 +149,41 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                 </SheetContent>
               </Sheet>
             ) : (
-              // Desktop: Use expandable panel
+              // Desktop: Improved panel with less shine and more stability
               <div className="mt-4">
-                <motion.div 
-                  initial={false}
-                  animate={isSetDetailsOpen ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="overflow-hidden"
-                >
-                  <Card className="ios-card mt-4 mb-2">
-                    <CardHeader className="p-3 md:p-4 pb-0">
-                      <CardTitle className="text-base md:text-lg sf-pro-display flex items-center justify-between">
-                        <span className="flex items-center">
-                          <Sparkles className="h-4 w-4 text-primary mr-2" />
-                          SET Details
-                        </span>
-                        
-                        {sets.length > 2 && (
-                          <Badge variant="outline" className="text-xs flex items-center gap-1 bg-gray-50 border-gray-100">
-                            <ChevronDown className="h-3 w-3" />
-                            <span>Scroll for more</span>
-                          </Badge>
-                        )}
+                <Card className="ios-card border border-gray-100 shadow-sm hover:shadow-sm">
+                  <CardHeader className="p-3 md:p-4 pb-2 border-b border-gray-50">
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-base md:text-lg sf-pro-display flex items-center">
+                        <Sparkles className="h-4 w-4 text-set-purple mr-2" />
+                        SET Details
                       </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-3 md:p-4 pt-3 relative">
-                      <ScrollArea className="h-[340px]">
-                        <div className="space-y-3 pr-2">
-                          {sets.map((set, index) => (
-                            <SetCard key={index} set={set} index={index} />
-                          ))}
-                        </div>
-                        <ScrollBar />
-                      </ScrollArea>
                       
-                      {sets.length > 2 && (
-                        <motion.div 
-                          className="absolute bottom-1 left-0 right-0 flex justify-center pointer-events-none"
-                          animate={{ opacity: [0.5, 1, 0.5], y: [0, 5, 0] }}
-                          transition={{ repeat: Infinity, duration: 2 }}
-                        >
-                          <ChevronDown className="h-4 w-4 text-gray-400" />
-                        </motion.div>
-                      )}
-                    </CardContent>
-                  </Card>
-                </motion.div>
-                
-                <Button 
-                  onClick={() => setIsSetDetailsOpen(!isSetDetailsOpen)} 
-                  className={`flex items-center gap-1.5 mx-auto mt-2 text-sm rounded-full py-2 px-5 
-                  ${isSetDetailsOpen ? 'bg-gray-100 hover:bg-gray-200 text-gray-700' : 'bg-gradient-to-r from-set-purple to-set-purple/90 text-white'}
-                  transition-all shadow-md hover:shadow-lg`}
-                  size="sm"
-                >
-                  {isSetDetailsOpen ? (
-                    <>
-                      <X className="h-3.5 w-3.5" />
-                      <span>Hide SET Details</span>
-                    </>
-                  ) : (
-                    <>
-                      <ListFilter className="h-3.5 w-3.5" />
-                      <span>View {sets.length} SET Details</span>
-                      <ChevronDown className="h-3.5 w-3.5" />
-                    </>
-                  )}
-                </Button>
+                      <Badge variant="outline" className="bg-set-purple/10 text-set-purple border-set-purple/20">
+                        {sets.length} Set{sets.length > 1 ? "s" : ""}
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="p-3 md:p-4 pt-3 relative">
+                    <ScrollArea className="h-[340px]">
+                      <div className="space-y-3 pr-2">
+                        {sets.map((set, index) => (
+                          <SetCard key={index} set={set} index={index} />
+                        ))}
+                      </div>
+                      <ScrollBar />
+                    </ScrollArea>
+                    
+                    {sets.length > 2 && (
+                      <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none bg-gradient-to-t from-white via-white/80 to-transparent flex items-center justify-center">
+                        <Badge variant="outline" className="bg-background text-xs flex items-center gap-1 shadow-sm pointer-events-auto">
+                          <ChevronDown className="h-3 w-3" />
+                          <span>Scroll to see more sets</span>
+                        </Badge>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
               </div>
             )}
           </>
