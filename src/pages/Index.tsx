@@ -6,7 +6,7 @@ import ResultsDisplay from "@/components/results/ResultsDisplay";
 import HowItWorks from "@/components/info/HowItWorks";
 import { detectSets } from "@/services/api";
 import { toast } from "sonner";
-import { AlertCircle, RefreshCw } from "lucide-react";
+import { AlertCircle, RefreshCw, AlertTriangle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -54,9 +54,18 @@ const Index = () => {
       }
     } catch (error) {
       console.error("Error processing image:", error);
-      setError(error instanceof Error ? error.message : "We couldn't process your image. Please try again with a clearer photo.");
+      
+      // Check if the error contains "No cards detected"
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      
+      if (errorMessage.includes("No cards detected")) {
+        setError("We couldn't detect any SET cards in your image. Please try taking a clearer picture with good lighting.");
+      } else {
+        setError(errorMessage);
+      }
+      
       toast.error("Failed to process image", {
-        description: error instanceof Error ? error.message : "Please try again."
+        description: "Please try again with a clearer photo."
       });
     } finally {
       setIsProcessing(false);
@@ -92,16 +101,16 @@ const Index = () => {
         </motion.div>
         
         {error && (
-          <Alert variant="destructive" className="mb-5 max-w-md mx-auto">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription className="flex flex-col gap-3">
+          <Alert variant="destructive" className="mb-5 max-w-md mx-auto bg-orange-50 border-orange-100 text-orange-800">
+            <AlertTriangle className="h-4 w-4 text-orange-500" />
+            <AlertTitle className="text-orange-700">No SET Cards Detected</AlertTitle>
+            <AlertDescription className="flex flex-col gap-3 text-orange-600">
               <span>{error}</span>
               <Button 
                 variant="outline" 
                 size="sm" 
                 onClick={handleReset} 
-                className="self-end flex items-center gap-1"
+                className="self-end flex items-center gap-1 border-orange-200 text-orange-700 hover:bg-orange-100"
               >
                 <RefreshCw className="h-3 w-3" />
                 Try again
@@ -112,7 +121,7 @@ const Index = () => {
         
         <div className="max-w-5xl mx-auto">
           {activeTab === "upload" ? (
-            <div className="flex flex-col gap-6 md:gap-12">
+            <div className="flex flex-col gap-6">
               <div className="max-w-md mx-auto w-full">
                 <ImageUpload 
                   onImageSelected={handleImageSelected}
@@ -120,19 +129,19 @@ const Index = () => {
                 />
               </div>
               
-              <div className="mt-6 md:mt-8 w-full">
+              <div className="mt-4 md:mt-6 w-full">
                 <HowItWorks />
               </div>
             </div>
           ) : (
-            <div className="space-y-6 md:space-y-8">
+            <div className="space-y-6">
               <ResultsDisplay
                 resultImage={resultImage}
                 sets={detectedSets}
                 onReset={handleReset}
               />
               
-              <div className="mt-4 md:mt-6">
+              <div className="mt-4 md:mt-5">
                 <HowItWorks />
               </div>
             </div>

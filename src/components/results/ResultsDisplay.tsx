@@ -2,9 +2,9 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Download, RefreshCw, Eye, Sparkles } from "lucide-react";
+import { Download, RefreshCw, Eye, Sparkles, MousePointerClick, ChevronDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { motion } from "framer-motion";
 import SetCard from "./SetCard";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -53,6 +53,15 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
       transition={{ duration: 0.4 }}
       className="space-y-4 md:space-y-6"
     >
+      {sets.length > 0 && (
+        <div className="text-center mb-2">
+          <Badge className="bg-gradient-to-r from-set-purple to-set-purple/80 text-white border-0 rounded-full px-4 py-1 shadow-md text-sm inline-flex items-center gap-1.5">
+            <Sparkles className="h-3.5 w-3.5" />
+            <span className="sf-pro-display font-medium">{sets.length} {sets.length === 1 ? "SET" : "SETs"} found!</span>
+          </Badge>
+        </div>
+      )}
+      
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
         <div className="md:col-span-7">
           <Card className="ios-card overflow-hidden">
@@ -62,9 +71,6 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                   <Eye className="h-4 w-4 text-primary mr-2" />
                   Results
                 </span>
-                <Badge className="bg-[#F8F2FF] text-set-purple dark:bg-[#2A1E38] border-0 rounded-full px-2 py-0.5 md:px-3 md:py-1 shadow-sm text-xs">
-                  {sets.length} {sets.length === 1 ? "set" : "sets"} found
-                </Badge>
               </CardTitle>
             </CardHeader>
             <CardContent className="p-3 md:p-4">
@@ -73,7 +79,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                   <img
                     src={resultImage}
                     alt="Detected sets"
-                    className="w-full h-auto object-contain border border-gray-100 rounded-md"
+                    className="w-full h-auto object-contain border border-gray-100 rounded-md max-h-[calc(100vh-350px)]"
                   />
                   
                   <div className="absolute bottom-3 right-3 flex gap-2">
@@ -106,31 +112,59 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
         <div className="md:col-span-5">
           <Card className="ios-card h-full">
             <CardHeader className="p-3 md:p-4 pb-0">
-              <CardTitle className="text-base md:text-lg sf-pro-display flex items-center">
-                <Sparkles className="h-4 w-4 text-primary mr-2" />
-                SET Details
+              <CardTitle className="text-base md:text-lg sf-pro-display flex items-center justify-between">
+                <span className="flex items-center">
+                  <Sparkles className="h-4 w-4 text-primary mr-2" />
+                  SET Details
+                </span>
+                
+                {sets.length > 2 && (
+                  <Badge variant="outline" className="text-xs flex items-center gap-1 bg-gray-50 border-gray-100">
+                    <ChevronDown className="h-3 w-3" />
+                    <span>Scroll for more</span>
+                  </Badge>
+                )}
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-3 md:p-4 pt-3">
+            <CardContent className="p-3 md:p-4 pt-3 relative">
               {sets.length > 0 ? (
-                <ScrollArea className={isMobile ? "h-[300px]" : "h-[400px]"}>
-                  <div className="space-y-3 pr-2">
-                    {sets.map((set, index) => (
-                      <SetCard key={index} set={set} index={index} />
-                    ))}
-                  </div>
-                </ScrollArea>
+                <>
+                  <ScrollArea className={isMobile ? "h-[280px]" : "h-[340px]"}>
+                    <div className="space-y-3 pr-2">
+                      {sets.map((set, index) => (
+                        <SetCard key={index} set={set} index={index} />
+                      ))}
+                    </div>
+                    <ScrollBar />
+                  </ScrollArea>
+                  
+                  {sets.length > 2 && (
+                    <motion.div 
+                      className="absolute bottom-1 left-0 right-0 flex justify-center pointer-events-none"
+                      animate={{ opacity: [0.5, 1, 0.5], y: [0, 5, 0] }}
+                      transition={{ repeat: Infinity, duration: 2 }}
+                    >
+                      <ChevronDown className="h-4 w-4 text-gray-400" />
+                    </motion.div>
+                  )}
+                </>
               ) : (
-                <div className="flex flex-col items-center justify-center h-[150px] md:h-[200px] text-center">
-                  <div className="text-muted-foreground mb-2">
-                    <svg className="w-10 h-10 md:w-12 md:h-12 mx-auto" viewBox="0 0 24 24" fill="none">
-                      <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M12 15.5C14.2091 15.5 16 13.7091 16 11.5C16 9.29086 14.2091 7.5 12 7.5C9.79086 7.5 8 9.29086 8 11.5C8 13.7091 9.79086 15.5 12 15.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                <div className="flex flex-col items-center justify-center h-[150px] md:h-[200px] text-center p-4">
+                  <div className="bg-orange-50 border border-orange-100 rounded-xl p-4 shadow-sm w-full max-w-sm">
+                    <div className="text-orange-500 mb-2">
+                      <svg className="w-8 h-8 mx-auto" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M12 8V13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M11.995 16H12.004" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                    <p className="text-gray-700 sf-pro-text text-sm font-medium">
+                      No SET cards detected
+                    </p>
+                    <p className="text-gray-500 sf-pro-text text-xs mt-1">
+                      Please try taking a clearer picture of your SET game board
+                    </p>
                   </div>
-                  <p className="text-muted-foreground sf-pro-text text-sm">
-                    No valid SETs found in this image
-                  </p>
                 </div>
               )}
             </CardContent>
