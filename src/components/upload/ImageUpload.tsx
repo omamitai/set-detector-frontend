@@ -107,16 +107,16 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               onDragOver={handleDrag}
               onDrop={handleDrag}
             >
-              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-8 py-10' : 'p-10 py-14'}`}>
-                <div className="mb-4">
+              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-8 py-12' : 'p-12 py-16'}`}>
+                <div className="mb-5">
                   <motion.div 
-                    className="flex items-center justify-center gap-2"
+                    className="flex items-center justify-center gap-3"
                     animate={{ y: [0, -5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    <div className="text-set-purple text-2xl">◇</div>
-                    <div className="text-set-red text-2xl">○</div>
-                    <div className="text-set-green text-2xl">△</div>
+                    <div className="text-set-purple text-3xl">◇</div>
+                    <div className="text-set-red text-3xl">○</div>
+                    <div className="text-set-green text-3xl">△</div>
                   </motion.div>
                 </div>
                 
@@ -138,7 +138,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 
                 <Button 
                   onClick={triggerFileInput}
-                  className={`purple-button gap-2 mb-6 ${isMobile ? 'text-sm py-3 px-6' : 'text-base py-3 px-7'}`}
+                  className={`purple-button gap-2 mb-6 ${isMobile ? 'text-sm py-3 px-6' : 'text-base py-3.5 px-8'}`}
                   disabled={isProcessing}
                 >
                   <Camera className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />

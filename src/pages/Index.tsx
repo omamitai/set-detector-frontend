@@ -147,7 +147,7 @@ const Index = () => {
                 onReset={handleReset}
               />
               
-              <div className="mt-8 md:mt-10">
+              <div className="mt-8 md:mt-10 pb-16">
                 <HowItWorks />
               </div>
             </div>

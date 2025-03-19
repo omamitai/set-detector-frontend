@@ -48,16 +48,16 @@ const SetCard: React.FC<SetCardProps> = ({ set, index }) => {
               className="border rounded-lg p-1.5 bg-background/50 backdrop-blur-sm hover:bg-white transition-all"
             >
               <div className="grid grid-cols-2 gap-1">
-                <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap capitalize">
+                <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap">
                   {card.Count}
                 </Badge>
-                <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap capitalize">
+                <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap">
                   {card.Shape}
                 </Badge>
-                <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap capitalize">
+                <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap">
                   {card.Color}
                 </Badge>
-                <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap capitalize">
+                <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap">
                   {card.Fill}
                 </Badge>
               </div>

@@ -58,15 +58,6 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
       transition={{ duration: 0.4 }}
       className="space-y-4 md:space-y-6"
     >
-      {sets.length > 0 && (
-        <div className="text-center mb-4">
-          <Badge className="bg-gradient-to-r from-set-purple to-set-purple/80 text-white border-0 rounded-full px-5 py-1.5 shadow-md text-sm inline-flex items-center gap-1.5">
-            <Sparkles className="h-3.5 w-3.5" />
-            <span className="sf-pro-display font-medium">{sets.length} {sets.length === 1 ? "SET" : "SETs"} found!</span>
-          </Badge>
-        </div>
-      )}
-      
       <div className="relative">
         <Card className="ios-card overflow-hidden">
           <CardHeader className="p-3 md:p-4 pb-0">
@@ -75,6 +66,13 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                 <Eye className="h-4 w-4 text-primary mr-2" />
                 Results
               </span>
+              
+              {sets.length > 0 && (
+                <Badge className="bg-gradient-to-r from-set-purple to-set-purple/80 text-white border-0 rounded-full px-3 py-1 shadow-md text-sm inline-flex items-center gap-1.5">
+                  <Sparkles className="h-3.5 w-3.5" />
+                  <span className="sf-pro-display font-medium">{sets.length} {sets.length === 1 ? "SET" : "SETs"}</span>
+                </Badge>
+              )}
             </CardTitle>
           </CardHeader>
           <CardContent className="p-3 md:p-4 relative">
@@ -83,7 +81,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                 <img
                   src={resultImage}
                   alt="Detected sets"
-                  className="w-full h-auto object-contain border border-gray-100 rounded-md max-h-[calc(100vh-350px)]"
+                  className="w-full h-auto object-contain border border-gray-100 rounded-md max-h-[70vh]"
                 />
                 
                 <div className="absolute bottom-3 right-3 flex gap-2">
@@ -115,15 +113,16 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
         {sets.length > 0 && (
           <>
             {isMobile ? (
-              // Mobile: Use Sheet from the bottom
+              // Mobile: Use Sheet from the bottom with improved styling
               <Sheet>
                 <SheetTrigger asChild>
                   <Button 
-                    className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 gap-1.5 rounded-full text-sm py-2 px-5 shadow-lg bg-gradient-to-r from-set-purple to-set-purple/90 border-0 hover:shadow-xl hover:-translate-y-1"
+                    className="fixed bottom-6 left-1/2 transform -translate-x-1/2 gap-1.5 rounded-full text-sm py-2.5 px-5 
+                    shadow-lg bg-gradient-to-r from-set-purple to-set-purple/90 border-0 hover:shadow-xl z-10"
                     size="sm"
                   >
                     <ListFilter className="h-3.5 w-3.5" />
-                    <span className="font-medium">View {sets.length} SET Details</span>
+                    <span className="font-medium">View Sets</span>
                     <ChevronUp className="h-3.5 w-3.5" />
                   </Button>
                 </SheetTrigger>
@@ -139,7 +138,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                   </div>
                   
                   <ScrollArea className="h-[calc(70vh-100px)]">
-                    <div className="space-y-3 pr-2">
+                    <div className="space-y-3 pr-2 pb-4">
                       {sets.map((set, index) => (
                         <SetCard key={index} set={set} index={index} />
                       ))}
@@ -246,7 +245,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
   );
 };
 
-// Missing ChevronUp component
+// ChevronUp component
 const ChevronUp = (props: any) => (
   <svg
     {...props}
