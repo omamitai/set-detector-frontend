@@ -92,6 +92,17 @@
     transform: translateY(-2px);
   }
   
+  /* iOS-specific spacing and styling */
+  .ios-spacing {
+    padding-top: max(16px, env(safe-area-inset-top, 16px));
+    margin-top: 16px;
+  }
+  
+  .ios-button {
+    border-radius: 16px;
+    padding: 14px 20px;
+  }
+  
   /* Mobile optimizations */
   @media (max-width: 640px) {
     .mobile-safe-area {
@@ -184,7 +195,7 @@
   }
 }
 
-/* Improvements for mobile */
+/* iOS optimizations */
 @media (max-width: 640px) {
   html, body {
     overflow-x: hidden;
@@ -200,11 +211,17 @@
   
   /* Fixed button spacing correction */
   body {
-    padding-bottom: env(safe-area-inset-bottom, 70px);
+    padding-bottom: env(safe-area-inset-bottom, 80px);
   }
   
   /* Prevent overlapping content */
   .has-bottom-sheet {
-    padding-bottom: 70px;
+    padding-bottom: 80px;
+  }
+  
+  /* Add more space at the bottom for iOS devices */
+  .ios-bottom-space {
+    margin-bottom: env(safe-area-inset-bottom, 24px);
+    padding-bottom: env(safe-area-inset-bottom, 24px);
   }
 }

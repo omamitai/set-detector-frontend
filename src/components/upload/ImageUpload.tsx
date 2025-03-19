@@ -23,7 +23,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const [uploadProgress, setUploadProgress] = useState(0);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const cameraInputRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -86,11 +85,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     }
   };
 
-  const triggerCameraInput = () => {
-    cameraInputRef.current?.click();
-  };
-
-  const triggerGalleryInput = () => {
+  const triggerFileInput = () => {
     fileInputRef.current?.click();
   };
 
@@ -112,8 +107,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               onDragOver={handleDrag}
               onDrop={handleDrag}
             >
-              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-8 py-16' : 'p-12 py-20'}`}>
-                <div className="mb-5">
+              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-8 py-20' : 'p-12 py-24'}`}>
+                <div className="mb-6">
                   <motion.div 
                     className="flex items-center justify-center gap-3"
                     animate={{ y: [0, -5, 0] }}
@@ -125,7 +120,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   </motion.div>
                 </div>
                 
-                <h3 className={`sf-pro-display ${isMobile ? 'text-lg' : 'text-xl'} font-medium mb-3 text-gray-900`}>
+                <h3 className={`sf-pro-display ${isMobile ? 'text-xl' : 'text-2xl'} font-medium mb-3 text-gray-900`}>
                   {isDragActive ? "Drop your SET game photo here" : "Upload SET game photo"}
                 </h3>
                 <p className={`sf-pro-text ${isMobile ? 'text-sm' : 'text-base'} text-muted-foreground mb-8 text-center max-w-sm`}>
@@ -140,43 +135,20 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   className="hidden"
                 />
                 
-                <input 
-                  ref={cameraInputRef}
-                  type="file"
-                  accept="image/*"
-                  capture="environment"
-                  className="hidden"
-                  onChange={(e) => {
-                    if (e.target.files && e.target.files[0]) {
-                      onDrop([e.target.files[0]]);
-                    }
-                  }}
-                />
-                
                 {isMobile ? (
                   <div className="flex flex-col w-full space-y-3 px-6">
                     <Button 
-                      onClick={triggerCameraInput}
-                      className="purple-button gap-2 justify-center py-3.5 w-full"
+                      onClick={triggerFileInput}
+                      className="purple-button gap-2 justify-center py-4 w-full text-base ios-button"
                       disabled={isProcessing}
                     >
-                      <Camera className="h-4 w-4" />
-                      <span className="sf-pro-display">Take Photo</span>
-                    </Button>
-                    
-                    <Button 
-                      onClick={triggerGalleryInput}
-                      className="gap-2 justify-center bg-white border border-gray-200 text-gray-700 py-3.5 hover:bg-gray-50 w-full"
-                      disabled={isProcessing}
-                      variant="outline"
-                    >
-                      <ImageIcon className="h-4 w-4" />
-                      <span className="sf-pro-display">Choose from Gallery</span>
+                      <Camera className="h-5 w-5" />
+                      <span className="sf-pro-display">Choose Photo</span>
                     </Button>
                   </div>
                 ) : (
                   <Button 
-                    onClick={triggerGalleryInput}
+                    onClick={triggerFileInput}
                     className="purple-button gap-2 mb-6 text-base py-3.5 px-8"
                     disabled={isProcessing}
                   >
