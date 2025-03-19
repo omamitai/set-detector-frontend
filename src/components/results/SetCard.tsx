@@ -47,23 +47,19 @@ const SetCard: React.FC<SetCardProps> = ({ set, index }) => {
               key={cardIndex}
               className="border rounded-lg p-1.5 bg-background/50 backdrop-blur-sm hover:bg-white transition-all"
             >
-              <div className="flex flex-col gap-1">
-                <div className="flex items-center gap-1 mb-1">
-                  <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap">
-                    {card.Count}
-                  </Badge>
-                  <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap capitalize">
-                    {card.Shape}
-                  </Badge>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap capitalize">
-                    {card.Color}
-                  </Badge>
-                  <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap capitalize">
-                    {card.Fill}
-                  </Badge>
-                </div>
+              <div className="grid grid-cols-2 gap-1">
+                <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap capitalize">
+                  {card.Count}
+                </Badge>
+                <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap capitalize">
+                  {card.Shape}
+                </Badge>
+                <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap capitalize">
+                  {card.Color}
+                </Badge>
+                <Badge variant="outline" className="text-xs h-5 flex items-center justify-center bg-gray-50/80 whitespace-nowrap capitalize">
+                  {card.Fill}
+                </Badge>
               </div>
             </div>
           ))}

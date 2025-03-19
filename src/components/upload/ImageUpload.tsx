@@ -107,23 +107,23 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               onDragOver={handleDrag}
               onDrop={handleDrag}
             >
-              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-6' : 'p-8'}`}>
-                <div className="mb-3">
+              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-8 py-10' : 'p-10 py-14'}`}>
+                <div className="mb-4">
                   <motion.div 
-                    className="flex items-center justify-center gap-1"
+                    className="flex items-center justify-center gap-2"
                     animate={{ y: [0, -5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    <div className="text-set-purple text-xl">◇</div>
-                    <div className="text-set-red text-xl">○</div>
-                    <div className="text-set-green text-xl">△</div>
+                    <div className="text-set-purple text-2xl">◇</div>
+                    <div className="text-set-red text-2xl">○</div>
+                    <div className="text-set-green text-2xl">△</div>
                   </motion.div>
                 </div>
                 
-                <h3 className={`sf-pro-display ${isMobile ? 'text-base' : 'text-lg'} font-medium mb-2 text-gray-900`}>
+                <h3 className={`sf-pro-display ${isMobile ? 'text-lg' : 'text-xl'} font-medium mb-3 text-gray-900`}>
                   {isDragActive ? "Drop your SET game photo here" : "Upload SET game photo"}
                 </h3>
-                <p className={`sf-pro-text ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground mb-6 text-center max-w-sm`}>
+                <p className={`sf-pro-text ${isMobile ? 'text-sm' : 'text-base'} text-muted-foreground mb-8 text-center max-w-sm`}>
                   Take a clear, well-lit photo of the cards from directly above for the best detection results
                 </p>
                 
@@ -138,15 +138,15 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 
                 <Button 
                   onClick={triggerFileInput}
-                  className={`purple-button gap-2 mb-4 ${isMobile ? 'text-sm py-2.5' : ''}`}
+                  className={`purple-button gap-2 mb-6 ${isMobile ? 'text-sm py-3 px-6' : 'text-base py-3 px-7'}`}
                   disabled={isProcessing}
                 >
-                  <Camera className={`${isMobile ? 'h-3.5 w-3.5' : 'h-4 w-4'}`} />
+                  <Camera className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
                   <span className="sf-pro-display">Upload or Take Photo</span>
                 </Button>
                 
-                <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground sf-pro-text">
-                  <UploadCloud className="h-3 w-3" />
+                <div className="flex items-center justify-center gap-1.5 text-sm text-muted-foreground sf-pro-text">
+                  <UploadCloud className="h-4 w-4" />
                   <span>Or drag and drop image here</span>
                 </div>
               </CardContent>
