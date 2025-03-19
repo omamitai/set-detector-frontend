@@ -18,22 +18,34 @@ interface DetectionResult {
   resultImage: string;
 }
 
-// Backend API response structure
-interface BackendResponse {
-  image_base64: string;
-  sets_found: number[][];
-  card_features: {
-    [position: string]: {
+// Railway API response structure (matches our backend)
+interface RailwayApiResponse {
+  image: string;  // Base64 encoded image
+  sets_found: Array<{
+    set_id: number;
+    cards: Array<{
+      position: number;
+      features: {
+        number: string;
+        color: string;
+        shape: string;
+        shading: string;
+      }
+    }>
+  }>;
+  all_cards: Array<{
+    position: number;
+    features: {
       number: string;
       color: string;
       shape: string;
       shading: string;
     }
-  };
+  }>;
 }
 
-// The Render.com API endpoint
-const API_ENDPOINT = "https://set-detector-api.onrender.com/api/process";
+// The Railway.app API endpoint
+const API_ENDPOINT = "https://set-game-api-production.up.railway.app/api/detect";
 const MAX_RETRIES = 3;
 const INITIAL_TIMEOUT = 60000; // 60 seconds
 
@@ -63,7 +75,9 @@ export async function detectSets(image: File): Promise<DetectionResult> {
       const response = await fetch(API_ENDPOINT, {
         method: "POST",
         body: formData,
-        signal: controller.signal
+        signal: controller.signal,
+        // Don't include credentials with wildcard CORS
+        credentials: 'omit'
       });
       
       clearTimeout(timeoutId);
@@ -84,32 +98,31 @@ export async function detectSets(image: File): Promise<DetectionResult> {
       }
       
       // Process successful response
-      const data = await response.json() as BackendResponse;
+      const data = await response.json() as RailwayApiResponse;
       
       // Check if we got the expected data
-      if (!data.image_base64 || !data.sets_found || !data.card_features) {
+      if (!data.image || !data.sets_found) {
         throw new Error("Invalid response format from API. Missing required fields.");
       }
       
-      // Transform the backend response into the format expected by the frontend
+      // Transform the Railway API response into the format expected by the frontend
       return {
-        sets: data.sets_found.map((setIndices: number[]) => {
+        sets: data.sets_found.map((setInfo) => {
           return {
-            set_indices: setIndices,
-            cards: setIndices.map((position) => {
-              const cardFeatures = data.card_features[position.toString()];
+            set_indices: setInfo.cards.map(card => card.position),
+            cards: setInfo.cards.map((card) => {
               return {
-                Count: parseInt(cardFeatures.number),
-                Color: cardFeatures.color,
-                Fill: cardFeatures.shading,
-                Shape: cardFeatures.shape,
+                Count: parseInt(card.features.number),
+                Color: card.features.color,
+                Fill: card.features.shading,
+                Shape: card.features.shape,
                 // Use default coordinates since backend doesn't provide them
                 Coordinates: [0, 0, 100, 100]
               };
             })
           };
         }),
-        resultImage: `data:image/jpeg;base64,${data.image_base64}`
+        resultImage: `data:image/jpeg;base64,${data.image}`
       };
       
     } catch (error) {
@@ -119,8 +132,8 @@ export async function detectSets(image: File): Promise<DetectionResult> {
       // Handle specific error types
       if (error instanceof DOMException && error.name === "AbortError") {
         lastError = new Error(`Request timed out after ${INITIAL_TIMEOUT + (retryCount * 15000)}ms. The server is taking longer than expected to respond.`);
-      } else if (error instanceof TypeError && error.message.includes("NetworkError")) {
-        lastError = new Error("Network error. Please check your internet connection and try again.");
+      } else if (error instanceof TypeError && error.message.includes("NetworkError") || error.message.includes("Failed to fetch")) {
+        lastError = new Error("Network error. This might be a CORS issue or connection problem. Please check your browser console for details.");
       }
       
       // Increment retry counter
