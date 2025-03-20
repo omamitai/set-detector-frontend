@@ -1,17 +1,13 @@
-import React, { useState } from "react";
+
+import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { 
-  Download, RefreshCw, Eye, Sparkles, 
-  ChevronDown, ChevronRight, ListFilter, X, 
-  Camera, Image as ImageIcon
+  Download, RefreshCw, Eye, Sparkles, Image as ImageIcon
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { motion, AnimatePresence } from "framer-motion";
-import SetCard from "./SetCard";
+import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 interface SetCard {
   Count: number;
@@ -38,7 +34,6 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
   onReset,
 }) => {
   const isMobile = useIsMobile();
-  const [showSetDetails, setShowSetDetails] = useState(false);
   
   const downloadImage = () => {
     if (!resultImage) return;
@@ -67,7 +62,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                 Results
               </span>
               
-              {sets.length > 0 && (
+              {sets.length > 0 && !isMobile && (
                 <Badge className="bg-set-purple text-white border-0 rounded-full px-3 py-1 shadow-sm text-sm inline-flex items-center gap-1.5">
                   <Sparkles className="h-3.5 w-3.5" />
                   <span className="sf-pro-display font-medium">{sets.length} {sets.length === 1 ? "SET" : "SETs"} detected</span>
@@ -81,7 +76,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                 <img
                   src={resultImage}
                   alt="Detected sets"
-                  className={`w-full h-auto object-contain max-h-[70vh] ${isMobile ? 'px-1 py-2' : ''}`}
+                  className={`w-full h-auto object-contain max-h-[70vh] ${isMobile ? 'p-3' : 'p-4'}`}
                 />
                 
                 <div className="absolute bottom-3 right-3 flex gap-2">
@@ -110,87 +105,18 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
           </CardContent>
         </Card>
         
-        {sets.length > 0 && (
-          <>
-            {isMobile ? (
-              // Mobile: Show only SET count badge in a more prominent position
-              <div className="mt-4 px-2">
-                <Card className="ios-card border-0 shadow-sm">
-                  <CardContent className="p-3">
-                    <div className="flex items-center justify-center">
-                      <Badge 
-                        className="bg-set-purple/95 text-white border-0 rounded-xl px-4 py-2 
-                                text-sm shadow-md w-full justify-center"
-                      >
-                        <Sparkles className="h-4 w-4 mr-2" />
-                        <span className="sf-pro-display font-medium">
-                          {sets.length} {sets.length === 1 ? "SET" : "SETs"} detected
-                        </span>
-                      </Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            ) : (
-              // Desktop: Button to show/hide SET details panel
-              <div className="mt-4">
-                <Button
-                  variant="outline"
-                  onClick={() => setShowSetDetails(!showSetDetails)}
-                  className="w-full py-3 mb-2 border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 gap-2 ios-card"
-                >
-                  <Sparkles className="h-4 w-4 text-set-purple" />
-                  <span>{showSetDetails ? "Hide" : "View"} SET Details</span>
-                  {showSetDetails ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-                </Button>
-                
-                <AnimatePresence>
-                  {showSetDetails && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Card className="ios-card border border-gray-100 shadow-sm hover:shadow-sm overflow-hidden">
-                        <CardHeader className="p-3 md:p-4 pb-2 border-b border-gray-50">
-                          <div className="flex items-center justify-between">
-                            <CardTitle className="text-base md:text-lg sf-pro-display flex items-center">
-                              <Sparkles className="h-4 w-4 text-set-purple mr-2" />
-                              SET Details
-                            </CardTitle>
-                            
-                            <Badge variant="outline" className="bg-set-purple/10 text-set-purple border-set-purple/20">
-                              {sets.length} Set{sets.length > 1 ? "s" : ""}
-                            </Badge>
-                          </div>
-                        </CardHeader>
-                        <CardContent className="p-3 md:p-4 pt-3 relative">
-                          <ScrollArea className="h-[340px]">
-                            <div className="space-y-3 pr-2">
-                              {sets.map((set, index) => (
-                                <SetCard key={index} set={set} index={index} />
-                              ))}
-                            </div>
-                            <ScrollBar />
-                          </ScrollArea>
-                          
-                          {sets.length > 2 && (
-                            <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none bg-gradient-to-t from-white via-white/80 to-transparent flex items-center justify-center">
-                              <Badge variant="outline" className="bg-background text-xs flex items-center gap-1 shadow-sm pointer-events-auto">
-                                <ChevronDown className="h-3 w-3" />
-                                <span>Scroll to see more sets</span>
-                              </Badge>
-                            </div>
-                          )}
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            )}
-          </>
+        {sets.length > 0 && isMobile && (
+          <div className="mt-4 px-1">
+            <Badge 
+              className="bg-set-purple/95 text-white border-0 rounded-xl px-4 py-2.5 
+                      text-sm shadow-md w-full justify-center flex items-center"
+            >
+              <Sparkles className="h-4 w-4 mr-2" />
+              <span className="sf-pro-display font-medium">
+                {sets.length} {sets.length === 1 ? "SET" : "SETs"} detected
+              </span>
+            </Badge>
+          </div>
         )}
       </div>
       
@@ -216,22 +142,5 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
     </motion.div>
   );
 };
-
-const ChevronUp = (props: any) => (
-  <svg
-    {...props}
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="m18 15-6-6-6 6" />
-  </svg>
-);
 
 export default ResultsDisplay;

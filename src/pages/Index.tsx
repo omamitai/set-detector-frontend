@@ -6,7 +6,7 @@ import ResultsDisplay from "@/components/results/ResultsDisplay";
 import HowItWorks from "@/components/info/HowItWorks";
 import { detectSets } from "@/services/api";
 import { toast } from "sonner";
-import { AlertCircle, RefreshCw, AlertTriangle, Camera } from "lucide-react";
+import { AlertCircle, RefreshCw, AlertTriangle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -84,15 +84,15 @@ const Index = () => {
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="max-w-6xl mx-auto px-4 md:px-4 py-5 md:py-6"
+        className="max-w-6xl mx-auto px-4 md:px-6 py-5 md:py-6"
       >
         <motion.div 
-          className={`text-center mb-6 ${isMobile ? 'mt-8' : 'md:mb-8'}`}
+          className={`text-center mb-6 ${isMobile ? 'mt-10 mb-8' : 'md:mb-8'}`}
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className={`${isMobile ? 'text-4xl' : 'text-2xl md:text-3xl'} font-bold mb-3 text-gray-900 sf-pro-display`}>
+          <h1 className={`${isMobile ? 'text-5xl' : 'text-3xl md:text-4xl'} font-bold mb-3 text-gray-900 sf-pro-display`}>
             SET Game Detector
           </h1>
           <p className="text-muted-foreground mb-4 max-w-lg mx-auto sf-pro-text text-sm md:text-base">
@@ -147,7 +147,7 @@ const Index = () => {
                 onReset={handleReset}
               />
               
-              <div className="mt-12 md:mt-12 pb-24 md:pb-16">
+              <div className="mt-12 md:mt-12 pb-16 md:pb-16">
                 <HowItWorks />
               </div>
             </div>

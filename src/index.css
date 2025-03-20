@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -99,7 +100,7 @@
   
   .ios-button {
     border-radius: 16px;
-    padding: 16px 20px;
+    padding: 14px 20px;
   }
   
   /* Mobile optimizations */

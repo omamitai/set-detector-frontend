@@ -107,8 +107,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               onDragOver={handleDrag}
               onDrop={handleDrag}
             >
-              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-8 py-28' : 'p-12 py-24'}`}>
-                <div className="mb-7">
+              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-6 py-16' : 'p-10 py-20'}`}>
+                <div className="mb-5">
                   <motion.div 
                     className="flex items-center justify-center gap-3"
                     animate={{ y: [0, -5, 0] }}
@@ -120,10 +120,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   </motion.div>
                 </div>
                 
-                <h3 className={`sf-pro-display ${isMobile ? 'text-2xl' : 'text-2xl'} font-medium mb-3 text-gray-900`}>
+                <h3 className={`sf-pro-display ${isMobile ? 'text-xl' : 'text-2xl'} font-medium mb-3 text-gray-900`}>
                   {isDragActive ? "Drop your SET game photo here" : "Upload SET game photo"}
                 </h3>
-                <p className={`sf-pro-text ${isMobile ? 'text-base' : 'text-base'} text-muted-foreground mb-8 text-center max-w-sm`}>
+                <p className={`sf-pro-text ${isMobile ? 'text-sm' : 'text-base'} text-muted-foreground mb-6 text-center max-w-sm`}>
                   Take a clear, well-lit photo of the cards from directly above
                 </p>
                 
