@@ -84,18 +84,18 @@ const Index = () => {
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="max-w-6xl mx-auto px-4 md:px-6 py-5 md:py-6"
+        className="max-w-6xl mx-auto px-4 md:px-6 py-4 md:py-6"
       >
         <motion.div 
-          className={`text-center mb-6 ${isMobile ? 'mt-10 mb-8' : 'md:mb-8'}`}
+          className={`text-center mb-5 ${isMobile ? 'mt-6 mb-6' : 'md:mb-8'}`}
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className={`${isMobile ? 'text-5xl' : 'text-3xl md:text-4xl'} font-bold mb-3 text-gray-900 sf-pro-display`}>
+          <h1 className={`${isMobile ? 'text-4xl' : 'text-3xl md:text-4xl'} font-bold mb-2.5 text-gray-900 sf-pro-display`}>
             SET Game Detector
           </h1>
-          <p className="text-muted-foreground mb-4 max-w-lg mx-auto sf-pro-text text-sm md:text-base">
+          <p className="text-muted-foreground mb-2 max-w-lg mx-auto sf-pro-text text-sm md:text-base">
             Upload a photo of your SET game layout
           </p>
         </motion.div>
@@ -125,17 +125,17 @@ const Index = () => {
           </motion.div>
         )}
         
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-md mx-auto md:max-w-4xl">
           {activeTab === "upload" ? (
-            <div className="flex flex-col gap-8">
-              <div className={`max-w-md mx-auto w-full ${isMobile ? 'mt-6' : 'ios-spacing'}`}>
+            <div className="flex flex-col gap-6">
+              <div className={`mx-auto w-full ${isMobile ? 'mt-2' : 'ios-spacing'}`}>
                 <ImageUpload 
                   onImageSelected={handleImageSelected}
                   isProcessing={isProcessing}
                 />
               </div>
               
-              <div className="mt-12 md:mt-10 w-full">
+              <div className="mt-8 md:mt-10 w-full">
                 <HowItWorks />
               </div>
             </div>
@@ -147,7 +147,7 @@ const Index = () => {
                 onReset={handleReset}
               />
               
-              <div className="mt-12 md:mt-12 pb-16 md:pb-16">
+              <div className="mt-10 md:mt-12 pb-12 md:pb-16">
                 <HowItWorks />
               </div>
             </div>

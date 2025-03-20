@@ -107,24 +107,24 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               onDragOver={handleDrag}
               onDrop={handleDrag}
             >
-              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-6 py-16' : 'p-10 py-20'}`}>
-                <div className="mb-5">
+              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-6 py-10' : 'p-10 py-16'}`}>
+                <div className="mb-4">
                   <motion.div 
-                    className="flex items-center justify-center gap-3"
+                    className="flex items-center justify-center gap-2"
                     animate={{ y: [0, -5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    <div className="text-set-purple text-3xl">◇</div>
-                    <div className="text-set-red text-3xl">○</div>
-                    <div className="text-set-green text-3xl">△</div>
+                    <div className="text-set-purple text-2xl">◇</div>
+                    <div className="text-set-red text-2xl">○</div>
+                    <div className="text-set-green text-2xl">△</div>
                   </motion.div>
                 </div>
                 
-                <h3 className={`sf-pro-display ${isMobile ? 'text-xl' : 'text-2xl'} font-medium mb-3 text-gray-900`}>
+                <h3 className={`sf-pro-display ${isMobile ? 'text-lg' : 'text-xl'} font-medium mb-2 text-gray-900`}>
                   {isDragActive ? "Drop your SET game photo here" : "Upload SET game photo"}
                 </h3>
-                <p className={`sf-pro-text ${isMobile ? 'text-sm' : 'text-base'} text-muted-foreground mb-6 text-center max-w-sm`}>
-                  Take a clear, well-lit photo of the cards from directly above
+                <p className={`sf-pro-text ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground mb-4 text-center max-w-sm`}>
+                  Take a clear photo of the cards
                 </p>
                 
                 <input 
@@ -137,23 +137,23 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 />
                 
                 {isMobile ? (
-                  <div className="flex flex-col w-full space-y-3 px-6">
+                  <div className="flex flex-col w-full space-y-2 px-4">
                     <Button 
                       onClick={triggerFileInput}
-                      className="purple-button gap-2 justify-center py-5 w-full text-base ios-button"
+                      className="purple-button gap-2 justify-center py-4 w-full text-sm ios-button"
                       disabled={isProcessing}
                     >
-                      <ImageIcon className="h-5 w-5" />
+                      <Camera className="h-4 w-4" />
                       <span className="sf-pro-display">Choose Photo</span>
                     </Button>
-                    <p className="text-sm text-center text-muted-foreground sf-pro-text pt-1">
-                      Select from your camera or photo library
+                    <p className="text-xs text-center text-muted-foreground sf-pro-text pt-1">
+                      Camera or photo library
                     </p>
                   </div>
                 ) : (
                   <Button 
                     onClick={triggerFileInput}
-                    className="purple-button gap-2 mb-6 text-base py-3.5 px-8"
+                    className="purple-button gap-2 mb-4 text-base py-3 px-6"
                     disabled={isProcessing}
                   >
                     <UploadCloud className="h-5 w-5" />
@@ -162,7 +162,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 )}
                 
                 {!isMobile && (
-                  <div className="flex items-center justify-center gap-1.5 text-sm text-muted-foreground sf-pro-text mt-3">
+                  <div className="flex items-center justify-center gap-1.5 text-sm text-muted-foreground sf-pro-text mt-2">
                     <UploadCloud className="h-4 w-4" />
                     <span>Or drag and drop image here</span>
                   </div>
@@ -200,51 +200,16 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="absolute inset-0"
+                    className="absolute inset-0 flex items-center justify-center"
                   >
-                    {/* Scanning effect */}
-                    <motion.div 
-                      className="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent"
-                      animate={{ y: ["0%", "100%"], opacity: [0.3, 0.7, 0.3] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                    />
-                    
-                    {/* Scanning line */}
-                    <motion.div 
-                      className="absolute left-0 right-0 h-[2px] scan-line"
-                      animate={{ y: ["0%", "100%"] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                    />
+                    {/* Processing indicator overlay */}
+                    <div className="absolute inset-0 bg-background/50 backdrop-blur-sm"></div>
                     
                     {/* Processing indicator */}
-                    <div className="absolute top-3 right-3 bg-background/70 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full border-2 border-primary border-t-transparent animate-spin" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium sf-pro-display`}>Processing</span>
+                    <div className="bg-background/90 backdrop-blur-md rounded-xl px-4 py-3 shadow-lg flex items-center gap-2 z-10">
+                      <div className="w-4 h-4 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+                      <span className="text-sm font-medium sf-pro-display">Processing image...</span>
                     </div>
-                    
-                    {/* SET Detection grid overlay */}
-                    <motion.div 
-                      className="absolute inset-0 grid grid-cols-3 grid-rows-3 gap-2 p-4"
-                      initial="hidden"
-                      animate="visible"
-                    >
-                      {Array.from({ length: 9 }).map((_, i) => (
-                        <motion.div 
-                          key={i}
-                          className="border-2 border-transparent rounded-lg"
-                          variants={{
-                            hidden: { borderColor: "rgba(151, 71, 234, 0)" },
-                            visible: { borderColor: "rgba(151, 71, 234, 0.3)" }
-                          }}
-                          transition={{ 
-                            delay: i * 0.1,
-                            duration: 0.3,
-                            repeat: Infinity,
-                            repeatType: "reverse"
-                          }}
-                        />
-                      ))}
-                    </motion.div>
                   </motion.div>
                 )}
                 
