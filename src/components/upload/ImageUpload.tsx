@@ -107,8 +107,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               onDragOver={handleDrag}
               onDrop={handleDrag}
             >
-              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-8 py-24' : 'p-12 py-24'}`}>
-                <div className="mb-6">
+              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-8 py-28' : 'p-12 py-24'}`}>
+                <div className="mb-7">
                   <motion.div 
                     className="flex items-center justify-center gap-3"
                     animate={{ y: [0, -5, 0] }}
@@ -120,11 +120,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   </motion.div>
                 </div>
                 
-                <h3 className={`sf-pro-display ${isMobile ? 'text-xl' : 'text-2xl'} font-medium mb-3 text-gray-900`}>
+                <h3 className={`sf-pro-display ${isMobile ? 'text-2xl' : 'text-2xl'} font-medium mb-3 text-gray-900`}>
                   {isDragActive ? "Drop your SET game photo here" : "Upload SET game photo"}
                 </h3>
-                <p className={`sf-pro-text ${isMobile ? 'text-sm' : 'text-base'} text-muted-foreground mb-8 text-center max-w-sm`}>
-                  Take a clear, well-lit photo of the cards from directly above for the best detection results
+                <p className={`sf-pro-text ${isMobile ? 'text-base' : 'text-base'} text-muted-foreground mb-8 text-center max-w-sm`}>
+                  Take a clear, well-lit photo of the cards from directly above
                 </p>
                 
                 <input 
@@ -140,14 +140,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   <div className="flex flex-col w-full space-y-3 px-6">
                     <Button 
                       onClick={triggerFileInput}
-                      className="purple-button gap-2 justify-center py-4 w-full text-base ios-button"
+                      className="purple-button gap-2 justify-center py-5 w-full text-base ios-button"
                       disabled={isProcessing}
                     >
                       <ImageIcon className="h-5 w-5" />
                       <span className="sf-pro-display">Choose Photo</span>
                     </Button>
-                    <p className="text-xs text-center text-muted-foreground sf-pro-text">
-                      You'll be able to select from your camera or photo library
+                    <p className="text-sm text-center text-muted-foreground sf-pro-text pt-1">
+                      Select from your camera or photo library
                     </p>
                   </div>
                 ) : (

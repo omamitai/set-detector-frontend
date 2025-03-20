@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -82,7 +81,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                 <img
                   src={resultImage}
                   alt="Detected sets"
-                  className="w-full h-auto object-contain max-h-[70vh]"
+                  className={`w-full h-auto object-contain max-h-[70vh] ${isMobile ? 'px-1 py-2' : ''}`}
                 />
                 
                 <div className="absolute bottom-3 right-3 flex gap-2">
@@ -114,41 +113,23 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
         {sets.length > 0 && (
           <>
             {isMobile ? (
-              // Mobile: Button is now inside the page flow rather than floating
-              <div className="mt-4 px-4">
-                <Sheet>
-                  <SheetTrigger asChild>
-                    <Button 
-                      className="w-full gap-1.5 rounded-xl text-sm py-3 px-5 
-                      shadow-md bg-set-purple border-0 hover:bg-set-purple/90"
-                      size="sm"
-                    >
-                      <Sparkles className="h-3.5 w-3.5" />
-                      <span className="font-medium">View {sets.length} SET{sets.length > 1 ? "s" : ""} Details</span>
-                      <ChevronDown className="h-3.5 w-3.5" />
-                    </Button>
-                  </SheetTrigger>
-                  <SheetContent side="bottom" className="rounded-t-xl h-[70vh] pt-6 px-4">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold sf-pro-display flex items-center gap-2">
-                        <Sparkles className="h-4 w-4 text-primary" />
-                        SET Details
-                      </h3>
-                      <Badge variant="outline" className="bg-set-purple/10 text-set-purple border-set-purple/20">
-                        {sets.length} Set{sets.length > 1 ? "s" : ""}
+              // Mobile: Show only SET count badge in a more prominent position
+              <div className="mt-4 px-2">
+                <Card className="ios-card border-0 shadow-sm">
+                  <CardContent className="p-3">
+                    <div className="flex items-center justify-center">
+                      <Badge 
+                        className="bg-set-purple/95 text-white border-0 rounded-xl px-4 py-2 
+                                text-sm shadow-md w-full justify-center"
+                      >
+                        <Sparkles className="h-4 w-4 mr-2" />
+                        <span className="sf-pro-display font-medium">
+                          {sets.length} {sets.length === 1 ? "SET" : "SETs"} detected
+                        </span>
                       </Badge>
                     </div>
-                    
-                    <ScrollArea className="h-[calc(70vh-100px)]">
-                      <div className="space-y-3 pr-2 pb-4">
-                        {sets.map((set, index) => (
-                          <SetCard key={index} set={set} index={index} />
-                        ))}
-                      </div>
-                      <ScrollBar />
-                    </ScrollArea>
-                  </SheetContent>
-                </Sheet>
+                  </CardContent>
+                </Card>
               </div>
             ) : (
               // Desktop: Button to show/hide SET details panel
@@ -213,7 +194,6 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
         )}
       </div>
       
-      {/* If no sets are found, show message */}
       {sets.length === 0 && resultImage && (
         <div className="flex flex-col items-center justify-center p-4">
           <div className="bg-orange-50 border border-orange-100 rounded-xl p-4 shadow-sm w-full max-w-sm">
@@ -237,7 +217,6 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
   );
 };
 
-// ChevronUp component
 const ChevronUp = (props: any) => (
   <svg
     {...props}
