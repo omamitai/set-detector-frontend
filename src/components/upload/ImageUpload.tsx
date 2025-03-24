@@ -22,6 +22,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const [uploadProgress, setUploadProgress] = useState(0);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -83,9 +84,15 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       setDragActive(false);
     }
   };
-
+  
+  // File selection from gallery/files
   const triggerFileInput = () => {
     fileInputRef.current?.click();
+  };
+  
+  // Camera capture
+  const triggerCameraInput = () => {
+    cameraInputRef.current?.click();
   };
 
   return (
@@ -126,28 +133,53 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   Take a clear photo of the cards
                 </p>
                 
+                {/* Hidden input for file (gallery) selection */}
                 <input 
                   ref={fileInputRef}
                   type="file"
-                  {...getInputProps()}
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      onDrop([e.target.files[0]]);
+                    }
+                  }}
+                />
+                
+                {/* Hidden input for camera */}
+                <input 
+                  ref={cameraInputRef}
+                  type="file"
                   accept="image/*"
                   capture="environment"
                   className="hidden"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      onDrop([e.target.files[0]]);
+                    }
+                  }}
                 />
                 
                 {isMobile ? (
-                  <div className="flex flex-col w-full space-y-1 px-2">
+                  <div className="flex flex-col w-full space-y-2 px-2">
                     <Button 
-                      onClick={triggerFileInput}
+                      onClick={triggerCameraInput}
                       className="purple-button gap-2 justify-center py-3 w-full text-sm ios-button"
                       disabled={isProcessing}
                     >
                       <Camera className="h-4 w-4" />
-                      <span className="sf-pro-display">Choose Photo</span>
+                      <span className="sf-pro-display">Take Photo</span>
                     </Button>
-                    <p className="text-xs text-center text-muted-foreground sf-pro-text pt-1">
-                      Camera or photo library
-                    </p>
+                    
+                    <Button 
+                      onClick={triggerFileInput}
+                      variant="outline"
+                      className="gap-2 justify-center py-3 w-full text-sm ios-button bg-secondary/80"
+                      disabled={isProcessing}
+                    >
+                      <ImageIcon className="h-4 w-4" />
+                      <span className="sf-pro-display">Choose from Gallery</span>
+                    </Button>
                   </div>
                 ) : (
                   <Button 

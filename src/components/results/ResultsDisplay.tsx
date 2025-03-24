@@ -58,14 +58,14 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
           <CardContent className="p-0 relative">
             {resultImage && (
               <div className="relative">
-                {/* Sets found badge - positioned at top center for better mobile visibility */}
+                {/* Sets found badge - moved to top right corner to avoid hiding cards */}
                 {sets.length > 0 && (
-                  <div className="absolute top-4 left-0 right-0 flex justify-center z-10">
+                  <div className="absolute top-3 right-3 z-10">
                     <Badge 
-                      className="bg-set-purple/95 text-white border-0 rounded-full px-4 py-1.5 
-                              shadow-lg flex items-center gap-1.5"
+                      className="bg-set-purple/95 text-white border-0 rounded-full px-3 py-1 
+                                shadow-lg flex items-center gap-1.5"
                     >
-                      <Sparkles className="h-3.5 w-3.5" />
+                      <Sparkles className="h-3 w-3" />
                       <span className="sf-pro-display font-medium text-xs">
                         {sets.length} SET{sets.length !== 1 ? "s" : ""} detected
                       </span>
