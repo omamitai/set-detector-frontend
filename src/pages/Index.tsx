@@ -5,7 +5,6 @@ import ImageUpload from "@/components/upload/ImageUpload";
 import ResultsDisplay from "@/components/results/ResultsDisplay";
 import HowItWorks from "@/components/info/HowItWorks";
 import { detectSets } from "@/services/api";
-import { toast } from "sonner";
 import { AlertCircle, RefreshCw, AlertTriangle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { motion } from "framer-motion";
@@ -37,9 +36,7 @@ const Index = () => {
     try {
       setIsProcessing(true);
       setError(null);
-      toast.info("Processing image...", {
-        description: "This may take a few moments."
-      });
+      // Removed toast notification
       
       const result = await detectSets(file);
       
@@ -47,11 +44,7 @@ const Index = () => {
       setDetectedSets(result.sets);
       setActiveTab("results");
       
-      if (result.sets.length > 0) {
-        toast.success(`Found ${result.sets.length} SET${result.sets.length > 1 ? "s" : ""}!`);
-      } else {
-        toast.info("No SETs found in this image.");
-      }
+      // Removed toast notifications
     } catch (error) {
       console.error("Error processing image:", error);
       
@@ -64,9 +57,7 @@ const Index = () => {
         setError(errorMessage);
       }
       
-      toast.error("Failed to process image", {
-        description: "Please try again with a clearer photo."
-      });
+      // Removed toast notification
     } finally {
       setIsProcessing(false);
     }
@@ -84,15 +75,15 @@ const Index = () => {
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="max-w-6xl mx-auto px-4 md:px-6 py-4 md:py-6"
+        className="max-w-6xl mx-auto px-3 md:px-6 py-3 md:py-6"
       >
         <motion.div 
-          className={`text-center mb-5 ${isMobile ? 'mt-6 mb-6' : 'md:mb-8'}`}
+          className={`text-center mb-4 ${isMobile ? 'mt-3 mb-4' : 'md:mb-6'}`}
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className={`${isMobile ? 'text-4xl' : 'text-3xl md:text-4xl'} font-bold mb-2.5 text-gray-900 sf-pro-display`}>
+          <h1 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold mb-2 text-gray-900 sf-pro-display`}>
             SET Game Detector
           </h1>
           <p className="text-muted-foreground mb-2 max-w-lg mx-auto sf-pro-text text-sm md:text-base">
@@ -106,10 +97,10 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Alert variant="destructive" className="mb-5 max-w-md mx-auto bg-orange-50 border-orange-100 text-orange-800">
+            <Alert variant="destructive" className="mb-4 max-w-md mx-auto bg-orange-50 border-orange-100 text-orange-800">
               <AlertTriangle className="h-4 w-4 text-orange-500" />
               <AlertTitle className="text-orange-700">No SET Cards Detected</AlertTitle>
-              <AlertDescription className="flex flex-col gap-3 text-orange-600">
+              <AlertDescription className="flex flex-col gap-2 text-orange-600">
                 <span>{error}</span>
                 <Button 
                   variant="outline" 
@@ -127,27 +118,27 @@ const Index = () => {
         
         <div className="max-w-md mx-auto md:max-w-4xl">
           {activeTab === "upload" ? (
-            <div className="flex flex-col gap-6">
-              <div className={`mx-auto w-full ${isMobile ? 'mt-2' : 'ios-spacing'}`}>
+            <div className="flex flex-col gap-4">
+              <div className={`mx-auto w-full ${isMobile ? 'mt-0' : 'ios-spacing'}`}>
                 <ImageUpload 
                   onImageSelected={handleImageSelected}
                   isProcessing={isProcessing}
                 />
               </div>
               
-              <div className="mt-8 md:mt-10 w-full">
+              <div className="mt-6 md:mt-10 w-full">
                 <HowItWorks />
               </div>
             </div>
           ) : (
-            <div className="space-y-6">
+            <div className="space-y-4 md:space-y-6">
               <ResultsDisplay
                 resultImage={resultImage}
                 sets={detectedSets}
                 onReset={handleReset}
               />
               
-              <div className="mt-10 md:mt-12 pb-12 md:pb-16">
+              <div className="mt-6 md:mt-12 pb-8 md:pb-16">
                 <HowItWorks />
               </div>
             </div>

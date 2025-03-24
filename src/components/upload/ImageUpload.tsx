@@ -1,7 +1,6 @@
 
 import React, { useState, useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
-import { toast } from "sonner";
 import { UploadCloud, X, Camera, Image as ImageIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -32,13 +31,13 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
     // Check if file is an image
     if (!file.type.startsWith("image/")) {
-      toast.error("Please upload an image file");
+      console.error("Please upload an image file");
       return;
     }
 
     // Check file size (max 10MB)
     if (file.size > 10 * 1024 * 1024) {
-      toast.error("File size must be less than 10MB");
+      console.error("File size must be less than 10MB");
       return;
     }
     setSelectedFile(file);
@@ -107,8 +106,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               onDragOver={handleDrag}
               onDrop={handleDrag}
             >
-              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-6 py-10' : 'p-10 py-16'}`}>
-                <div className="mb-4">
+              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-4 py-7' : 'p-10 py-16'}`}>
+                <div className="mb-3">
                   <motion.div 
                     className="flex items-center justify-center gap-2"
                     animate={{ y: [0, -5, 0] }}
@@ -120,10 +119,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   </motion.div>
                 </div>
                 
-                <h3 className={`sf-pro-display ${isMobile ? 'text-lg' : 'text-xl'} font-medium mb-2 text-gray-900`}>
+                <h3 className={`sf-pro-display ${isMobile ? 'text-base' : 'text-xl'} font-medium mb-1 text-gray-900`}>
                   {isDragActive ? "Drop your SET game photo here" : "Upload SET game photo"}
                 </h3>
-                <p className={`sf-pro-text ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground mb-4 text-center max-w-sm`}>
+                <p className={`sf-pro-text ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground mb-3 text-center max-w-sm`}>
                   Take a clear photo of the cards
                 </p>
                 
@@ -137,10 +136,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 />
                 
                 {isMobile ? (
-                  <div className="flex flex-col w-full space-y-2 px-4">
+                  <div className="flex flex-col w-full space-y-1 px-2">
                     <Button 
                       onClick={triggerFileInput}
-                      className="purple-button gap-2 justify-center py-4 w-full text-sm ios-button"
+                      className="purple-button gap-2 justify-center py-3 w-full text-sm ios-button"
                       disabled={isProcessing}
                     >
                       <Camera className="h-4 w-4" />
@@ -182,14 +181,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 <img 
                   src={previewUrl} 
                   alt="Preview" 
-                  className="w-full h-auto object-contain max-h-[50vh] md:max-h-[60vh]" 
+                  className="w-full h-auto object-contain max-h-[45vh] md:max-h-[60vh]" 
                 />
                 
                 {!isProcessing && (
                   <Button 
                     variant="ghost"
                     size="icon"
-                    className="absolute top-3 right-3 rounded-full bg-background/70 backdrop-blur-sm"
+                    className="absolute top-2 right-2 rounded-full bg-background/70 backdrop-blur-sm"
                     onClick={removeImage}
                   >
                     <X className="h-4 w-4" />
@@ -205,7 +204,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     {/* Processing indicator overlay */}
                     <div className="absolute inset-0 bg-background/50 backdrop-blur-sm"></div>
                     
-                    {/* Processing indicator */}
+                    {/* Simplified processing indicator */}
                     <div className="bg-background/90 backdrop-blur-md rounded-xl px-4 py-3 shadow-lg flex items-center gap-2 z-10">
                       <div className="w-4 h-4 rounded-full border-2 border-primary border-t-transparent animate-spin" />
                       <span className="text-sm font-medium sf-pro-display">Processing image...</span>
@@ -215,7 +214,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 
                 {uploadProgress < 100 && (
                   <div className="absolute bottom-0 left-0 right-0 p-2 bg-background/70 backdrop-blur-sm">
-                    <Progress value={uploadProgress} className="h-2" />
+                    <Progress value={uploadProgress} className="h-1.5" />
                   </div>
                 )}
               </CardContent>

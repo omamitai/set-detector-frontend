@@ -58,11 +58,11 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
           <CardContent className="p-0 relative">
             {resultImage && (
               <div className="relative">
-                {/* Sets found badge - shown on top of image */}
+                {/* Sets found badge - positioned at top center for better mobile visibility */}
                 {sets.length > 0 && (
-                  <div className="absolute top-3 left-3 z-10">
+                  <div className="absolute top-4 left-0 right-0 flex justify-center z-10">
                     <Badge 
-                      className="bg-set-purple/95 text-white border-0 rounded-full px-3 py-1.5 
+                      className="bg-set-purple/95 text-white border-0 rounded-full px-4 py-1.5 
                               shadow-lg flex items-center gap-1.5"
                     >
                       <Sparkles className="h-3.5 w-3.5" />
@@ -76,7 +76,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                 <img
                   src={resultImage}
                   alt="Detected sets"
-                  className="w-full h-auto object-contain max-h-[70vh] p-4"
+                  className="w-full h-auto object-contain max-h-[70vh] px-2 py-3"
                 />
                 
                 <div className="absolute bottom-3 right-3 flex gap-2">
@@ -107,8 +107,8 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
       </div>
       
       {sets.length === 0 && resultImage && (
-        <div className="flex flex-col items-center justify-center p-4">
-          <div className="bg-orange-50 border border-orange-100 rounded-xl p-4 shadow-sm w-full max-w-sm">
+        <div className="flex flex-col items-center justify-center p-2">
+          <div className="bg-orange-50 border border-orange-100 rounded-xl p-3 shadow-sm w-full max-w-sm">
             <p className="text-orange-600 sf-pro-text text-sm font-medium text-center">
               No SET cards detected in this image
             </p>
