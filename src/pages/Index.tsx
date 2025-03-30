@@ -83,13 +83,6 @@ const Index = () => {
     visible: { y: 0, opacity: 1 }
   };
 
-  // Cards animation for hero section
-  const cards = [
-    { symbol: "◇", color: "text-[#5856D6]", animationDelay: 0, rotate: "-3deg", translateY: "-5px" },
-    { symbol: "○", color: "text-[#D06175]", animationDelay: 0.2, rotate: "2deg", translateY: "0px" },
-    { symbol: "△", color: "text-[#4A8072]", animationDelay: 0.4, rotate: "5deg", translateY: "-3px" },
-  ];
-
   return (
     <Layout>
       <motion.div 
@@ -97,40 +90,17 @@ const Index = () => {
         animate={{ opacity: 1 }}
         className="max-w-6xl mx-auto px-4 md:px-6 py-4 md:py-8"
       >
-        {/* Hero section with floating cards */}
+        {/* Hero section - removed floating cards */}
         <motion.div 
-          className="text-center mb-6 md:mb-10 relative"
+          className="text-center mb-8 md:mb-12"
           initial={itemVariants.hidden}
           animate={itemVariants.visible}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <div className="relative flex justify-center mb-4">
-            {cards.map((card, index) => (
-              <motion.div
-                key={index}
-                className={`absolute ${card.color} text-4xl md:text-5xl font-bold`}
-                style={{ 
-                  transform: `rotate(${card.rotate}) translateY(${card.translateY})`,
-                  zIndex: 10 - index
-                }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ 
-                  opacity: 1, 
-                  y: 0,
-                  transition: { delay: card.animationDelay, duration: 0.5 }
-                }}
-                whileHover={{ scale: 1.1, rotate: '0deg' }}
-              >
-                {card.symbol}
-              </motion.div>
-            ))}
-            <div className="h-16 md:h-20"></div> {/* Spacer for floating cards */}
-          </div>
-          
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 text-gray-800 font-poppins tracking-tight">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 text-dark-slate font-poppins tracking-tight bg-clip-text text-transparent bg-neo-gradient-purple">
             SET Game Detector
           </h1>
-          <p className="text-gray-500 max-w-lg mx-auto font-sans text-base md:text-lg">
+          <p className="text-neutral-slate max-w-lg mx-auto font-sans text-base md:text-lg">
             Instantly spot every SET. Just snap, and play smarter.
           </p>
         </motion.div>
@@ -141,16 +111,16 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Alert variant="destructive" className="mb-6 max-w-md mx-auto bg-[#FFF5F5] border-[#D06175]/20 text-[#D06175] shadow-sm">
-              <AlertTriangle className="h-4 w-4 text-[#D06175]" />
-              <AlertTitle className="text-[#D06175] font-medium">No SET Cards Detected</AlertTitle>
-              <AlertDescription className="flex flex-col gap-2 text-[#D06175]/90">
+            <Alert variant="destructive" className="mb-6 max-w-md mx-auto bg-white border-accent-pink/20 text-accent-pink shadow-sm">
+              <AlertTriangle className="h-4 w-4 text-accent-pink" />
+              <AlertTitle className="text-accent-pink font-medium">No SET Cards Detected</AlertTitle>
+              <AlertDescription className="flex flex-col gap-2 text-accent-pink/90">
                 <span>{error}</span>
                 <Button 
                   variant="outline" 
                   size="sm" 
                   onClick={handleReset} 
-                  className="self-end flex items-center gap-1 border-[#D06175]/20 text-[#D06175] hover:bg-[#FFF5F5]/80"
+                  className="self-end flex items-center gap-1 border-accent-pink/20 text-accent-pink hover:bg-white/80"
                 >
                   <RefreshCw className="h-3 w-3" />
                   Try again
@@ -185,10 +155,10 @@ const Index = () => {
                 <HowItWorks />
               </motion.div>
               
-              {/* Sticky bottom CTA for mobile */}
+              {/* Sticky bottom CTA for mobile with proper spacing and z-index */}
               {isMobile && (
                 <motion.div 
-                  className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-md shadow-lg border-t z-50"
+                  className="fixed bottom-0 left-0 right-0 p-4 glass-panel shadow-lg border-t z-40"
                   initial={{ y: 100 }}
                   animate={{ y: 0 }}
                   transition={{ delay: 0.5, type: "spring", stiffness: 300, damping: 30 }}
@@ -199,7 +169,7 @@ const Index = () => {
                         const fileInput = document.querySelector('input[capture="environment"]') as HTMLInputElement;
                         if (fileInput) fileInput.click();
                       }}
-                      className="flex-1 bg-[#5856D6] text-white gap-2 rounded-xl h-12"
+                      className="flex-1 neo-button text-white gap-2 rounded-xl h-12"
                     >
                       <Camera className="h-4 w-4" />
                       Take Photo
@@ -211,7 +181,7 @@ const Index = () => {
                         if (fileInput) fileInput.click();
                       }}
                       variant="outline"
-                      className="flex-1 border-[#5856D6]/20 text-[#5856D6] gap-2 rounded-xl h-12"
+                      className="flex-1 neo-button-secondary text-primary-violet gap-2 rounded-xl h-12"
                     >
                       <ImageIcon className="h-4 w-4" />
                       Gallery

@@ -14,7 +14,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 262 84% 59%; /* #5856D6 Deep Purple */
+    --primary: 260 84% 66%; /* #8B5CF6 Deep Purple */
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -23,7 +23,7 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 262 84% 59%; /* #5856D6 */
+    --accent: 260 84% 66%; /* #8B5CF6 */
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 84.2% 60.2%;
@@ -31,7 +31,7 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 262 84% 59%; /* #5856D6 */
+    --ring: 260 84% 66%; /* #8B5CF6 */
 
     --radius: 0.75rem; /* Refined border radius */
   }
@@ -70,68 +70,80 @@
     clip-path: path("M 75,0 C 150,0 150,100 75,100 C 0,100 0,0 75,0 Z");
   }
   
-  /* Interactive SET shapes - more refined */
+  /* Futuristic SET shapes with gradients */
   .set-shape {
     @apply transition-all duration-300 cursor-pointer hover:brightness-105;
   }
   
   .set-shape:hover {
-    filter: drop-shadow(0 0 6px rgba(88, 86, 214, 0.3));
+    filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.4));
   }
   
-  /* Enhanced card layouts - more sophisticated */
+  /* Enhanced neo-morphic card layouts */
   .set-card {
-    @apply rounded-lg shadow-sm border-0 backdrop-blur-sm bg-white/90;
-    transition: all 0.3s ease;
+    @apply rounded-xl shadow-md border-0 backdrop-blur-sm bg-white/90;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(243, 244, 246, 0.7));
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
   }
   
   .set-card:hover {
-    @apply shadow-md bg-white/95;
-    transform: translateY(-2px);
+    @apply shadow-lg bg-white/95;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
   }
   
-  /* Button styles - more refined */
+  /* Button styles - futuristic gradient */
   .set-button-primary {
-    @apply bg-gradient-to-b from-set-purple to-set-purple/90 text-white rounded-md shadow-md
-           shadow-set-purple/10 border-0 flex items-center justify-center gap-2 
-           transition-all hover:shadow-lg hover:shadow-set-purple/20 hover:-translate-y-0.5 
+    @apply bg-neo-gradient-purple text-white rounded-lg shadow-md
+           shadow-primary-purple/20 border-0 flex items-center justify-center gap-2 
+           transition-all hover:shadow-lg hover:shadow-primary-purple/30 hover:-translate-y-0.5 
            active:scale-95 font-medium py-2.5 px-4;
   }
   
   .set-button-secondary {
-    @apply bg-white/90 backdrop-blur-sm text-set-purple rounded-md shadow-sm border border-set-purple/10
+    @apply bg-white/90 backdrop-blur-sm text-primary-violet rounded-lg shadow-sm border border-primary-violet/10
            flex items-center justify-center gap-2 transition-all hover:shadow-md hover:-translate-y-0.5
            active:scale-95 font-medium py-2.5 px-4;
   }
   
-  /* Badge styles - more sophisticated */
+  /* Badge styles - gradient backgrounds */
   .set-badge {
     @apply rounded-md px-3 py-1 text-sm font-medium shadow-sm flex items-center gap-1.5;
   }
   
   .set-badge-primary {
-    @apply bg-gradient-to-r from-set-purple to-set-purple/90 text-white border-0 set-badge;
+    @apply bg-neo-gradient-purple text-white border-0 set-badge;
   }
   
   .set-badge-success {
-    @apply bg-gradient-to-r from-set-green to-set-green/90 text-white border-0 set-badge;
+    @apply bg-neo-gradient-blue text-white border-0 set-badge;
   }
   
-  /* Set symbols - more subtle */
+  /* Set symbols - gradient colors */
   .set-symbol {
     @apply inline-block text-xl font-medium transition-all duration-300;
   }
   
   .set-symbol-diamond {
-    @apply set-symbol text-set-purple/90;
+    @apply set-symbol text-primary-purple;
+    background: linear-gradient(to bottom right, #8B5CF6, #6366F1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   
   .set-symbol-oval {
-    @apply set-symbol text-[#D06175]/90;
+    @apply set-symbol text-accent-pink;
+    background: linear-gradient(to bottom right, #EC4899, #F59E0B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   
   .set-symbol-triangle {
-    @apply set-symbol text-[#4A8072]/90;
+    @apply set-symbol text-accent-teal;
+    background: linear-gradient(to bottom right, #14B8A6, #3B82F6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }
 
@@ -162,11 +174,11 @@
   
   /* Glassmorphism effects - more refined */
   .glass {
-    @apply backdrop-blur-md bg-white/70 border border-white/20;
+    @apply backdrop-blur-xl bg-white/70 border border-white/20 shadow-xl;
   }
   
   .glass-colored {
-    @apply backdrop-blur-md bg-gradient-to-br from-white/70 to-white/60 border border-white/20;
+    @apply backdrop-blur-xl bg-gradient-to-br from-white/70 to-white/60 border border-white/20 shadow-xl;
   }
   
   /* Interaction states */
@@ -185,15 +197,15 @@
   
   /* New gradient utilities */
   .purple-gradient {
-    @apply bg-gradient-to-r from-set-purple/90 to-set-purple/70;
+    @apply bg-neo-gradient-purple;
   }
   
   .purple-gradient-subtle {
-    @apply bg-gradient-to-r from-set-purple/20 via-set-purple/10 to-set-purple/5;
+    @apply bg-gradient-to-r from-primary-purple/20 via-primary-indigo/10 to-primary-blue/5;
   }
   
-  .set-gradient-soft {
-    @apply bg-gradient-to-r from-set-purple/20 via-[#4A8072]/10 to-[#D06175]/10;
+  .futuristic-gradient-soft {
+    @apply bg-gradient-to-r from-primary-purple/20 via-accent-teal/10 to-accent-pink/10;
   }
 }
 

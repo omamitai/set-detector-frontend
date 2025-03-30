@@ -67,20 +67,17 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				set: {
-					purple: '#5856D6',  // Deep purple
-					lavender: '#C7C2F9', // Secondary pastel lavender
-					green: '#30D158',   // Vivid green 
-					red: '#FF453A',    // Bold red
-					dark: '#1C1C1E',    // Dark navy
-					gray: '#636366',    // Soft gray
-					light: '#F8FAFC',   // Light background
-					yellow: '#FFD60A',  // Bright yellow for accents
-					blue: '#0A84FF',    // Bright blue for accents
-					'purple-gradient': 'linear-gradient(135deg, #5856D6, #7A78E2)',
-					'green-gradient': 'linear-gradient(135deg, #30D158, #4FE076)',
-					'red-gradient': 'linear-gradient(135deg, #FF453A, #FF6B63)'
-				}
+				// Updated futuristic color scheme
+				'primary-purple': '#8B5CF6', 
+				'primary-violet': '#7C3AED',
+				'primary-indigo': '#6366F1',
+				'primary-blue': '#3B82F6',
+				'accent-teal': '#14B8A6',
+				'accent-pink': '#EC4899',
+				'accent-amber': '#F59E0B',
+				'dark-slate': '#1E293B',
+				'neutral-slate': '#64748B',
+				'light-slate': '#CBD5E1',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -174,7 +171,11 @@ export default {
 				'float': 'float 4s ease-in-out infinite'
 			},
 			backgroundImage: {
-				'set-gradient': 'linear-gradient(135deg, rgba(88, 86, 214, 0.5), rgba(48, 209, 88, 0.5), rgba(255, 69, 58, 0.5))',
+				'futuristic-gradient': 'linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(99, 102, 241, 0.05), rgba(59, 130, 246, 0.05))',
+				'neo-gradient-purple': 'linear-gradient(135deg, #8B5CF6, #6366F1)',
+				'neo-gradient-blue': 'linear-gradient(135deg, #3B82F6, #14B8A6)',
+				'neo-gradient-pink': 'linear-gradient(135deg, #EC4899, #F59E0B)',
+				'neo-card-gradient': 'linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(243, 244, 246, 0.7))',
 			}
 		}
 	},
