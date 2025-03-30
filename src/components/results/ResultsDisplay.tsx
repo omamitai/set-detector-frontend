@@ -73,24 +73,24 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
       className="space-y-5"
     >
       <div className="relative">
-        <Card className="rounded-3xl overflow-hidden border-0 shadow-xl">
+        <Card className="rounded-lg overflow-hidden border-0 shadow-md">
           <CardContent className="p-0 relative">
             {resultImage && (
               <div className="relative">
-                {/* Sets found badge - positioned at top right corner with improved styling */}
+                {/* Sets found badge - more sophisticated styling */}
                 {sets.length > 0 && (
-                  <div className="absolute top-4 right-4 z-10">
+                  <div className="absolute top-3 right-3 z-10">
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.2, duration: 0.3 }}
                     >
                       <Badge 
-                        className="bg-gradient-to-r from-set-purple to-set-purple/90 text-white border-0 
-                                 rounded-full px-4 py-2 shadow-lg flex items-center gap-2 font-medium"
+                        className="purple-gradient text-white border-0 
+                                 rounded-md px-3 py-1.5 shadow-md flex items-center gap-2"
                       >
-                        <Sparkles className="h-4 w-4 text-white animate-pulse" />
-                        <span className="font-poppins">
+                        <Sparkles className="h-3.5 w-3.5 text-white/90" />
+                        <span className="font-medium text-sm">
                           {sets.length} SET{sets.length !== 1 ? "s" : ""} detected
                         </span>
                       </Badge>
@@ -105,17 +105,17 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                     className="w-full h-auto object-contain max-h-[70vh] p-2"
                   />
                   
-                  {/* Subtle glow effect overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-set-purple/10 via-transparent to-set-green/10 opacity-60 pointer-events-none"></div>
+                  {/* Very subtle gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-set-purple/5 via-transparent to-set-purple/5 opacity-40 pointer-events-none"></div>
                 </div>
                 
-                <div className="absolute bottom-4 right-4 flex gap-2">
+                <div className="absolute bottom-3 right-3 flex gap-2">
                   <Button
                     variant="secondary"
                     size={isMobile ? "sm" : "default"}
                     onClick={onReset}
-                    className="gap-1.5 rounded-full bg-white/90 backdrop-blur-sm text-xs font-medium shadow-lg
-                              hover:bg-white hover:shadow-xl transition-all duration-300 border-0"
+                    className="gap-1.5 rounded-md bg-white/90 backdrop-blur-sm text-xs font-medium shadow-sm
+                              hover:bg-white hover:shadow-md transition-all duration-300 border-0"
                   >
                     <RefreshCw className="h-3.5 w-3.5 text-[#1C1C1E]" />
                     <span className="font-medium text-[#1C1C1E]">New Photo</span>
@@ -126,8 +126,8 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                       variant="default"
                       size={isMobile ? "sm" : "default"}
                       onClick={shareImage}
-                      className="gap-1.5 rounded-full bg-set-green text-white text-xs font-medium shadow-lg
-                                hover:bg-set-green/90 hover:shadow-xl transition-all duration-300 border-0"
+                      className="gap-1.5 rounded-md purple-gradient text-white text-xs font-medium shadow-sm
+                                hover:opacity-90 hover:shadow-md transition-all duration-300 border-0"
                     >
                       <Share2 className="h-3.5 w-3.5" />
                       <span className="font-medium">Share</span>
@@ -138,8 +138,8 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                     variant="default"
                     size={isMobile ? "sm" : "default"}
                     onClick={downloadImage}
-                    className="gap-1.5 rounded-full bg-set-purple text-white text-xs font-medium shadow-lg
-                              hover:bg-set-purple/90 hover:shadow-xl transition-all duration-300 border-0"
+                    className="gap-1.5 rounded-md purple-gradient text-white text-xs font-medium shadow-sm
+                              hover:opacity-90 hover:shadow-md transition-all duration-300 border-0"
                   >
                     <Download className="h-3.5 w-3.5" />
                     <span className="font-medium">Save</span>
@@ -158,8 +158,8 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
           transition={{ delay: 0.3, duration: 0.4 }}
           className="flex flex-col items-center justify-center p-2"
         >
-          <div className="bg-[#FFEBE9] border border-[#FF453A]/20 rounded-xl p-4 shadow-md w-full max-w-sm">
-            <p className="text-[#FF453A] font-medium text-center font-sans">
+          <div className="bg-[#FFF5F5] border border-[#FF453A]/10 rounded-md p-3 shadow-sm w-full max-w-sm">
+            <p className="text-[#FF453A] font-medium text-center text-sm">
               No SET cards detected in this image
             </p>
           </div>

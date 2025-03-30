@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Github, Info, SparkleIcon } from "lucide-react";
+import { Github, Info } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -22,7 +22,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           --set-primary: #5856D6;
           --set-secondary: #C7C2F9;
           --set-accent: #FF453A;
-          font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
         }
         
         body {
@@ -34,17 +34,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         .bg-set-gradient {
           background-attachment: fixed;
           background-image: 
-            radial-gradient(at 20% 30%, rgba(88, 86, 214, 0.15) 0px, transparent 50%), 
-            radial-gradient(at 80% 20%, rgba(48, 209, 88, 0.15) 0px, transparent 50%),
-            radial-gradient(at 50% 70%, rgba(255, 69, 58, 0.1) 0px, transparent 50%);
+            radial-gradient(at 20% 30%, rgba(88, 86, 214, 0.12) 0px, transparent 50%), 
+            radial-gradient(at 80% 20%, rgba(88, 86, 214, 0.08) 0px, transparent 50%),
+            radial-gradient(at 50% 70%, rgba(88, 86, 214, 0.05) 0px, transparent 50%);
+          background-color: #FAFAFA;
         }
         
         .bg-pattern-dots {
-          background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+          background-image: radial-gradient(rgba(88, 86, 214, 0.12) 1px, transparent 1px);
           background-size: 12px 12px;
         }
         
-        /* SET icons styling */
+        /* SET icons styling - more refined */
         .set-icon {
           display: inline-flex;
           align-items: center;
@@ -77,44 +78,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       `}
       </style>
 
-      <header className="border-b border-gray-200/30 bg-white/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="container mx-auto py-3 px-4 flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <div className="flex items-center">
-              <div className="flex space-x-1 mr-2">
-                <div className="set-icon text-set-purple">◇</div>
-                <div className="set-icon text-set-red">○</div>
-                <div className="set-icon text-set-green">△</div>
-              </div>
-              <h1 className="font-bold text-lg text-gray-900 font-poppins">SET Detector</h1>
-            </div>
-          </div>
-          
-          <div className="flex items-center space-x-2">
-            <a 
-              href="https://www.setgame.com/set/puzzle_rules"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="ghost" size="icon" className="rounded-full text-set-gray hover:text-set-purple">
-                <Info className="h-5 w-5" />
-              </Button>
-            </a>
-            
-            <a 
-              href="https://github.com/omamitai/set-detector"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="ghost" size="icon" className="rounded-full text-set-gray hover:text-set-purple">
-                <Github className="h-5 w-5" />
-              </Button>
-            </a>
-          </div>
-        </div>
-      </header>
-
-      <main className="flex-grow mobile-safe-area pb-20">
+      <main className="flex-grow mobile-safe-area pb-8 md:pb-16">
         {children}
       </main>
 
@@ -123,7 +87,31 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <p className="text-xs text-set-gray mb-2 sm:mb-0 font-sans">
             SET® is a registered trademark of Cannei, LLC.
           </p>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
+            <a 
+              href="https://www.setgame.com/set/puzzle_rules"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-set-gray hover:text-set-purple transition-colors"
+            >
+              <div className="flex items-center gap-1.5">
+                <Info className="h-3.5 w-3.5" />
+                <span>Rules</span>
+              </div>
+            </a>
+            
+            <a 
+              href="https://github.com/omamitai/set-detector"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-set-gray hover:text-set-purple transition-colors"
+            >
+              <div className="flex items-center gap-1.5">
+                <Github className="h-3.5 w-3.5" />
+                <span>GitHub</span>
+              </div>
+            </a>
+            
             <p className="text-xs text-set-gray font-sans">
               Detector by <a href="https://github.com/omamitai" className="text-set-purple hover:underline">Omamitai</a>
             </p>

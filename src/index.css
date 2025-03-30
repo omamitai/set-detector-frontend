@@ -33,7 +33,7 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 262 84% 59%; /* #5856D6 */
 
-    --radius: 1rem; /* Increased border radius */
+    --radius: 0.75rem; /* Refined border radius */
   }
 }
 
@@ -47,9 +47,9 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
   
-  /* Modern typography */
+  /* Refined typography */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-poppins font-bold tracking-tight;
+    @apply font-sans font-semibold tracking-tight;
   }
   
   p, a, button, li, span {
@@ -70,118 +70,130 @@
     clip-path: path("M 75,0 C 150,0 150,100 75,100 C 0,100 0,0 75,0 Z");
   }
   
-  /* Interactive SET shapes */
+  /* Interactive SET shapes - more refined */
   .set-shape {
-    @apply transition-all duration-300 cursor-pointer hover:brightness-110;
+    @apply transition-all duration-300 cursor-pointer hover:brightness-105;
   }
   
   .set-shape:hover {
-    @apply animate-pulse;
-    filter: drop-shadow(0 0 8px currentColor);
+    filter: drop-shadow(0 0 6px rgba(88, 86, 214, 0.6));
   }
   
-  /* Enhanced card layouts */
+  /* Enhanced card layouts - more sophisticated */
   .set-card {
-    @apply rounded-3xl shadow-md border-0 backdrop-blur-sm bg-white/90;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    @apply rounded-lg shadow-sm border-0 backdrop-blur-sm bg-white/90;
+    transition: all 0.3s ease;
   }
   
   .set-card:hover {
-    @apply shadow-xl bg-white/95;
-    transform: translateY(-5px);
+    @apply shadow-md bg-white/95;
+    transform: translateY(-2px);
   }
   
-  /* Button styles */
+  /* Button styles - more refined */
   .set-button-primary {
-    @apply bg-gradient-to-b from-set-purple to-set-purple/90 text-white rounded-2xl shadow-lg
-           shadow-set-purple/20 border-0 flex items-center justify-center gap-2 
-           transition-all hover:shadow-xl hover:shadow-set-purple/30 hover:-translate-y-1 
-           active:scale-95 font-medium py-3 px-5;
+    @apply bg-gradient-to-b from-set-purple to-set-purple/90 text-white rounded-md shadow-md
+           shadow-set-purple/10 border-0 flex items-center justify-center gap-2 
+           transition-all hover:shadow-lg hover:shadow-set-purple/20 hover:-translate-y-0.5 
+           active:scale-98 font-medium py-2.5 px-4;
   }
   
   .set-button-secondary {
-    @apply bg-white/90 backdrop-blur-sm text-set-purple rounded-2xl shadow-md border border-set-purple/10
-           flex items-center justify-center gap-2 transition-all hover:shadow-lg hover:-translate-y-1
-           active:scale-95 font-medium py-3 px-5;
+    @apply bg-white/90 backdrop-blur-sm text-set-purple rounded-md shadow-sm border border-set-purple/10
+           flex items-center justify-center gap-2 transition-all hover:shadow-md hover:-translate-y-0.5
+           active:scale-98 font-medium py-2.5 px-4;
   }
   
-  /* Badge styles */
+  /* Badge styles - more sophisticated */
   .set-badge {
-    @apply rounded-full px-3.5 py-1.5 text-sm font-medium shadow-md flex items-center gap-1.5;
+    @apply rounded-md px-3 py-1 text-sm font-medium shadow-sm flex items-center gap-1.5;
   }
   
   .set-badge-primary {
-    @apply bg-set-purple text-white border-0 set-badge;
+    @apply bg-gradient-to-r from-set-purple to-set-purple/90 text-white border-0 set-badge;
   }
   
   .set-badge-success {
-    @apply bg-set-green text-white border-0 set-badge;
+    @apply bg-gradient-to-r from-set-green to-set-green/90 text-white border-0 set-badge;
   }
   
-  /* Set symbols */
+  /* Set symbols - more subtle */
   .set-symbol {
-    @apply inline-block text-xl font-bold transition-all duration-300;
+    @apply inline-block text-xl font-medium transition-all duration-300;
   }
   
   .set-symbol-diamond {
-    @apply set-symbol text-set-purple;
+    @apply set-symbol text-set-purple/90;
   }
   
   .set-symbol-oval {
-    @apply set-symbol text-set-red;
+    @apply set-symbol text-set-red/90;
   }
   
   .set-symbol-triangle {
-    @apply set-symbol text-set-green;
+    @apply set-symbol text-set-green/90;
   }
 }
 
 @layer utilities {
   /* Animation utilities */
   .animate-float {
-    animation: float 4s ease-in-out infinite;
+    animation: float 5s ease-in-out infinite;
   }
   
   .animate-pulse-subtle {
-    animation: pulse 2s ease-in-out infinite;
+    animation: pulse 3s ease-in-out infinite;
   }
   
   .animate-rotate {
-    animation: rotate 10s linear infinite;
+    animation: rotate 12s linear infinite;
   }
   
   .animate-shimmer {
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.1) 50%,
       transparent 100%
     );
     background-size: 200% 100%;
-    animation: shimmer 2s linear infinite;
+    animation: shimmer 3s linear infinite;
   }
   
-  /* Glassmorphism effects */
+  /* Glassmorphism effects - more refined */
   .glass {
-    @apply backdrop-blur-md bg-white/70 border border-white/30;
+    @apply backdrop-blur-md bg-white/70 border border-white/20;
   }
   
   .glass-colored {
-    @apply backdrop-blur-md bg-gradient-to-br from-white/70 to-white/50 border border-white/30;
+    @apply backdrop-blur-md bg-gradient-to-br from-white/70 to-white/60 border border-white/20;
   }
   
   /* Interaction states */
   .interactive {
-    @apply transition-all duration-300 hover:scale-105 active:scale-95;
+    @apply transition-all duration-300 hover:scale-102 active:scale-98;
   }
   
   /* Common spacing utilities */
   .section-y-space {
-    @apply py-8 md:py-12;
+    @apply py-6 md:py-10;
   }
   
   .card-padding {
-    @apply p-4 md:p-6;
+    @apply p-3 md:p-5;
+  }
+  
+  /* New gradient utilities */
+  .purple-gradient {
+    @apply bg-gradient-to-r from-set-purple/90 to-set-purple/70;
+  }
+  
+  .purple-gradient-subtle {
+    @apply bg-gradient-to-r from-set-purple/20 via-set-purple/10 to-set-purple/5;
+  }
+  
+  .set-gradient-soft {
+    @apply bg-gradient-to-r from-set-purple/30 via-set-green/20 to-set-red/10;
   }
 }
 
@@ -193,13 +205,13 @@
   
   /* Improved spacing for iOS devices */
   body {
-    padding-bottom: env(safe-area-inset-bottom, 80px);
+    padding-bottom: env(safe-area-inset-bottom, 20px);
   }
   
   /* Better tap targets */
   button, a, .clickable {
-    min-height: 44px;
-    min-width: 44px;
+    min-height: 40px;
+    min-width: 40px;
   }
 }
 
@@ -209,7 +221,7 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-6px);
   }
 }
 
@@ -219,8 +231,8 @@
     transform: scale(1);
   }
   50% {
-    opacity: 0.8;
-    transform: scale(1.05);
+    opacity: 0.9;
+    transform: scale(1.03);
   }
 }
 
@@ -240,4 +252,13 @@
   100% {
     background-position: 200% 0;
   }
+}
+
+/* Refined scales for animations */
+@keyframes scale-98 {
+  to { transform: scale(0.98); }
+}
+
+@keyframes scale-102 {
+  to { transform: scale(1.02); }
 }
