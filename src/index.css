@@ -14,7 +14,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 260 84% 66%; /* #8B5CF6 Deep Purple */
+    --primary: 0 72% 51%; /* Red */
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -23,7 +23,7 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 260 84% 66%; /* #8B5CF6 */
+    --accent: 20 100% 63%; /* Amber */
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 84.2% 60.2%;
@@ -31,9 +31,14 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 260 84% 66%; /* #8B5CF6 */
+    --ring: 0 72% 51%; /* Red */
 
     --radius: 0.75rem; /* Refined border radius */
+    
+    /* Add SET card colors */
+    --set-red: 0 72% 51%;
+    --set-green: 142 76% 36%;
+    --set-purple: 280 87% 65%;
   }
 }
 
@@ -70,40 +75,40 @@
     clip-path: path("M 75,0 C 150,0 150,100 75,100 C 0,100 0,0 75,0 Z");
   }
   
-  /* Futuristic SET shapes with gradients */
+  /* Futuristic SET shapes with enhanced gradients */
   .set-shape {
     @apply transition-all duration-300 cursor-pointer hover:brightness-105;
   }
   
   .set-shape:hover {
-    filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.4));
+    filter: drop-shadow(0 0 12px rgba(225, 29, 72, 0.5));
   }
   
   /* Enhanced neo-morphic card layouts */
   .set-card {
-    @apply rounded-xl shadow-md border-0 backdrop-blur-sm bg-white/90;
+    @apply rounded-xl shadow-lg border-0 backdrop-blur-sm bg-white/90;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(243, 244, 246, 0.7));
-    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(243, 244, 246, 0.8));
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.1);
   }
   
   .set-card:hover {
-    @apply shadow-lg bg-white/95;
-    transform: translateY(-3px);
-    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+    @apply shadow-xl bg-white/95;
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(15, 23, 42, 0.15);
   }
   
-  /* Button styles - futuristic gradient */
+  /* Button styles - updated gradients */
   .set-button-primary {
-    @apply bg-neo-gradient-purple text-white rounded-lg shadow-md
-           shadow-primary-purple/20 border-0 flex items-center justify-center gap-2 
-           transition-all hover:shadow-lg hover:shadow-primary-purple/30 hover:-translate-y-0.5 
-           active:scale-95 font-medium py-2.5 px-4;
+    @apply bg-gradient-to-r from-red-500 to-amber-500 text-white rounded-lg shadow-md
+           shadow-red-500/20 border-0 flex items-center justify-center gap-2 
+           transition-all hover:shadow-lg hover:shadow-red-500/30 hover:-translate-y-1 
+           active:translate-y-0 active:scale-95 font-medium py-2.5 px-4;
   }
   
   .set-button-secondary {
-    @apply bg-white/90 backdrop-blur-sm text-primary-violet rounded-lg shadow-sm border border-primary-violet/10
-           flex items-center justify-center gap-2 transition-all hover:shadow-md hover:-translate-y-0.5
+    @apply bg-white/90 backdrop-blur-sm text-gray-700 rounded-lg shadow-sm border border-gray-100
+           flex items-center justify-center gap-2 transition-all hover:shadow-md hover:-translate-y-1
            active:scale-95 font-medium py-2.5 px-4;
   }
   
@@ -113,11 +118,11 @@
   }
   
   .set-badge-primary {
-    @apply bg-neo-gradient-purple text-white border-0 set-badge;
+    @apply bg-gradient-to-r from-red-500 to-amber-500 text-white border-0 set-badge;
   }
   
   .set-badge-success {
-    @apply bg-neo-gradient-blue text-white border-0 set-badge;
+    @apply bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-0 set-badge;
   }
   
   /* Set symbols - gradient colors */
@@ -127,21 +132,21 @@
   
   .set-symbol-diamond {
     @apply set-symbol;
-    background: linear-gradient(to bottom right, #8B5CF6, #6366F1);
+    background: linear-gradient(to bottom right, #f43f5e, #f97316);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   
   .set-symbol-oval {
     @apply set-symbol;
-    background: linear-gradient(to bottom right, #EC4899, #F59E0B);
+    background: linear-gradient(to bottom right, #f97316, #facc15);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   
   .set-symbol-triangle {
     @apply set-symbol;
-    background: linear-gradient(to bottom right, #10B981, #34D399);
+    background: linear-gradient(to bottom right, #ef4444, #b91c1c);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }

@@ -2,7 +2,7 @@
 import React from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Github, Info, ExternalLink } from "lucide-react";
+import { Github, Info, ExternalLink, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface LayoutProps {
@@ -64,28 +64,29 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       `}
       </style>
 
-      {/* Top navigation bar - iOS style */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
+      {/* Enhanced iOS-style top navigation bar with glass effect */}
+      <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-xl border-b border-gray-100 shadow-sm">
         <div className="container mx-auto px-4 h-14 flex items-center justify-between">
-          <h1 className="text-lg font-medium text-gray-800">SET Detector</h1>
+          <h1 className="text-lg font-semibold text-gray-800 bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text text-transparent">SET Detector</h1>
           
           <div className="flex items-center gap-2">
             <Button
               variant="outline"
               size="sm"
-              onClick={() => window.open("https://www.setgame.com/sites/default/files/instructions/SET%20INSTRUCTIONS%20-%20ENGLISH.pdf", "_blank")}
-              className="bg-white text-gray-700 border border-gray-200 rounded-full h-8 px-3 text-xs shadow-none hover:bg-gray-50"
+              onClick={() => window.open("https://github.com/omamitai", "_blank")}
+              className="bg-white/90 text-gray-700 border border-gray-200 rounded-full h-8 px-3 text-xs shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 hover:bg-gray-50"
             >
-              <Info className="h-3.5 w-3.5 mr-1.5 text-gray-500" />
-              <span>Rules</span>
+              <Github className="h-3.5 w-3.5 mr-1.5 text-gray-700" />
+              <span>GitHub</span>
             </Button>
             
             <Button 
               variant="outline"
               size="sm"
               onClick={handleShare}
-              className="bg-blue-50 text-blue-600 border border-blue-100 rounded-full h-8 px-3 text-xs shadow-none hover:bg-blue-100"
+              className="bg-gradient-to-r from-red-500 to-amber-500 text-white border-0 rounded-full h-8 px-3 text-xs shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5"
             >
+              <Share2 className="h-3.5 w-3.5 mr-1.5 text-white" />
               <span>Share</span>
             </Button>
           </div>
@@ -96,7 +97,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         {children}
       </main>
 
-      <footer className="border-t border-gray-100 py-3 bg-white/60 backdrop-blur-lg mt-auto z-20 w-full">
+      <footer className="border-t border-gray-100 py-3 bg-white/80 backdrop-blur-xl sticky bottom-0 mt-auto z-20 w-full shadow-[0_-1px_3px_rgba(0,0,0,0.05)]">
         <div className="container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-xs text-gray-500 font-sans">
             SET® is a registered trademark of Cannei, LLC.
@@ -104,7 +105,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           
           <div className="flex items-center gap-2">
             <span className="text-xs text-gray-500 font-sans flex items-center">
-              Detector by <a href="https://github.com/omamitai" className="flex items-center ml-1 text-gray-600 hover:text-gray-800">
+              Detector by <a href="https://github.com/omamitai" className="flex items-center ml-1 text-gray-600 hover:text-gray-800 transition-colors">
                 <Github className="h-3.5 w-3.5 mr-1" />
                 omamitai
               </a>

@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { UploadCloud, X, Camera, Image as ImageIcon, Sparkles } from "lucide-react";
@@ -25,21 +24,21 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
   
-  // Enhanced SET shapes with gradient styling
+  // Enhanced SET shapes with gradient styling and red theme
   const symbols = [
     { 
       shape: "◇", 
-      style: "text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600 drop-shadow-sm", 
+      style: "text-transparent bg-clip-text bg-gradient-to-br from-red-400 to-red-600 drop-shadow-md", 
       animation: "animate-float" 
     },
     { 
       shape: "○", 
-      style: "text-transparent bg-clip-text bg-gradient-to-br from-purple-400 to-purple-600 drop-shadow-sm", 
+      style: "text-transparent bg-clip-text bg-gradient-to-br from-amber-400 to-amber-600 drop-shadow-md", 
       animation: "animate-pulse-subtle" 
     },
     { 
       shape: "△", 
-      style: "text-transparent bg-clip-text bg-gradient-to-br from-teal-400 to-teal-600 drop-shadow-sm", 
+      style: "text-transparent bg-clip-text bg-gradient-to-br from-rose-400 to-rose-600 drop-shadow-md", 
       animation: "animate-bounce-subtle" 
     }
   ];
@@ -129,7 +128,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             transition={{ duration: 0.4 }}
           >
             <Card 
-              className={`overflow-hidden bg-white border border-gray-100 shadow-sm rounded-xl transition-all ${dragActive ? 'ring-1 ring-blue-400' : ''}`}
+              className={`overflow-hidden bg-white border border-gray-100 shadow-lg rounded-xl transition-all ${dragActive ? 'ring-1 ring-red-400' : ''}`}
               {...getRootProps()} 
               onDragEnter={handleDrag}
               onDragLeave={handleDrag}
@@ -156,7 +155,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 </div>
                 
                 <motion.h3 
-                  className="font-medium text-xl md:text-2xl mb-3 text-gray-800"
+                  className="font-medium text-xl md:text-2xl mb-3 text-gray-800 bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text text-transparent"
                   whileHover={{ scale: 1.02 }}
                 >
                   {isDragActive ? "Drop your SET game photo here" : "Upload SET game photo"}
@@ -171,7 +170,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   Take a clear photo of the cards on a flat surface
                 </motion.p>
                 
-                {/* Hidden input for file (gallery) selection */}
+                {/* Hidden inputs */}
                 <input 
                   ref={fileInputRef}
                   type="file"
@@ -184,7 +183,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   }}
                 />
                 
-                {/* Hidden input for camera */}
                 <input 
                   ref={cameraInputRef}
                   type="file"
@@ -201,7 +199,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm">
                   <Button 
                     onClick={triggerCameraInput}
-                    className="bg-blue-500 hover:bg-blue-600 text-white rounded-full py-2.5 text-sm w-full shadow-sm transition-all"
+                    className="bg-gradient-to-r from-red-500 to-amber-500 text-white rounded-full py-2.5 text-sm w-full shadow-md hover:shadow-lg transition-all hover:-translate-y-1 active:translate-y-0"
                     disabled={isProcessing}
                   >
                     <Camera className="h-4 w-4 mr-2" />
@@ -211,7 +209,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   <Button 
                     onClick={triggerFileInput}
                     variant="outline"
-                    className="bg-white border border-gray-200 text-gray-700 rounded-full py-2.5 text-sm w-full shadow-sm hover:bg-gray-50 transition-all"
+                    className="bg-white/90 backdrop-blur-sm border border-gray-200 text-gray-700 rounded-full py-2.5 text-sm w-full shadow-sm hover:shadow-md transition-all hover:-translate-y-1 active:translate-y-0"
                     disabled={isProcessing}
                   >
                     <ImageIcon className="h-4 w-4 mr-2" />
@@ -235,7 +233,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <Card className="overflow-hidden shadow-sm border border-gray-100 rounded-xl bg-white">
+            <Card className="overflow-hidden shadow-lg border border-gray-100 rounded-xl bg-white">
               <CardContent className="p-0 relative">
                 <div className="relative">
                   <img 
@@ -255,7 +253,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                       <Button 
                         variant="outline"
                         size="icon"
-                        className="rounded-full bg-white/80 backdrop-blur-sm shadow-sm hover:bg-white border border-gray-200"
+                        className="rounded-full bg-white/80 backdrop-blur-sm shadow-md hover:shadow-lg hover:bg-white border border-gray-200"
                         onClick={removeImage}
                       >
                         <X className="h-4 w-4 text-gray-600" />
@@ -271,11 +269,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     className="absolute inset-0 flex items-center justify-center"
                   >
                     {/* Processing indicator overlay */}
-                    <div className="absolute inset-0 bg-white/50 backdrop-blur-md"></div>
+                    <div className="absolute inset-0 bg-white/60 backdrop-blur-md"></div>
                     
                     {/* Enhanced processing indicator */}
                     <motion.div 
-                      className="bg-white/90 backdrop-blur-xl rounded-xl px-5 py-4 shadow-sm flex flex-col items-center gap-3 z-10 max-w-xs border border-gray-100"
+                      className="bg-white/90 backdrop-blur-xl rounded-xl px-5 py-4 shadow-lg flex flex-col items-center gap-3 z-10 max-w-xs border border-gray-100"
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.2, type: "spring", stiffness: 300, damping: 25 }}
@@ -287,7 +285,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                             transition: { duration: 2, repeat: Infinity, ease: "linear" }
                           }}
                         >
-                          <Sparkles className="h-5 w-5 text-blue-500" />
+                          <Sparkles className="h-5 w-5 text-red-500" />
                         </motion.div>
                         <span className="text-base font-medium text-gray-800">Analyzing SET cards...</span>
                       </div>
