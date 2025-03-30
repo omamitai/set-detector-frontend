@@ -90,7 +90,7 @@ const Index = () => {
         animate={{ opacity: 1 }}
         className="max-w-6xl mx-auto px-4 md:px-6 py-4 md:py-8"
       >
-        {/* Hero section - removed floating cards */}
+        {/* Hero section */}
         <motion.div 
           className="text-center mb-8 md:mb-12"
           initial={itemVariants.hidden}
@@ -130,7 +130,7 @@ const Index = () => {
           </motion.div>
         )}
         
-        <div className="max-w-md mx-auto md:max-w-4xl">
+        <div className="max-w-md mx-auto md:max-w-4xl pb-24 sm:pb-0">
           {activeTab === "upload" ? (
             <motion.div 
               variants={containerVariants}
@@ -158,7 +158,7 @@ const Index = () => {
               {/* Sticky bottom CTA for mobile with proper spacing and z-index */}
               {isMobile && (
                 <motion.div 
-                  className="fixed bottom-0 left-0 right-0 p-4 glass-panel shadow-lg border-t z-40"
+                  className="fixed bottom-0 left-0 right-0 p-4 glass-panel shadow-lg border-t z-10"
                   initial={{ y: 100 }}
                   animate={{ y: 0 }}
                   transition={{ delay: 0.5, type: "spring", stiffness: 300, damping: 30 }}
@@ -169,7 +169,7 @@ const Index = () => {
                         const fileInput = document.querySelector('input[capture="environment"]') as HTMLInputElement;
                         if (fileInput) fileInput.click();
                       }}
-                      className="flex-1 neo-button text-white gap-2 rounded-xl h-12"
+                      className="flex-1 neo-button text-white gap-2 rounded-xl h-12 bg-gradient-to-r from-primary-violet to-primary-indigo"
                     >
                       <Camera className="h-4 w-4" />
                       Take Photo

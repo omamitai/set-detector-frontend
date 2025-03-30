@@ -126,22 +126,22 @@
   }
   
   .set-symbol-diamond {
-    @apply set-symbol text-primary-purple;
+    @apply set-symbol;
     background: linear-gradient(to bottom right, #8B5CF6, #6366F1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   
   .set-symbol-oval {
-    @apply set-symbol text-accent-pink;
+    @apply set-symbol;
     background: linear-gradient(to bottom right, #EC4899, #F59E0B);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   
   .set-symbol-triangle {
-    @apply set-symbol text-accent-teal;
-    background: linear-gradient(to bottom right, #14B8A6, #3B82F6);
+    @apply set-symbol;
+    background: linear-gradient(to bottom right, #10B981, #34D399);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }

@@ -84,7 +84,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         
         /* Ensure proper spacing for mobile bottom buttons */
         .pb-mobile-actions {
-          padding-bottom: calc(80px + env(safe-area-inset-bottom, 20px));
+          padding-bottom: calc(85px + env(safe-area-inset-bottom, 20px));
         }
         
         /* Mobile optimizations */
@@ -103,7 +103,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         {children}
       </main>
 
-      <footer className="border-t border-gray-100 py-4 bg-white/80 backdrop-blur-md mt-auto sticky bottom-0 z-10">
+      <footer className="border-t border-gray-100 py-4 bg-white/80 backdrop-blur-md mt-auto z-20 w-full">
         <div className="container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-xs text-gray-500 mb-2 sm:mb-0 font-sans">
             SET® is a registered trademark of Cannei, LLC.
@@ -123,7 +123,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             
             <a 
               href="https://github.com/omamitai/set-detector"
-              target="_blank"
+              target="_blank" 
               rel="noopener noreferrer"
               className="text-xs text-gray-500 hover:text-primary-violet transition-colors"
             >
