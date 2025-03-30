@@ -63,13 +63,15 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// SET game specific colors
+				// SET game specific colors - updated with iOS-inspired palette
 				set: {
-					purple: '#9747FF',
-					green: '#42CEB4',
-					red: '#FF5C87',
-					dark: '#1A1F2C',
-					light: '#F8FAFC'
+					purple: '#5856D6',  // Primary deep purple
+					lavender: '#C7C2F9', // Secondary pastel lavender
+					green: '#30D158',   // Mint green accent
+					coral: '#FF453A',   // Soft coral accent
+					dark: '#1C1C1E',    // Dark navy
+					gray: '#636366',    // Soft gray
+					light: '#F8FAFC'    // Light background
 				}
 			},
 			borderRadius: {
@@ -114,6 +116,14 @@ export default {
 					'0%': { transform: 'translateY(0%)', opacity: '0.3' },
 					'50%': { opacity: '0.7' },
 					'100%': { transform: 'translateY(100%)', opacity: '0.3' }
+				},
+				'scale-in': {
+					'0%': { transform: 'scale(0.95)', opacity: '0' },
+					'100%': { transform: 'scale(1)', opacity: '1' }
+				},
+				'bounce-subtle': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-3px)' }
 				}
 			},
 			animation: {
@@ -123,7 +133,9 @@ export default {
 				'fade-out': 'fade-out 0.3s ease-out',
 				'slide-in-up': 'slide-in-up 0.4s ease-out',
 				'slide-in-down': 'slide-in-down 0.4s ease-out',
-				'scan-line': 'scan-line 2s linear infinite'
+				'scan-line': 'scan-line 2s linear infinite',
+				'scale-in': 'scale-in 0.3s ease-out',
+				'bounce-subtle': 'bounce-subtle 2s ease-in-out infinite'
 			}
 		}
 	},

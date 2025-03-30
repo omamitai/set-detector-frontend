@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,7 +14,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 262 30% 54%;
+    --primary: 262 84% 59%; /* #5856D6 Deep Purple */
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -22,7 +23,7 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 262 30% 54%;
+    --accent: 262 84% 59%; /* #5856D6 */
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 84.2% 60.2%;
@@ -30,9 +31,9 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 262 30% 54%;
+    --ring: 262 84% 59%; /* #5856D6 */
 
-    --radius: 0.75rem;
+    --radius: 1rem; /* Increased border radius */
   }
 }
 
@@ -76,18 +77,18 @@
     @apply bg-background;
     background-attachment: fixed;
     background-image: 
-      radial-gradient(at 10% 20%, rgba(151, 71, 255, 0.35) 0px, transparent 65%), 
-      radial-gradient(at 90% 30%, rgba(66, 206, 180, 0.35) 0px, transparent 65%),
-      radial-gradient(at 50% 80%, rgba(255, 92, 135, 0.3) 0px, transparent 60%);
+      radial-gradient(at 10% 20%, rgba(88, 86, 214, 0.25) 0px, transparent 65%), 
+      radial-gradient(at 90% 30%, rgba(48, 209, 88, 0.25) 0px, transparent 65%),
+      radial-gradient(at 50% 80%, rgba(255, 69, 58, 0.2) 0px, transparent 60%);
   }
   
   .ios-card {
-    @apply rounded-2xl shadow-md border-0 backdrop-blur-sm bg-white/80;
-    transition: all 0.25s ease;
+    @apply rounded-2xl shadow-md border-0 backdrop-blur-sm bg-white/90;
+    transition: all 0.3s ease;
   }
   
   .ios-card:hover {
-    @apply shadow-lg bg-white/85;
+    @apply shadow-lg bg-white/95;
     transform: translateY(-2px);
   }
   
@@ -100,6 +101,7 @@
   .ios-button {
     border-radius: 16px;
     padding: 14px 20px;
+    -webkit-tap-highlight-color: transparent;
   }
   
   /* Mobile optimizations */
@@ -126,6 +128,7 @@
     /* Larger touch targets */
     .touch-target {
       min-height: 44px;
+      min-width: 44px;
     }
     
     /* Improved mobile badge styles */
@@ -136,8 +139,8 @@
   
   /* SET game theme buttons */
   .purple-button {
-    @apply bg-gradient-to-b from-set-purple/90 to-set-purple shadow-md shadow-set-purple/25 
-    text-white rounded-2xl border-0 py-2.5 px-4 font-medium transition-all;
+    @apply bg-gradient-to-b from-set-purple/95 to-set-purple shadow-md shadow-set-purple/20 
+    text-white rounded-2xl border-0 py-3 px-4 font-medium transition-all;
   }
   
   .purple-button:hover {
@@ -189,6 +192,21 @@
   /* Bottom spacing for fixed button */
   .pb-safe {
     padding-bottom: calc(env(safe-area-inset-bottom, 16px) + 60px);
+  }
+  
+  /* iOS style interactions */
+  .tap-highlight {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* iOS button press effect */
+  .ios-press {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  
+  .ios-press:active {
+    transform: scale(0.97);
+    opacity: 0.9;
   }
 }
 
@@ -253,5 +271,11 @@
   /* Larger text for better readability */
   .mobile-text-larger {
     font-size: 1.1rem;
+  }
+  
+  /* Improved touch targets following Apple HIG */
+  button, a, .clickable {
+    min-height: 44px;
+    min-width: 44px;
   }
 }

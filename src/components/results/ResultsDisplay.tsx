@@ -54,22 +54,28 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
       className="space-y-4"
     >
       <div className="relative">
-        <Card className="ios-card overflow-hidden">
+        <Card className="ios-card overflow-hidden border-0">
           <CardContent className="p-0 relative">
             {resultImage && (
               <div className="relative">
-                {/* Sets found badge - moved to top right corner to avoid hiding cards */}
+                {/* Sets found badge - moved to top right corner with improved styling */}
                 {sets.length > 0 && (
                   <div className="absolute top-3 right-3 z-10">
-                    <Badge 
-                      className="bg-set-purple/95 text-white border-0 rounded-full px-3 py-1 
-                                shadow-lg flex items-center gap-1.5"
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.2, duration: 0.3 }}
                     >
-                      <Sparkles className="h-3 w-3" />
-                      <span className="sf-pro-display font-medium text-xs">
-                        {sets.length} SET{sets.length !== 1 ? "s" : ""} detected
-                      </span>
-                    </Badge>
+                      <Badge 
+                        className="bg-[#5856D6]/90 text-white border-0 rounded-full px-3.5 py-1.5 
+                                 shadow-md flex items-center gap-1.5"
+                      >
+                        <Sparkles className="h-3.5 w-3.5 text-[#C7C2F9]" />
+                        <span className="sf-pro-display font-medium text-xs">
+                          {sets.length} SET{sets.length !== 1 ? "s" : ""} detected
+                        </span>
+                      </Badge>
+                    </motion.div>
                   </div>
                 )}
                 
@@ -84,19 +90,21 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                     variant="secondary"
                     size={isMobile ? "sm" : "default"}
                     onClick={onReset}
-                    className="gap-1 rounded-full bg-background/90 backdrop-blur-sm text-xs shadow-md"
+                    className="gap-1.5 rounded-full bg-white/90 backdrop-blur-sm text-xs font-medium shadow-md
+                              hover:bg-white hover:shadow-lg transition-all duration-300 border-0"
                   >
-                    <RefreshCw className="h-3 w-3" />
-                    <span className="sf-pro-text">New</span>
+                    <RefreshCw className="h-3.5 w-3.5 text-[#1C1C1E]" />
+                    <span className="sf-pro-text text-[#1C1C1E]">New</span>
                   </Button>
                   
                   <Button
                     variant="default"
                     size={isMobile ? "sm" : "default"}
                     onClick={downloadImage}
-                    className="gap-1 rounded-full bg-primary/90 backdrop-blur-sm text-xs shadow-md"
+                    className="gap-1.5 rounded-full bg-[#5856D6]/90 backdrop-blur-sm text-xs font-medium shadow-md
+                              hover:bg-[#5856D6] hover:shadow-lg transition-all duration-300 border-0"
                   >
-                    <Download className="h-3 w-3" />
+                    <Download className="h-3.5 w-3.5" />
                     <span className="sf-pro-text">Save</span>
                   </Button>
                 </div>
@@ -107,13 +115,18 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
       </div>
       
       {sets.length === 0 && resultImage && (
-        <div className="flex flex-col items-center justify-center p-2">
-          <div className="bg-orange-50 border border-orange-100 rounded-xl p-3 shadow-sm w-full max-w-sm">
-            <p className="text-orange-600 sf-pro-text text-sm font-medium text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.4 }}
+          className="flex flex-col items-center justify-center p-2"
+        >
+          <div className="bg-[#FFEBE9] border border-[#FF453A]/20 rounded-xl p-3.5 shadow-sm w-full max-w-sm">
+            <p className="text-[#FF453A] sf-pro-text text-sm font-medium text-center">
               No SET cards detected in this image
             </p>
           </div>
-        </div>
+        </motion.div>
       )}
     </motion.div>
   );

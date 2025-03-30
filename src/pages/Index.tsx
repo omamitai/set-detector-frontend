@@ -36,7 +36,6 @@ const Index = () => {
     try {
       setIsProcessing(true);
       setError(null);
-      // Removed toast notification
       
       const result = await detectSets(file);
       
@@ -44,7 +43,6 @@ const Index = () => {
       setDetectedSets(result.sets);
       setActiveTab("results");
       
-      // Removed toast notifications
     } catch (error) {
       console.error("Error processing image:", error);
       
@@ -56,8 +54,6 @@ const Index = () => {
       } else {
         setError(errorMessage);
       }
-      
-      // Removed toast notification
     } finally {
       setIsProcessing(false);
     }
@@ -70,6 +66,23 @@ const Index = () => {
     setError(null);
   };
 
+  // Container variants for motion animations
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        when: "beforeChildren",
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 }
+  };
+
   return (
     <Layout>
       <motion.div 
@@ -78,15 +91,15 @@ const Index = () => {
         className="max-w-6xl mx-auto px-3 md:px-6 py-3 md:py-6"
       >
         <motion.div 
-          className={`text-center mb-4 ${isMobile ? 'mt-3 mb-4' : 'md:mb-6'}`}
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
+          className={`text-center ${isMobile ? 'mt-1 mb-3' : 'mt-2 mb-6'}`}
+          initial={itemVariants.hidden}
+          animate={itemVariants.visible}
+          transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <h1 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold mb-2 text-gray-900 sf-pro-display`}>
+          <h1 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold mb-2 text-set-dark sf-pro-display tracking-tight`}>
             SET Game Detector
           </h1>
-          <p className="text-muted-foreground mb-2 max-w-lg mx-auto sf-pro-text text-sm md:text-base">
+          <p className="text-set-gray mb-2 max-w-lg mx-auto sf-pro-text text-sm md:text-base">
             Upload a photo of your SET game layout
           </p>
         </motion.div>
@@ -97,16 +110,16 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Alert variant="destructive" className="mb-4 max-w-md mx-auto bg-orange-50 border-orange-100 text-orange-800">
-              <AlertTriangle className="h-4 w-4 text-orange-500" />
-              <AlertTitle className="text-orange-700">No SET Cards Detected</AlertTitle>
-              <AlertDescription className="flex flex-col gap-2 text-orange-600">
+            <Alert variant="destructive" className="mb-4 max-w-md mx-auto bg-[#FFEBE9] border-[#FF453A]/20 text-[#FF453A] shadow-sm">
+              <AlertTriangle className="h-4 w-4 text-[#FF453A]" />
+              <AlertTitle className="text-[#FF453A] font-medium">No SET Cards Detected</AlertTitle>
+              <AlertDescription className="flex flex-col gap-2 text-[#FF453A]/90">
                 <span>{error}</span>
                 <Button 
                   variant="outline" 
                   size="sm" 
                   onClick={handleReset} 
-                  className="self-end flex items-center gap-1 border-orange-200 text-orange-700 hover:bg-orange-100"
+                  className="self-end flex items-center gap-1 border-[#FF453A]/20 text-[#FF453A] hover:bg-[#FFEBE9]/80"
                 >
                   <RefreshCw className="h-3 w-3" />
                   Try again
@@ -118,30 +131,51 @@ const Index = () => {
         
         <div className="max-w-md mx-auto md:max-w-4xl">
           {activeTab === "upload" ? (
-            <div className="flex flex-col gap-4">
-              <div className={`mx-auto w-full ${isMobile ? 'mt-0' : 'ios-spacing'}`}>
+            <motion.div 
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="flex flex-col gap-4"
+            >
+              <motion.div 
+                variants={itemVariants}
+                className={`mx-auto w-full ${isMobile ? 'mt-0' : 'ios-spacing'}`}
+              >
                 <ImageUpload 
                   onImageSelected={handleImageSelected}
                   isProcessing={isProcessing}
                 />
-              </div>
+              </motion.div>
               
-              <div className="mt-6 md:mt-10 w-full">
+              <motion.div 
+                variants={itemVariants}
+                className="mt-4 md:mt-8 w-full"
+              >
                 <HowItWorks />
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           ) : (
-            <div className="space-y-4 md:space-y-6">
-              <ResultsDisplay
-                resultImage={resultImage}
-                sets={detectedSets}
-                onReset={handleReset}
-              />
+            <motion.div 
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="space-y-4 md:space-y-6"
+            >
+              <motion.div variants={itemVariants}>
+                <ResultsDisplay
+                  resultImage={resultImage}
+                  sets={detectedSets}
+                  onReset={handleReset}
+                />
+              </motion.div>
               
-              <div className="mt-6 md:mt-12 pb-8 md:pb-16">
+              <motion.div 
+                variants={itemVariants}
+                className="mt-4 md:mt-8 pb-6 md:pb-12"
+              >
                 <HowItWorks />
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           )}
         </div>
       </motion.div>
