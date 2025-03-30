@@ -1,7 +1,7 @@
 
 import React, { useState, useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
-import { UploadCloud, X, Camera, Image as ImageIcon } from "lucide-react";
+import { UploadCloud, X, Camera, Image as ImageIcon, Sparkles } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -24,6 +24,13 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
+  
+  // Animated SET symbols
+  const symbols = [
+    { shape: "◇", color: "text-set-purple", animation: "animate-float" },
+    { shape: "○", color: "text-set-red", animation: "animate-pulse-subtle" },
+    { shape: "△", color: "text-set-green", animation: "animate-bounce-subtle" }
+  ];
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (isProcessing) return;
@@ -51,7 +58,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       setUploadProgress(progress);
       if (progress >= 100) {
         clearInterval(interval);
-        onImageSelected(file);
+        
+        // Add a small delay to simulate processing
+        setTimeout(() => {
+          onImageSelected(file);
+        }, 300);
       }
     }, 50);
   }, [isProcessing, onImageSelected]);
@@ -103,35 +114,50 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
           >
-            <div 
+            <Card 
+              className={`set-card overflow-hidden border-0 shadow-xl transition-all ${dragActive ? 'ring-2 ring-set-purple' : ''}`}
               {...getRootProps()} 
-              className={`ios-card transition-all ${dragActive ? 'ring-2 ring-primary' : ''}`}
               onDragEnter={handleDrag}
               onDragLeave={handleDrag}
               onDragOver={handleDrag}
               onDrop={handleDrag}
             >
-              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-4 py-7' : 'p-10 py-16'}`}>
-                <div className="mb-3">
-                  <motion.div 
-                    className="flex items-center justify-center gap-2"
-                    animate={{ y: [0, -5, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <div className="text-set-purple text-2xl">◇</div>
-                    <div className="text-set-red text-2xl">○</div>
-                    <div className="text-set-green text-2xl">△</div>
-                  </motion.div>
+              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-5 py-8' : 'p-10 py-16'}`}>
+                {/* Interactive SET shapes */}
+                <div className="mb-5 flex items-center justify-center gap-3">
+                  {symbols.map((symbol, index) => (
+                    <motion.div
+                      key={index}
+                      className={`${symbol.color} text-3xl md:text-4xl font-bold ${symbol.animation}`}
+                      whileHover={{ 
+                        scale: 1.2, 
+                        rotate: index % 2 === 0 ? 15 : -15,
+                        transition: { duration: 0.3 }
+                      }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      {symbol.shape}
+                    </motion.div>
+                  ))}
                 </div>
                 
-                <h3 className={`sf-pro-display ${isMobile ? 'text-base' : 'text-xl'} font-medium mb-1 text-gray-900`}>
+                <motion.h3 
+                  className="font-poppins text-xl md:text-2xl font-bold mb-2 text-set-dark"
+                  whileHover={{ scale: 1.03 }}
+                >
                   {isDragActive ? "Drop your SET game photo here" : "Upload SET game photo"}
-                </h3>
-                <p className={`sf-pro-text ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground mb-3 text-center max-w-sm`}>
-                  Take a clear photo of the cards
-                </p>
+                </motion.h3>
+                
+                <motion.p 
+                  className="text-set-gray mb-5 text-center max-w-sm font-sans"
+                  initial={{ opacity: 0.8 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
+                >
+                  Take a clear photo of the cards on a flat surface
+                </motion.p>
                 
                 {/* Hidden input for file (gallery) selection */}
                 <input 
@@ -160,72 +186,77 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   }}
                 />
                 
-                {isMobile ? (
-                  <div className="flex flex-col w-full space-y-2 px-2">
+                {/* Don't show these buttons on mobile since we have a sticky toolbar instead */}
+                {!isMobile && (
+                  <div className="flex flex-col gap-3 w-full max-w-sm">
                     <Button 
                       onClick={triggerCameraInput}
-                      className="purple-button gap-2 justify-center py-3 w-full text-sm ios-button"
+                      className="set-button-primary py-3 text-base w-full"
                       disabled={isProcessing}
                     >
-                      <Camera className="h-4 w-4" />
-                      <span className="sf-pro-display">Take Photo</span>
+                      <Camera className="h-5 w-5" />
+                      <span className="font-poppins">Take Photo</span>
                     </Button>
                     
                     <Button 
                       onClick={triggerFileInput}
                       variant="outline"
-                      className="gap-2 justify-center py-3 w-full text-sm ios-button bg-secondary/80"
+                      className="set-button-secondary py-3 text-base w-full"
                       disabled={isProcessing}
                     >
-                      <ImageIcon className="h-4 w-4" />
-                      <span className="sf-pro-display">Choose from Gallery</span>
+                      <ImageIcon className="h-5 w-5" />
+                      <span className="font-poppins">Choose from Gallery</span>
                     </Button>
                   </div>
-                ) : (
-                  <Button 
-                    onClick={triggerFileInput}
-                    className="purple-button gap-2 mb-4 text-base py-3 px-6"
-                    disabled={isProcessing}
-                  >
-                    <UploadCloud className="h-5 w-5" />
-                    <span className="sf-pro-display">Upload Photo</span>
-                  </Button>
                 )}
                 
                 {!isMobile && (
-                  <div className="flex items-center justify-center gap-1.5 text-sm text-muted-foreground sf-pro-text mt-2">
+                  <div className="flex items-center justify-center gap-1.5 text-sm text-set-gray mt-5">
                     <UploadCloud className="h-4 w-4" />
                     <span>Or drag and drop image here</span>
                   </div>
                 )}
               </CardContent>
-            </div>
+            </Card>
           </motion.div>
         ) : (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
           >
-            <Card className="ios-card overflow-hidden">
+            <Card className="set-card overflow-hidden shadow-xl border-0">
               <CardContent className="p-0 relative">
-                <img 
-                  src={previewUrl} 
-                  alt="Preview" 
-                  className="w-full h-auto object-contain max-h-[45vh] md:max-h-[60vh]" 
-                />
-                
-                {!isProcessing && (
-                  <Button 
-                    variant="ghost"
-                    size="icon"
-                    className="absolute top-2 right-2 rounded-full bg-background/70 backdrop-blur-sm"
-                    onClick={removeImage}
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                )}
+                <div className="relative">
+                  <img 
+                    src={previewUrl} 
+                    alt="Preview" 
+                    className="w-full h-auto object-contain max-h-[45vh] md:max-h-[60vh]" 
+                  />
+                  
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-set-purple/5 via-transparent to-set-green/5 pointer-events-none"></div>
+                  
+                  {!isProcessing && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="absolute top-3 right-3"
+                    >
+                      <Button 
+                        variant="outline"
+                        size="icon"
+                        className="rounded-full bg-white/80 backdrop-blur-sm shadow-md hover:bg-white hover:shadow-lg"
+                        onClick={removeImage}
+                      >
+                        <X className="h-4 w-4 text-set-gray" />
+                      </Button>
+                    </motion.div>
+                  )}
+                </div>
                 
                 {isProcessing && (
                   <motion.div 
@@ -234,20 +265,51 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     className="absolute inset-0 flex items-center justify-center"
                   >
                     {/* Processing indicator overlay */}
-                    <div className="absolute inset-0 bg-background/50 backdrop-blur-sm"></div>
+                    <div className="absolute inset-0 bg-white/50 backdrop-blur-md"></div>
                     
-                    {/* Simplified processing indicator */}
-                    <div className="bg-background/90 backdrop-blur-md rounded-xl px-4 py-3 shadow-lg flex items-center gap-2 z-10">
-                      <div className="w-4 h-4 rounded-full border-2 border-primary border-t-transparent animate-spin" />
-                      <span className="text-sm font-medium sf-pro-display">Processing image...</span>
-                    </div>
+                    {/* Enhanced processing indicator */}
+                    <motion.div 
+                      className="bg-white/90 backdrop-blur-xl rounded-2xl px-5 py-4 shadow-xl flex flex-col items-center gap-3 z-10 max-w-xs"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.2, type: "spring", stiffness: 300, damping: 25 }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <motion.div
+                          animate={{ 
+                            rotate: 360,
+                            transition: { duration: 2, repeat: Infinity, ease: "linear" }
+                          }}
+                        >
+                          <Sparkles className="h-5 w-5 text-set-purple" />
+                        </motion.div>
+                        <span className="text-base font-medium font-poppins text-set-dark">Analyzing SET cards...</span>
+                      </div>
+                      
+                      <Progress value={uploadProgress} className="h-1.5 w-full bg-gray-100" />
+                      
+                      <div className="flex items-center justify-center gap-2">
+                        {symbols.map((symbol, index) => (
+                          <motion.div
+                            key={index}
+                            className={`${symbol.color} text-lg font-bold`}
+                            animate={{ 
+                              scale: [1, 1.2, 1],
+                              opacity: [1, 0.8, 1],
+                              transition: { 
+                                duration: 1.5, 
+                                repeat: Infinity, 
+                                delay: index * 0.3,
+                                ease: "easeInOut"
+                              }
+                            }}
+                          >
+                            {symbol.shape}
+                          </motion.div>
+                        ))}
+                      </div>
+                    </motion.div>
                   </motion.div>
-                )}
-                
-                {uploadProgress < 100 && (
-                  <div className="absolute bottom-0 left-0 right-0 p-2 bg-background/70 backdrop-blur-sm">
-                    <Progress value={uploadProgress} className="h-1.5" />
-                  </div>
                 )}
               </CardContent>
             </Card>

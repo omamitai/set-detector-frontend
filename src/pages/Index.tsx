@@ -5,7 +5,7 @@ import ImageUpload from "@/components/upload/ImageUpload";
 import ResultsDisplay from "@/components/results/ResultsDisplay";
 import HowItWorks from "@/components/info/HowItWorks";
 import { detectSets } from "@/services/api";
-import { AlertCircle, RefreshCw, AlertTriangle } from "lucide-react";
+import { AlertCircle, RefreshCw, AlertTriangle, Camera, Image as ImageIcon, SparkleIcon } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -83,24 +83,55 @@ const Index = () => {
     visible: { y: 0, opacity: 1 }
   };
 
+  // Cards animation for hero section
+  const cards = [
+    { symbol: "◇", color: "text-set-purple", animationDelay: 0, rotate: "-3deg", translateY: "-5px" },
+    { symbol: "○", color: "text-set-red", animationDelay: 0.2, rotate: "2deg", translateY: "0px" },
+    { symbol: "△", color: "text-set-green", animationDelay: 0.4, rotate: "5deg", translateY: "-3px" },
+  ];
+
   return (
     <Layout>
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="max-w-6xl mx-auto px-3 md:px-6 py-3 md:py-6"
+        className="max-w-6xl mx-auto px-4 md:px-6 py-4 md:py-8"
       >
+        {/* Hero section with floating cards */}
         <motion.div 
-          className={`text-center ${isMobile ? 'mt-1 mb-3' : 'mt-2 mb-6'}`}
+          className="text-center mb-6 md:mb-10 relative"
           initial={itemVariants.hidden}
           animate={itemVariants.visible}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <h1 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold mb-2 text-set-dark sf-pro-display tracking-tight`}>
+          <div className="relative flex justify-center mb-4">
+            {cards.map((card, index) => (
+              <motion.div
+                key={index}
+                className={`absolute ${card.color} text-4xl md:text-5xl font-bold`}
+                style={{ 
+                  transform: `rotate(${card.rotate}) translateY(${card.translateY})`,
+                  zIndex: 10 - index
+                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ 
+                  opacity: 1, 
+                  y: 0,
+                  transition: { delay: card.animationDelay, duration: 0.5 }
+                }}
+                whileHover={{ scale: 1.1, rotate: '0deg' }}
+              >
+                {card.symbol}
+              </motion.div>
+            ))}
+            <div className="h-16 md:h-20"></div> {/* Spacer for floating cards */}
+          </div>
+          
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 text-set-dark font-poppins tracking-tight">
             SET Game Detector
           </h1>
-          <p className="text-set-gray mb-2 max-w-lg mx-auto sf-pro-text text-sm md:text-base">
-            Upload a photo of your SET game layout
+          <p className="text-set-gray max-w-lg mx-auto font-sans text-base md:text-lg">
+            Instantly spot every SET. Just snap, and play smarter.
           </p>
         </motion.div>
         
@@ -110,7 +141,7 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Alert variant="destructive" className="mb-4 max-w-md mx-auto bg-[#FFEBE9] border-[#FF453A]/20 text-[#FF453A] shadow-sm">
+            <Alert variant="destructive" className="mb-6 max-w-md mx-auto bg-[#FFEBE9] border-[#FF453A]/20 text-[#FF453A] shadow-sm">
               <AlertTriangle className="h-4 w-4 text-[#FF453A]" />
               <AlertTitle className="text-[#FF453A] font-medium">No SET Cards Detected</AlertTitle>
               <AlertDescription className="flex flex-col gap-2 text-[#FF453A]/90">
@@ -135,11 +166,11 @@ const Index = () => {
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="flex flex-col gap-4"
+              className="flex flex-col gap-8"
             >
               <motion.div 
                 variants={itemVariants}
-                className={`mx-auto w-full ${isMobile ? 'mt-0' : 'ios-spacing'}`}
+                className="mx-auto w-full"
               >
                 <ImageUpload 
                   onImageSelected={handleImageSelected}
@@ -149,17 +180,53 @@ const Index = () => {
               
               <motion.div 
                 variants={itemVariants}
-                className="mt-4 md:mt-8 w-full"
+                className="w-full"
               >
                 <HowItWorks />
               </motion.div>
+              
+              {/* Sticky bottom CTA for mobile */}
+              {isMobile && (
+                <motion.div 
+                  className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-md shadow-lg border-t z-50"
+                  initial={{ y: 100 }}
+                  animate={{ y: 0 }}
+                  transition={{ delay: 0.5, type: "spring", stiffness: 300, damping: 30 }}
+                >
+                  <div className="flex gap-3 max-w-md mx-auto">
+                    <Button 
+                      onClick={() => {
+                        const fileInput = document.querySelector('input[capture="environment"]') as HTMLInputElement;
+                        if (fileInput) fileInput.click();
+                      }}
+                      className="flex-1 bg-set-purple text-white gap-2 rounded-xl h-12"
+                    >
+                      <Camera className="h-4 w-4" />
+                      Take Photo
+                    </Button>
+                    
+                    <Button 
+                      onClick={() => {
+                        const fileInput = document.querySelector('input[type="file"]:not([capture])') as HTMLInputElement;
+                        if (fileInput) fileInput.click();
+                      }}
+                      variant="outline"
+                      className="flex-1 border-set-purple/20 text-set-purple gap-2 rounded-xl h-12"
+                    >
+                      <ImageIcon className="h-4 w-4" />
+                      Gallery
+                    </Button>
+                  </div>
+                  <div className="h-safe-bottom"></div>
+                </motion.div>
+              )}
             </motion.div>
           ) : (
             <motion.div 
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="space-y-4 md:space-y-6"
+              className="space-y-8 md:space-y-10 pb-16 md:pb-20"
             >
               <motion.div variants={itemVariants}>
                 <ResultsDisplay
@@ -169,10 +236,7 @@ const Index = () => {
                 />
               </motion.div>
               
-              <motion.div 
-                variants={itemVariants}
-                className="mt-4 md:mt-8 pb-6 md:pb-12"
-              >
+              <motion.div variants={itemVariants}>
                 <HowItWorks />
               </motion.div>
             </motion.div>

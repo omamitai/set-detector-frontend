@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -19,6 +18,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'sans': ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+				'poppins': ['Poppins', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -63,21 +66,27 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// SET game specific colors - updated with iOS-inspired palette
 				set: {
-					purple: '#5856D6',  // Primary deep purple
+					purple: '#5856D6',  // Deep purple
 					lavender: '#C7C2F9', // Secondary pastel lavender
-					green: '#30D158',   // Mint green accent
-					coral: '#FF453A',   // Soft coral accent
+					green: '#30D158',   // Vivid green 
+					red: '#FF453A',    // Bold red
 					dark: '#1C1C1E',    // Dark navy
 					gray: '#636366',    // Soft gray
-					light: '#F8FAFC'    // Light background
+					light: '#F8FAFC',   // Light background
+					yellow: '#FFD60A',  // Bright yellow for accents
+					blue: '#0A84FF',    // Bright blue for accents
+					'purple-gradient': 'linear-gradient(135deg, #5856D6, #7A78E2)',
+					'green-gradient': 'linear-gradient(135deg, #30D158, #4FE076)',
+					'red-gradient': 'linear-gradient(135deg, #FF453A, #FF6B63)'
 				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				sm: 'calc(var(--radius) - 4px)',
+				'2xl': '1.5rem',
+				'3xl': '2rem',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -124,6 +133,24 @@ export default {
 				'bounce-subtle': {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-3px)' }
+				},
+				'pulse': {
+					'0%, 100%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(1.05)' }
+				},
+				'rotate-subtle': {
+					'0%': { transform: 'rotate(0deg)' },
+					'25%': { transform: 'rotate(3deg)' },
+					'75%': { transform: 'rotate(-3deg)' },
+					'100%': { transform: 'rotate(0deg)' }
+				},
+				'shimmer': {
+					'0%': { backgroundPosition: '-200% 0' },
+					'100%': { backgroundPosition: '200% 0' }
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-8px)' }
 				}
 			},
 			animation: {
@@ -135,7 +162,14 @@ export default {
 				'slide-in-down': 'slide-in-down 0.4s ease-out',
 				'scan-line': 'scan-line 2s linear infinite',
 				'scale-in': 'scale-in 0.3s ease-out',
-				'bounce-subtle': 'bounce-subtle 2s ease-in-out infinite'
+				'bounce-subtle': 'bounce-subtle 2s ease-in-out infinite',
+				'pulse': 'pulse 2s ease-in-out infinite',
+				'rotate-subtle': 'rotate-subtle 3s ease-in-out infinite',
+				'shimmer': 'shimmer 3s linear infinite',
+				'float': 'float 4s ease-in-out infinite'
+			},
+			backgroundImage: {
+				'set-gradient': 'linear-gradient(135deg, rgba(88, 86, 214, 0.5), rgba(48, 209, 88, 0.5), rgba(255, 69, 58, 0.5))',
 			}
 		}
 	},

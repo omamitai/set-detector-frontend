@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Camera, Cpu, Eye, SparkleIcon, Lightbulb, Zap } from "lucide-react";
+import { Camera, Cpu, Eye, SparkleIcon, Lightbulb, Zap, Share2, Info } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -8,34 +8,34 @@ import { useIsMobile } from "@/hooks/use-mobile";
 const HowItWorks = () => {
   const isMobile = useIsMobile();
   
-  // Define steps with more engaging content and iOS-style colors
+  // Define steps with more engaging content and enhanced colors
   const steps = [
     {
-      icon: <Camera className="h-5 w-5" />,
+      icon: <Camera className="h-6 w-6 text-white" />,
       title: "Capture",
-      description: "Take a clear, well-lit photo of your SET game cards laid out on a flat surface",
+      description: "Take a clear photo of your SET game cards on a flat surface with good lighting",
       color: "set-purple",
-      bgGradient: "from-[#EFEAFF] to-[#E5DFFF]",
+      gradient: "from-[#5856D6] to-[#7A78E2]",
       delay: 0.2,
-      iconBg: "#D6D2FD"
+      iconAnimation: "animate-pulse",
     },
     {
-      icon: <Zap className="h-5 w-5" />,
+      icon: <Zap className="h-6 w-6 text-white" />,
       title: "Analyze",
-      description: "Our AI instantly detects all cards on the board and identifies their unique attributes",
+      description: "Our AI instantly detects all cards and identifies their unique attributes",
       color: "set-green",
-      bgGradient: "from-[#E3FBE9] to-[#D4F8DE]",
+      gradient: "from-[#30D158] to-[#4FE076]",
       delay: 0.3,
-      iconBg: "#C3F0CF"
+      iconAnimation: "animate-bounce-subtle",
     },
     {
-      icon: <Lightbulb className="h-5 w-5" />,
+      icon: <Lightbulb className="h-6 w-6 text-white" />,
       title: "Discover",
-      description: "See all valid SETs highlighted on your game board with detailed explanations",
-      color: "set-coral",
-      bgGradient: "from-[#FFE5E3] to-[#FFDDD9]",
+      description: "See all valid SETs highlighted with detailed explanations in seconds",
+      color: "set-red",
+      gradient: "from-[#FF453A] to-[#FF6B63]",
       delay: 0.4,
-      iconBg: "#FFCEC8"
+      iconAnimation: "animate-shimmer",
     }
   ];
 
@@ -53,70 +53,115 @@ const HowItWorks = () => {
 
   const itemVariants = {
     hidden: { y: 10, opacity: 0 },
-    visible: { y: 0, opacity: 1 }
+    visible: { y: 0, opacity: 1, transition: { duration: 0.4 }}
   };
+
+  const interactiveSymbols = [
+    { symbol: "◇", color: "text-set-purple", animation: "animate-float", delay: 0 },
+    { symbol: "○", color: "text-set-red", animation: "animate-pulse", delay: 0.2 },
+    { symbol: "△", color: "text-set-green", animation: "animate-bounce-subtle", delay: 0.4 }
+  ];
 
   return (
     <motion.div 
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="w-full max-w-4xl mx-auto backdrop-blur-sm rounded-xl p-4 md:p-5"
+      className="w-full max-w-4xl mx-auto p-4 md:p-6 rounded-2xl"
     >
       <motion.div 
         variants={itemVariants}
-        className="text-center mb-4 md:mb-6"
+        className="text-center mb-6 md:mb-8"
       >
-        <h2 className="text-base md:text-lg font-semibold mb-1 sf-pro-display text-set-dark flex items-center justify-center">
-          <SparkleIcon className="h-4 w-4 mr-1.5 text-set-purple" />
+        <div className="flex items-center justify-center gap-3 mb-3">
+          {interactiveSymbols.map((item, idx) => (
+            <motion.div
+              key={idx}
+              className={`${item.color} text-2xl md:text-3xl font-bold ${item.animation}`}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: item.delay, duration: 0.5 }}
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {item.symbol}
+            </motion.div>
+          ))}
+        </div>
+        
+        <h2 className="text-xl md:text-2xl font-bold mb-2 text-set-dark font-poppins tracking-tight">
           How It Works
         </h2>
-        <p className="text-set-gray text-xs md:text-sm sf-pro-text max-w-md mx-auto">
-          Our AI-powered SET detector helps you find all valid SET combinations instantly
+        <p className="text-set-gray text-sm md:text-base font-sans max-w-md mx-auto">
+          Instantly spot every SET. Just snap, and play smarter.
         </p>
       </motion.div>
       
-      <div className={`${isMobile ? 'flex flex-col' : 'grid grid-cols-3'} gap-3 md:gap-4`}>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         {steps.map((step, index) => (
           <motion.div 
             key={index}
             variants={itemVariants}
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+            whileTap={{ scale: 0.98 }}
             className="group"
-            whileHover={{ y: -3, transition: { duration: 0.2 } }}
           >
             <div 
               className={cn(
-                "rounded-xl border-0 shadow-sm p-4 h-full",
-                "bg-gradient-to-br backdrop-blur-sm group-hover:shadow-md transition-all duration-300 overflow-hidden relative",
-                `bg-gradient-to-br ${step.bgGradient}`
+                "rounded-2xl shadow-lg p-6 h-full border-0 overflow-hidden relative",
+                "bg-gradient-to-br backdrop-blur-sm group-hover:shadow-xl transition-all duration-300",
+                `bg-gradient-to-br ${step.gradient}`
               )}
             >
-              <div className="absolute inset-0 bg-white/20 group-hover:bg-white/10 transition-colors duration-300" />
+              <div className="absolute inset-0 opacity-10 bg-pattern-dots" />
               
-              <div className={`flex ${isMobile ? 'items-center' : 'flex-col'} gap-3 relative z-10`}>
+              <div className="flex flex-col items-center text-center relative z-10">
                 <div 
-                  className={`rounded-full p-3 ${isMobile ? 'mb-0' : 'mb-2'} transition-transform group-hover:scale-110 duration-300 w-fit 
-                  ${isMobile ? 'flex-shrink-0' : ''}`}
-                  style={{ backgroundColor: step.iconBg }}
+                  className={`rounded-full p-3 mb-4 bg-white/20 backdrop-blur-md
+                   transition-transform duration-300 w-16 h-16 flex items-center justify-center
+                   shadow-lg group-hover:shadow-xl group-hover:scale-110 ${step.iconAnimation}`}
                 >
-                  <div className={`text-${step.color}`}>
-                    {step.icon}
-                  </div>
+                  {step.icon}
                 </div>
                 
-                <div className={isMobile ? 'flex-1' : ''}>
-                  <h3 className="text-sm md:text-base font-medium mb-1.5 sf-pro-display text-set-dark">
-                    {step.title}
-                  </h3>
-                  <p className="text-set-gray text-xs sf-pro-text">
-                    {step.description}
-                  </p>
-                </div>
+                <h3 className="text-lg md:text-xl font-bold mb-2 font-poppins text-white">
+                  {step.title}
+                </h3>
+                <p className="text-white/90 text-sm md:text-base font-sans">
+                  {step.description}
+                </p>
               </div>
             </div>
           </motion.div>
         ))}
       </div>
+      
+      <motion.div 
+        variants={itemVariants}
+        className="mt-8 text-center flex items-center justify-center gap-4 flex-wrap"
+      >
+        <a 
+          href="https://www.setgame.com/set/puzzle_rules" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-set-gray hover:text-set-purple transition-colors text-sm"
+        >
+          <Info className="h-4 w-4" />
+          <span>SET Game Rules</span>
+        </a>
+        
+        <div className="h-5 border-l border-gray-300 hidden md:block"></div>
+        
+        <a 
+          href="https://github.com/omamitai/set-detector"
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-set-gray hover:text-set-purple transition-colors text-sm"
+        >
+          <Share2 className="h-4 w-4" />
+          <span>Share this tool</span>
+        </a>
+      </motion.div>
     </motion.div>
   );
 };
