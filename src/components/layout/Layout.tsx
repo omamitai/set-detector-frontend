@@ -2,7 +2,8 @@
 import React from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Github, Info, Share2 } from "lucide-react";
+import { Github, Info, Share2, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -10,6 +11,25 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isMobile = useIsMobile();
+
+  // Function to share the tool
+  const handleShare = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'SET Game Detector',
+          text: 'Check out this tool that helps you find SETs in the SET card game!',
+          url: window.location.href,
+        });
+      } else {
+        // Fallback for browsers that don't support Web Share API
+        navigator.clipboard.writeText(window.location.href);
+        alert('Link copied to clipboard!');
+      }
+    } catch (error) {
+      console.error('Error sharing:', error);
+    }
+  };
   
   return (
     <div className="min-h-screen flex flex-col transition-colors duration-300 bg-futuristic-gradient">
@@ -89,11 +109,24 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         
         /* Mobile optimizations */
         @media (max-width: 640px) {
-          .mobile-safe-area {
-            padding-bottom: env(safe-area-inset-bottom, 16px);
-            padding-top: env(safe-area-inset-top, 0);
-            padding-left: env(safe-area-inset-left, 16px);
-            padding-right: env(safe-area-inset-right, 16px);
+          html, body {
+            overflow-x: hidden;
+          }
+          
+          /* Improved spacing for iOS devices */
+          body {
+            padding-bottom: env(safe-area-inset-bottom, 20px);
+          }
+          
+          /* Better tap targets */
+          button, a, .clickable {
+            min-height: 40px;
+            min-width: 40px;
+          }
+          
+          /* Ensure footer is visible on mobile */
+          .pb-mobile-actions {
+            padding-bottom: calc(70px + env(safe-area-inset-bottom, 20px));
           }
         }
       `}
@@ -103,34 +136,42 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         {children}
       </main>
 
-      <footer className="border-t border-gray-100 py-4 bg-white/80 backdrop-blur-md mt-auto z-20 w-full">
-        <div className="container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
+      <footer className="border-t border-gray-100/50 py-4 bg-white/60 backdrop-blur-lg shadow-md mt-auto z-20 w-full">
+        <div className="container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-gray-500 mb-2 sm:mb-0 font-sans">
             SET® is a registered trademark of Cannei, LLC.
           </p>
-          <div className="flex items-center gap-4">
-            <a 
-              href="https://www.setgame.com/sites/default/files/instructions/SET%20INSTRUCTIONS%20-%20ENGLISH.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-gray-500 hover:text-primary-violet transition-colors"
+          
+          <div className="flex items-center gap-3 flex-wrap justify-center">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => window.open("https://www.setgame.com/sites/default/files/instructions/SET%20INSTRUCTIONS%20-%20ENGLISH.pdf", "_blank")}
+              className="bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm rounded-full border border-primary-indigo/20 text-primary-indigo hover:bg-white hover:border-primary-indigo/30 shadow-sm transition-all duration-300 h-8 px-3"
             >
-              <div className="flex items-center gap-1.5">
-                <Info className="h-3.5 w-3.5" />
-                <span>Rules</span>
-              </div>
-            </a>
+              <Info className="h-3.5 w-3.5 mr-1.5" />
+              <span className="text-xs">SET Game Rules</span>
+              <ExternalLink className="h-3 w-3 ml-1 opacity-70" />
+            </Button>
+            
+            <Button 
+              variant="outline"
+              size="sm"
+              onClick={handleShare}
+              className="bg-gradient-to-br from-primary-indigo/90 to-primary-violet/90 text-white border-0 rounded-full shadow-md hover:shadow-lg transition-all duration-300 h-8 px-3"
+            >
+              <Share2 className="h-3.5 w-3.5 mr-1.5" />
+              <span className="text-xs">Share this tool</span>
+            </Button>
             
             <a 
               href="https://github.com/omamitai/set-detector"
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-xs text-gray-500 hover:text-primary-violet transition-colors"
+              className="group bg-gradient-to-br from-dark-slate/90 to-dark-slate/80 text-white text-xs rounded-full flex items-center gap-1.5 px-3 py-1.5 shadow-sm hover:shadow-md transition-all duration-300"
             >
-              <div className="flex items-center gap-1.5">
-                <Github className="h-3.5 w-3.5" />
-                <span>GitHub</span>
-              </div>
+              <Github className="h-3.5 w-3.5" />
+              <span>GitHub</span>
             </a>
             
             <p className="text-xs text-gray-500 font-sans">

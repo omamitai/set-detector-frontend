@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { UploadCloud, X, Camera, Image as ImageIcon, Sparkles } from "lucide-react";
@@ -25,11 +24,23 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
   
-  // Animated SET symbols
+  // Enhanced SET shapes with gradient styling
   const symbols = [
-    { shape: "◇", color: "text-set-purple", animation: "animate-float" },
-    { shape: "○", color: "text-set-red", animation: "animate-pulse-subtle" },
-    { shape: "△", color: "text-set-green", animation: "animate-bounce-subtle" }
+    { 
+      shape: "◇", 
+      style: "text-transparent bg-clip-text bg-gradient-to-br from-primary-purple to-primary-indigo drop-shadow-md", 
+      animation: "animate-float" 
+    },
+    { 
+      shape: "○", 
+      style: "text-transparent bg-clip-text bg-gradient-to-br from-accent-pink to-accent-amber drop-shadow-md", 
+      animation: "animate-pulse-subtle" 
+    },
+    { 
+      shape: "△", 
+      style: "text-transparent bg-clip-text bg-gradient-to-br from-accent-teal to-green-400 drop-shadow-md", 
+      animation: "animate-bounce-subtle" 
+    }
   ];
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -117,7 +128,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             transition={{ duration: 0.4 }}
           >
             <Card 
-              className={`set-card overflow-hidden border-0 shadow-xl transition-all ${dragActive ? 'ring-2 ring-set-purple' : ''}`}
+              className={`set-card overflow-hidden border-0 shadow-xl transition-all ${dragActive ? 'ring-2 ring-primary-purple/80' : ''}`}
               {...getRootProps()} 
               onDragEnter={handleDrag}
               onDragLeave={handleDrag}
@@ -125,16 +136,16 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               onDrop={handleDrag}
             >
               <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-5 py-8' : 'p-10 py-16'}`}>
-                {/* Interactive SET shapes */}
-                <div className="mb-5 flex items-center justify-center gap-3">
+                {/* Enhanced SET shapes with gradient styling */}
+                <div className="mb-6 flex items-center justify-center gap-5">
                   {symbols.map((symbol, index) => (
                     <motion.div
                       key={index}
-                      className={`${symbol.color} text-3xl md:text-4xl font-bold ${symbol.animation}`}
+                      className={`${symbol.style} text-4xl md:text-5xl font-bold ${symbol.animation}`}
                       whileHover={{ 
                         scale: 1.2, 
                         rotate: index % 2 === 0 ? 15 : -15,
-                        transition: { duration: 0.3 }
+                        transition: { duration: 0.3, ease: "easeOut" }
                       }}
                       whileTap={{ scale: 0.9 }}
                     >
@@ -144,14 +155,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 </div>
                 
                 <motion.h3 
-                  className="font-poppins text-xl md:text-2xl font-bold mb-2 text-set-dark"
+                  className="font-poppins text-xl md:text-2xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-primary-purple via-primary-violet to-primary-indigo"
                   whileHover={{ scale: 1.03 }}
                 >
                   {isDragActive ? "Drop your SET game photo here" : "Upload SET game photo"}
                 </motion.h3>
                 
                 <motion.p 
-                  className="text-set-gray mb-5 text-center max-w-sm font-sans"
+                  className="text-neutral-slate mb-6 text-center max-w-sm font-sans"
                   initial={{ opacity: 0.8 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
@@ -191,7 +202,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   <div className="flex flex-col gap-3 w-full max-w-sm">
                     <Button 
                       onClick={triggerCameraInput}
-                      className="set-button-primary py-3 text-base w-full"
+                      className="bg-gradient-to-r from-primary-violet via-primary-indigo to-primary-blue text-white rounded-xl py-3 text-base w-full shadow-lg shadow-primary-indigo/20 hover:shadow-xl hover:shadow-primary-indigo/30"
                       disabled={isProcessing}
                     >
                       <Camera className="h-5 w-5" />
@@ -201,7 +212,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     <Button 
                       onClick={triggerFileInput}
                       variant="outline"
-                      className="set-button-secondary py-3 text-base w-full"
+                      className="bg-white/80 backdrop-blur-sm border border-primary-indigo/20 text-primary-indigo rounded-xl py-3 text-base w-full shadow-md hover:shadow-lg hover:bg-white"
                       disabled={isProcessing}
                     >
                       <ImageIcon className="h-5 w-5" />
@@ -211,7 +222,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 )}
                 
                 {!isMobile && (
-                  <div className="flex items-center justify-center gap-1.5 text-sm text-set-gray mt-5">
+                  <div className="flex items-center justify-center gap-1.5 text-sm text-neutral-slate mt-5">
                     <UploadCloud className="h-4 w-4" />
                     <span>Or drag and drop image here</span>
                   </div>
