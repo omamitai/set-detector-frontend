@@ -88,15 +88,15 @@ const Index = () => {
         className="max-w-6xl mx-auto px-4 md:px-6 py-4 md:py-8"
       >
         <motion.div 
-          className="text-center mb-8 md:mb-12"
-          initial={{ y: 20, opacity: 0 }}
+          className="text-center mb-8"
+          initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 0.4 }}
         >
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-primary-purple via-primary-violet to-primary-indigo font-poppins tracking-tight">
+          <h1 className="text-2xl md:text-3xl font-medium mb-2 text-gray-800">
             SET Game Detector
           </h1>
-          <p className="text-neutral-slate max-w-lg mx-auto font-sans text-base md:text-lg">
+          <p className="text-gray-500 max-w-lg mx-auto text-sm md:text-base">
             Instantly spot every SET. Just snap, and play smarter.
           </p>
         </motion.div>
@@ -107,16 +107,16 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Alert variant="destructive" className="mb-6 max-w-md mx-auto bg-white border-accent-pink/20 text-accent-pink shadow-sm">
-              <AlertTriangle className="h-4 w-4 text-accent-pink" />
-              <AlertTitle className="text-accent-pink font-medium">No SET Cards Detected</AlertTitle>
-              <AlertDescription className="flex flex-col gap-2 text-accent-pink/90">
+            <Alert variant="destructive" className="mb-6 max-w-md mx-auto bg-white border border-red-100 text-red-600 shadow-sm rounded-lg">
+              <AlertTriangle className="h-4 w-4 text-red-500" />
+              <AlertTitle className="text-red-600 font-medium">No SET Cards Detected</AlertTitle>
+              <AlertDescription className="flex flex-col gap-2 text-red-500">
                 <span>{error}</span>
                 <Button 
                   variant="outline" 
                   size="sm" 
                   onClick={handleReset} 
-                  className="self-end flex items-center gap-1 border-accent-pink/20 text-accent-pink hover:bg-white/80"
+                  className="self-end flex items-center gap-1 border-red-100 text-red-600 hover:bg-white/80 rounded-md"
                 >
                   <RefreshCw className="h-3 w-3" />
                   Try again
@@ -126,16 +126,17 @@ const Index = () => {
           </motion.div>
         )}
         
-        <div className="max-w-md mx-auto md:max-w-4xl pb-24 sm:pb-12">
+        <div className="max-w-md mx-auto md:max-w-4xl">
           {activeTab === "upload" ? (
             <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="flex flex-col gap-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="space-y-12"
             >
               <motion.div 
-                variants={itemVariants}
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.1 }}
                 className="mx-auto w-full"
               >
                 <ImageUpload 
@@ -145,55 +146,25 @@ const Index = () => {
               </motion.div>
               
               <motion.div 
-                variants={itemVariants}
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2 }}
                 className="w-full"
               >
                 <HowItWorks />
               </motion.div>
-              
-              {isMobile && (
-                <motion.div 
-                  className="fixed bottom-0 left-0 right-0 p-4 glass-panel shadow-lg border-t border-white/20 z-50"
-                  initial={{ y: 100 }}
-                  animate={{ y: 0 }}
-                  transition={{ delay: 0.5, type: "spring", stiffness: 300, damping: 30 }}
-                >
-                  <div className="flex gap-3 max-w-md mx-auto">
-                    <Button 
-                      onClick={() => {
-                        const fileInput = document.querySelector('input[capture="environment"]') as HTMLInputElement;
-                        if (fileInput) fileInput.click();
-                      }}
-                      className="flex-1 bg-gradient-to-r from-primary-violet to-primary-indigo text-white gap-2 rounded-xl h-12 shadow-lg shadow-primary-indigo/30 hover:shadow-xl hover:shadow-primary-indigo/40 border-0"
-                    >
-                      <Camera className="h-4 w-4" />
-                      Take Photo
-                    </Button>
-                    
-                    <Button 
-                      onClick={() => {
-                        const fileInput = document.querySelector('input[type="file"]:not([capture])') as HTMLInputElement;
-                        if (fileInput) fileInput.click();
-                      }}
-                      variant="outline"
-                      className="flex-1 bg-white/80 backdrop-blur-sm text-primary-violet gap-2 rounded-xl h-12 border border-primary-indigo/20 shadow-md hover:shadow-lg hover:bg-white"
-                    >
-                      <ImageIcon className="h-4 w-4" />
-                      Gallery
-                    </Button>
-                  </div>
-                  <div className="h-safe-bottom"></div>
-                </motion.div>
-              )}
             </motion.div>
           ) : (
             <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="space-y-8 md:space-y-10 pb-16 md:pb-20"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="space-y-12"
             >
-              <motion.div variants={itemVariants}>
+              <motion.div 
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.1 }}
+              >
                 <ResultsDisplay
                   resultImage={resultImage}
                   sets={detectedSets}
@@ -201,7 +172,11 @@ const Index = () => {
                 />
               </motion.div>
               
-              <motion.div variants={itemVariants}>
+              <motion.div 
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
                 <HowItWorks />
               </motion.div>
             </motion.div>

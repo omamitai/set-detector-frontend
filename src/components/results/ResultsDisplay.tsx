@@ -3,7 +3,7 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { 
-  Download, RefreshCw, Sparkles, Image as ImageIcon, Share2
+  Download, RefreshCw, Sparkles, Share2
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
@@ -73,7 +73,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
       className="space-y-5"
     >
       <div className="relative">
-        <Card className="rounded-lg overflow-hidden border-0 shadow-md">
+        <Card className="rounded-lg overflow-hidden border border-gray-100 shadow-sm bg-white">
           <CardContent className="p-0 relative">
             {resultImage && (
               <div className="relative">
@@ -86,8 +86,8 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                       transition={{ delay: 0.2, duration: 0.3 }}
                     >
                       <Badge 
-                        className="bg-[#5856D6]/90 text-white border-0 
-                                 rounded-md px-3 py-1.5 shadow-sm flex items-center gap-2"
+                        className="bg-blue-500/90 text-white border-0 
+                                 rounded-full px-3 py-1 shadow-sm flex items-center gap-2"
                       >
                         <Sparkles className="h-3.5 w-3.5 text-white/90" />
                         <span className="font-medium text-sm">
@@ -104,9 +104,6 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                     alt="Detected sets"
                     className="w-full h-auto object-contain max-h-[70vh] p-2"
                   />
-                  
-                  {/* Very subtle gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-[#5856D6]/5 via-transparent to-[#5856D6]/5 opacity-30 pointer-events-none"></div>
                 </div>
                 
                 <div className="absolute bottom-3 right-3 flex gap-2">
@@ -114,11 +111,10 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                     variant="secondary"
                     size={isMobile ? "sm" : "default"}
                     onClick={onReset}
-                    className="gap-1.5 rounded-md bg-white/90 backdrop-blur-sm text-xs font-medium shadow-sm
-                              hover:bg-white hover:shadow-md transition-all duration-300 border-0"
+                    className="gap-1.5 rounded-full bg-white text-xs font-medium shadow-sm hover:bg-gray-50 border border-gray-200"
                   >
-                    <RefreshCw className="h-3.5 w-3.5 text-[#1C1C1E]" />
-                    <span className="font-medium text-[#1C1C1E]">New Photo</span>
+                    <RefreshCw className="h-3.5 w-3.5 text-gray-700" />
+                    <span className="font-medium text-gray-700">New Photo</span>
                   </Button>
                   
                   {navigator.share && (
@@ -126,8 +122,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                       variant="default"
                       size={isMobile ? "sm" : "default"}
                       onClick={shareImage}
-                      className="gap-1.5 rounded-md bg-[#5856D6] text-white text-xs font-medium shadow-sm
-                                hover:bg-[#5856D6]/90 hover:shadow-md transition-all duration-300 border-0"
+                      className="gap-1.5 rounded-full bg-blue-500 text-white text-xs font-medium shadow-sm hover:bg-blue-600 border-0"
                     >
                       <Share2 className="h-3.5 w-3.5" />
                       <span className="font-medium">Share</span>
@@ -138,8 +133,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                     variant="default"
                     size={isMobile ? "sm" : "default"}
                     onClick={downloadImage}
-                    className="gap-1.5 rounded-md bg-[#5856D6] text-white text-xs font-medium shadow-sm
-                              hover:bg-[#5856D6]/90 hover:shadow-md transition-all duration-300 border-0"
+                    className="gap-1.5 rounded-full bg-blue-500 text-white text-xs font-medium shadow-sm hover:bg-blue-600 border-0"
                   >
                     <Download className="h-3.5 w-3.5" />
                     <span className="font-medium">Save</span>
@@ -158,8 +152,8 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
           transition={{ delay: 0.3, duration: 0.4 }}
           className="flex flex-col items-center justify-center p-2"
         >
-          <div className="bg-[#FFF5F5] border border-[#D06175]/10 rounded-md p-3 shadow-sm w-full max-w-sm">
-            <p className="text-[#D06175] font-medium text-center text-sm">
+          <div className="bg-red-50 border border-red-100 rounded-lg p-3 shadow-sm w-full max-w-sm">
+            <p className="text-red-600 font-medium text-center text-sm">
               No SET cards detected in this image
             </p>
           </div>

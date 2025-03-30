@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { UploadCloud, X, Camera, Image as ImageIcon, Sparkles } from "lucide-react";
@@ -28,17 +29,17 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const symbols = [
     { 
       shape: "◇", 
-      style: "text-transparent bg-clip-text bg-gradient-to-br from-primary-purple to-primary-indigo drop-shadow-md", 
+      style: "text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600 drop-shadow-sm", 
       animation: "animate-float" 
     },
     { 
       shape: "○", 
-      style: "text-transparent bg-clip-text bg-gradient-to-br from-accent-pink to-accent-amber drop-shadow-md", 
+      style: "text-transparent bg-clip-text bg-gradient-to-br from-purple-400 to-purple-600 drop-shadow-sm", 
       animation: "animate-pulse-subtle" 
     },
     { 
       shape: "△", 
-      style: "text-transparent bg-clip-text bg-gradient-to-br from-accent-teal to-green-400 drop-shadow-md", 
+      style: "text-transparent bg-clip-text bg-gradient-to-br from-teal-400 to-teal-600 drop-shadow-sm", 
       animation: "animate-bounce-subtle" 
     }
   ];
@@ -128,7 +129,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             transition={{ duration: 0.4 }}
           >
             <Card 
-              className={`set-card overflow-hidden border-0 shadow-xl transition-all ${dragActive ? 'ring-2 ring-primary-purple/80' : ''}`}
+              className={`overflow-hidden bg-white border border-gray-100 shadow-sm rounded-xl transition-all ${dragActive ? 'ring-1 ring-blue-400' : ''}`}
               {...getRootProps()} 
               onDragEnter={handleDrag}
               onDragLeave={handleDrag}
@@ -137,17 +138,17 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             >
               <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-5 py-8' : 'p-10 py-16'}`}>
                 {/* Enhanced SET shapes with gradient styling */}
-                <div className="mb-6 flex items-center justify-center gap-5">
+                <div className="mb-6 flex items-center justify-center gap-6">
                   {symbols.map((symbol, index) => (
                     <motion.div
                       key={index}
                       className={`${symbol.style} text-4xl md:text-5xl font-bold ${symbol.animation}`}
                       whileHover={{ 
-                        scale: 1.2, 
-                        rotate: index % 2 === 0 ? 15 : -15,
+                        scale: 1.1, 
+                        rotate: index % 2 === 0 ? 10 : -10,
                         transition: { duration: 0.3, ease: "easeOut" }
                       }}
-                      whileTap={{ scale: 0.9 }}
+                      whileTap={{ scale: 0.95 }}
                     >
                       {symbol.shape}
                     </motion.div>
@@ -155,14 +156,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 </div>
                 
                 <motion.h3 
-                  className="font-poppins text-xl md:text-2xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-primary-purple via-primary-violet to-primary-indigo"
-                  whileHover={{ scale: 1.03 }}
+                  className="font-medium text-xl md:text-2xl mb-3 text-gray-800"
+                  whileHover={{ scale: 1.02 }}
                 >
                   {isDragActive ? "Drop your SET game photo here" : "Upload SET game photo"}
                 </motion.h3>
                 
                 <motion.p 
-                  className="text-neutral-slate mb-6 text-center max-w-sm font-sans"
+                  className="text-gray-500 mb-6 text-center max-w-sm"
                   initial={{ opacity: 0.8 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
@@ -197,33 +198,30 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   }}
                 />
                 
-                {/* Don't show these buttons on mobile since we have a sticky toolbar instead */}
-                {!isMobile && (
-                  <div className="flex flex-col gap-3 w-full max-w-sm">
-                    <Button 
-                      onClick={triggerCameraInput}
-                      className="bg-gradient-to-r from-primary-violet via-primary-indigo to-primary-blue text-white rounded-xl py-3 text-base w-full shadow-lg shadow-primary-indigo/20 hover:shadow-xl hover:shadow-primary-indigo/30"
-                      disabled={isProcessing}
-                    >
-                      <Camera className="h-5 w-5" />
-                      <span className="font-poppins">Take Photo</span>
-                    </Button>
-                    
-                    <Button 
-                      onClick={triggerFileInput}
-                      variant="outline"
-                      className="bg-white/80 backdrop-blur-sm border border-primary-indigo/20 text-primary-indigo rounded-xl py-3 text-base w-full shadow-md hover:shadow-lg hover:bg-white"
-                      disabled={isProcessing}
-                    >
-                      <ImageIcon className="h-5 w-5" />
-                      <span className="font-poppins">Choose from Gallery</span>
-                    </Button>
-                  </div>
-                )}
+                <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm">
+                  <Button 
+                    onClick={triggerCameraInput}
+                    className="bg-blue-500 hover:bg-blue-600 text-white rounded-full py-2.5 text-sm w-full shadow-sm transition-all"
+                    disabled={isProcessing}
+                  >
+                    <Camera className="h-4 w-4 mr-2" />
+                    <span>Take Photo</span>
+                  </Button>
+                  
+                  <Button 
+                    onClick={triggerFileInput}
+                    variant="outline"
+                    className="bg-white border border-gray-200 text-gray-700 rounded-full py-2.5 text-sm w-full shadow-sm hover:bg-gray-50 transition-all"
+                    disabled={isProcessing}
+                  >
+                    <ImageIcon className="h-4 w-4 mr-2" />
+                    <span>Choose Gallery</span>
+                  </Button>
+                </div>
                 
                 {!isMobile && (
-                  <div className="flex items-center justify-center gap-1.5 text-sm text-neutral-slate mt-5">
-                    <UploadCloud className="h-4 w-4" />
+                  <div className="flex items-center justify-center gap-1.5 text-xs text-gray-400 mt-5">
+                    <UploadCloud className="h-3.5 w-3.5" />
                     <span>Or drag and drop image here</span>
                   </div>
                 )}
@@ -237,7 +235,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <Card className="set-card overflow-hidden shadow-xl border-0">
+            <Card className="overflow-hidden shadow-sm border border-gray-100 rounded-xl bg-white">
               <CardContent className="p-0 relative">
                 <div className="relative">
                   <img 
@@ -245,9 +243,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     alt="Preview" 
                     className="w-full h-auto object-contain max-h-[45vh] md:max-h-[60vh]" 
                   />
-                  
-                  {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-set-purple/5 via-transparent to-set-green/5 pointer-events-none"></div>
                   
                   {!isProcessing && (
                     <motion.div
@@ -260,10 +255,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                       <Button 
                         variant="outline"
                         size="icon"
-                        className="rounded-full bg-white/80 backdrop-blur-sm shadow-md hover:bg-white hover:shadow-lg"
+                        className="rounded-full bg-white/80 backdrop-blur-sm shadow-sm hover:bg-white border border-gray-200"
                         onClick={removeImage}
                       >
-                        <X className="h-4 w-4 text-set-gray" />
+                        <X className="h-4 w-4 text-gray-600" />
                       </Button>
                     </motion.div>
                   )}
@@ -280,7 +275,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     
                     {/* Enhanced processing indicator */}
                     <motion.div 
-                      className="bg-white/90 backdrop-blur-xl rounded-2xl px-5 py-4 shadow-xl flex flex-col items-center gap-3 z-10 max-w-xs"
+                      className="bg-white/90 backdrop-blur-xl rounded-xl px-5 py-4 shadow-sm flex flex-col items-center gap-3 z-10 max-w-xs border border-gray-100"
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.2, type: "spring", stiffness: 300, damping: 25 }}
@@ -292,9 +287,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                             transition: { duration: 2, repeat: Infinity, ease: "linear" }
                           }}
                         >
-                          <Sparkles className="h-5 w-5 text-set-purple" />
+                          <Sparkles className="h-5 w-5 text-blue-500" />
                         </motion.div>
-                        <span className="text-base font-medium font-poppins text-set-dark">Analyzing SET cards...</span>
+                        <span className="text-base font-medium text-gray-800">Analyzing SET cards...</span>
                       </div>
                       
                       <Progress value={uploadProgress} className="h-1.5 w-full bg-gray-100" />
@@ -303,7 +298,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                         {symbols.map((symbol, index) => (
                           <motion.div
                             key={index}
-                            className={`${symbol.color} text-lg font-bold`}
+                            className={`${symbol.style} text-lg font-bold`}
                             animate={{ 
                               scale: [1, 1.2, 1],
                               opacity: [1, 0.8, 1],
