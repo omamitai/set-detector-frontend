@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -87,6 +88,10 @@ export default {
 				sm: 'calc(var(--radius) - 4px)',
 				'2xl': '1.5rem',
 				'3xl': '2rem',
+			},
+			scale: {
+				'95': '0.95',
+				'102': '1.02',
 			},
 			keyframes: {
 				'accordion-down': {

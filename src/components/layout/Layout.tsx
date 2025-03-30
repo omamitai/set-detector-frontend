@@ -1,9 +1,8 @@
 
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { Github, Info } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Github, Info } from "lucide-react";
 
 interface LayoutProps {
   children: React.ReactNode;
