@@ -2,7 +2,7 @@
 import React from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Github, Info } from "lucide-react";
+import { Github, Info, Share2 } from "lucide-react";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -33,14 +33,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         .bg-set-gradient {
           background-attachment: fixed;
           background-image: 
-            radial-gradient(at 20% 30%, rgba(88, 86, 214, 0.12) 0px, transparent 50%), 
-            radial-gradient(at 80% 20%, rgba(88, 86, 214, 0.08) 0px, transparent 50%),
-            radial-gradient(at 50% 70%, rgba(88, 86, 214, 0.05) 0px, transparent 50%);
+            radial-gradient(at 20% 30%, rgba(88, 86, 214, 0.08) 0px, transparent 50%), 
+            radial-gradient(at 80% 20%, rgba(88, 86, 214, 0.05) 0px, transparent 50%),
+            radial-gradient(at 50% 70%, rgba(88, 86, 214, 0.03) 0px, transparent 50%);
           background-color: #FAFAFA;
         }
         
         .bg-pattern-dots {
-          background-image: radial-gradient(rgba(88, 86, 214, 0.12) 1px, transparent 1px);
+          background-image: radial-gradient(rgba(88, 86, 214, 0.08) 1px, transparent 1px);
           background-size: 12px 12px;
         }
         
@@ -81,17 +81,17 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         {children}
       </main>
 
-      <footer className="border-t py-4 bg-white/80 backdrop-blur-md mt-auto">
+      <footer className="border-t border-gray-100 py-4 bg-white/80 backdrop-blur-md mt-auto">
         <div className="container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-xs text-set-gray mb-2 sm:mb-0 font-sans">
+          <p className="text-xs text-gray-500 mb-2 sm:mb-0 font-sans">
             SET® is a registered trademark of Cannei, LLC.
           </p>
           <div className="flex items-center gap-4">
             <a 
-              href="https://www.setgame.com/set/puzzle_rules"
+              href="https://www.setgame.com/sites/default/files/instructions/SET%20INSTRUCTIONS%20-%20ENGLISH.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-set-gray hover:text-set-purple transition-colors"
+              className="text-xs text-gray-500 hover:text-set-purple transition-colors"
             >
               <div className="flex items-center gap-1.5">
                 <Info className="h-3.5 w-3.5" />
@@ -103,7 +103,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               href="https://github.com/omamitai/set-detector"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-set-gray hover:text-set-purple transition-colors"
+              className="text-xs text-gray-500 hover:text-set-purple transition-colors"
             >
               <div className="flex items-center gap-1.5">
                 <Github className="h-3.5 w-3.5" />
@@ -111,7 +111,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </div>
             </a>
             
-            <p className="text-xs text-set-gray font-sans">
+            <p className="text-xs text-gray-500 font-sans">
               Detector by <a href="https://github.com/omamitai" className="text-set-purple hover:underline">Omamitai</a>
             </p>
           </div>

@@ -5,7 +5,7 @@ import ImageUpload from "@/components/upload/ImageUpload";
 import ResultsDisplay from "@/components/results/ResultsDisplay";
 import HowItWorks from "@/components/info/HowItWorks";
 import { detectSets } from "@/services/api";
-import { AlertCircle, RefreshCw, AlertTriangle, Camera, Image as ImageIcon, SparkleIcon } from "lucide-react";
+import { AlertCircle, RefreshCw, AlertTriangle, Camera, Image as ImageIcon } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -85,9 +85,9 @@ const Index = () => {
 
   // Cards animation for hero section
   const cards = [
-    { symbol: "◇", color: "text-set-purple", animationDelay: 0, rotate: "-3deg", translateY: "-5px" },
-    { symbol: "○", color: "text-set-red", animationDelay: 0.2, rotate: "2deg", translateY: "0px" },
-    { symbol: "△", color: "text-set-green", animationDelay: 0.4, rotate: "5deg", translateY: "-3px" },
+    { symbol: "◇", color: "text-[#5856D6]", animationDelay: 0, rotate: "-3deg", translateY: "-5px" },
+    { symbol: "○", color: "text-[#D06175]", animationDelay: 0.2, rotate: "2deg", translateY: "0px" },
+    { symbol: "△", color: "text-[#4A8072]", animationDelay: 0.4, rotate: "5deg", translateY: "-3px" },
   ];
 
   return (
@@ -127,10 +127,10 @@ const Index = () => {
             <div className="h-16 md:h-20"></div> {/* Spacer for floating cards */}
           </div>
           
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 text-set-dark font-poppins tracking-tight">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 text-gray-800 font-poppins tracking-tight">
             SET Game Detector
           </h1>
-          <p className="text-set-gray max-w-lg mx-auto font-sans text-base md:text-lg">
+          <p className="text-gray-500 max-w-lg mx-auto font-sans text-base md:text-lg">
             Instantly spot every SET. Just snap, and play smarter.
           </p>
         </motion.div>
@@ -141,16 +141,16 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Alert variant="destructive" className="mb-6 max-w-md mx-auto bg-[#FFEBE9] border-[#FF453A]/20 text-[#FF453A] shadow-sm">
-              <AlertTriangle className="h-4 w-4 text-[#FF453A]" />
-              <AlertTitle className="text-[#FF453A] font-medium">No SET Cards Detected</AlertTitle>
-              <AlertDescription className="flex flex-col gap-2 text-[#FF453A]/90">
+            <Alert variant="destructive" className="mb-6 max-w-md mx-auto bg-[#FFF5F5] border-[#D06175]/20 text-[#D06175] shadow-sm">
+              <AlertTriangle className="h-4 w-4 text-[#D06175]" />
+              <AlertTitle className="text-[#D06175] font-medium">No SET Cards Detected</AlertTitle>
+              <AlertDescription className="flex flex-col gap-2 text-[#D06175]/90">
                 <span>{error}</span>
                 <Button 
                   variant="outline" 
                   size="sm" 
                   onClick={handleReset} 
-                  className="self-end flex items-center gap-1 border-[#FF453A]/20 text-[#FF453A] hover:bg-[#FFEBE9]/80"
+                  className="self-end flex items-center gap-1 border-[#D06175]/20 text-[#D06175] hover:bg-[#FFF5F5]/80"
                 >
                   <RefreshCw className="h-3 w-3" />
                   Try again
@@ -199,7 +199,7 @@ const Index = () => {
                         const fileInput = document.querySelector('input[capture="environment"]') as HTMLInputElement;
                         if (fileInput) fileInput.click();
                       }}
-                      className="flex-1 bg-set-purple text-white gap-2 rounded-xl h-12"
+                      className="flex-1 bg-[#5856D6] text-white gap-2 rounded-xl h-12"
                     >
                       <Camera className="h-4 w-4" />
                       Take Photo
@@ -211,7 +211,7 @@ const Index = () => {
                         if (fileInput) fileInput.click();
                       }}
                       variant="outline"
-                      className="flex-1 border-set-purple/20 text-set-purple gap-2 rounded-xl h-12"
+                      className="flex-1 border-[#5856D6]/20 text-[#5856D6] gap-2 rounded-xl h-12"
                     >
                       <ImageIcon className="h-4 w-4" />
                       Gallery

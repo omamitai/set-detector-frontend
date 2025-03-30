@@ -76,7 +76,7 @@
   }
   
   .set-shape:hover {
-    filter: drop-shadow(0 0 6px rgba(88, 86, 214, 0.6));
+    filter: drop-shadow(0 0 6px rgba(88, 86, 214, 0.3));
   }
   
   /* Enhanced card layouts - more sophisticated */
@@ -127,11 +127,11 @@
   }
   
   .set-symbol-oval {
-    @apply set-symbol text-set-red/90;
+    @apply set-symbol text-[#D06175]/90;
   }
   
   .set-symbol-triangle {
-    @apply set-symbol text-set-green/90;
+    @apply set-symbol text-[#4A8072]/90;
   }
 }
 
@@ -193,7 +193,7 @@
   }
   
   .set-gradient-soft {
-    @apply bg-gradient-to-r from-set-purple/30 via-set-green/20 to-set-red/10;
+    @apply bg-gradient-to-r from-set-purple/20 via-[#4A8072]/10 to-[#D06175]/10;
   }
 }
 

@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Camera, Cpu, Eye, SparkleIcon, Lightbulb, Zap, Share2, Info } from "lucide-react";
+import { Camera, Lightbulb, Zap, Share2, Info } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -8,14 +8,14 @@ import { useIsMobile } from "@/hooks/use-mobile";
 const HowItWorks = () => {
   const isMobile = useIsMobile();
   
-  // Define steps with more engaging content and enhanced colors
+  // Define steps with more sophisticated colors and content
   const steps = [
     {
       icon: <Camera className="h-6 w-6 text-white" />,
       title: "Capture",
       description: "Take a clear photo of your SET game cards on a flat surface with good lighting",
       color: "set-purple",
-      gradient: "from-[#5856D6] to-[#7A78E2]",
+      gradient: "from-[#5856D6]/90 to-[#7A78E2]/80",
       delay: 0.2,
       iconAnimation: "animate-pulse",
     },
@@ -24,7 +24,7 @@ const HowItWorks = () => {
       title: "Analyze",
       description: "Our AI instantly detects all cards and identifies their unique attributes",
       color: "set-green",
-      gradient: "from-[#30D158] to-[#4FE076]",
+      gradient: "from-[#4A8072]/90 to-[#5A9889]/80",
       delay: 0.3,
       iconAnimation: "animate-bounce-subtle",
     },
@@ -33,7 +33,7 @@ const HowItWorks = () => {
       title: "Discover",
       description: "See all valid SETs highlighted with detailed explanations in seconds",
       color: "set-red",
-      gradient: "from-[#FF453A] to-[#FF6B63]",
+      gradient: "from-[#D06175]/90 to-[#E57185]/80",
       delay: 0.4,
       iconAnimation: "animate-shimmer",
     }
@@ -57,9 +57,9 @@ const HowItWorks = () => {
   };
 
   const interactiveSymbols = [
-    { symbol: "◇", color: "text-set-purple", animation: "animate-float", delay: 0 },
-    { symbol: "○", color: "text-set-red", animation: "animate-pulse", delay: 0.2 },
-    { symbol: "△", color: "text-set-green", animation: "animate-bounce-subtle", delay: 0.4 }
+    { symbol: "◇", color: "text-[#5856D6]", animation: "animate-float", delay: 0 },
+    { symbol: "○", color: "text-[#D06175]", animation: "animate-pulse", delay: 0.2 },
+    { symbol: "△", color: "text-[#4A8072]", animation: "animate-bounce-subtle", delay: 0.4 }
   ];
 
   return (
@@ -89,10 +89,10 @@ const HowItWorks = () => {
           ))}
         </div>
         
-        <h2 className="text-xl md:text-2xl font-bold mb-2 text-set-dark font-poppins tracking-tight">
+        <h2 className="text-xl md:text-2xl font-bold mb-2 text-gray-800 font-poppins tracking-tight">
           How It Works
         </h2>
-        <p className="text-set-gray text-sm md:text-base font-sans max-w-md mx-auto">
+        <p className="text-gray-500 text-sm md:text-base font-sans max-w-md mx-auto">
           Instantly spot every SET. Just snap, and play smarter.
         </p>
       </motion.div>
@@ -108,18 +108,18 @@ const HowItWorks = () => {
           >
             <div 
               className={cn(
-                "rounded-2xl shadow-lg p-6 h-full border-0 overflow-hidden relative",
-                "bg-gradient-to-br backdrop-blur-sm group-hover:shadow-xl transition-all duration-300",
+                "rounded-2xl shadow-md p-6 h-full border-0 overflow-hidden relative",
+                "bg-gradient-to-br backdrop-blur-sm group-hover:shadow-lg transition-all duration-300",
                 `bg-gradient-to-br ${step.gradient}`
               )}
             >
-              <div className="absolute inset-0 opacity-10 bg-pattern-dots" />
+              <div className="absolute inset-0 opacity-5 bg-pattern-dots" />
               
               <div className="flex flex-col items-center text-center relative z-10">
                 <div 
                   className={`rounded-full p-3 mb-4 bg-white/20 backdrop-blur-md
                    transition-transform duration-300 w-16 h-16 flex items-center justify-center
-                   shadow-lg group-hover:shadow-xl group-hover:scale-110 ${step.iconAnimation}`}
+                   shadow-md group-hover:shadow-lg group-hover:scale-110 ${step.iconAnimation}`}
                 >
                   {step.icon}
                 </div>
@@ -141,10 +141,10 @@ const HowItWorks = () => {
         className="mt-8 text-center flex items-center justify-center gap-4 flex-wrap"
       >
         <a 
-          href="https://www.setgame.com/set/puzzle_rules" 
+          href="https://www.setgame.com/sites/default/files/instructions/SET%20INSTRUCTIONS%20-%20ENGLISH.pdf" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-set-gray hover:text-set-purple transition-colors text-sm"
+          className="inline-flex items-center gap-2 text-gray-500 hover:text-set-purple transition-colors text-sm"
         >
           <Info className="h-4 w-4" />
           <span>SET Game Rules</span>
@@ -156,7 +156,7 @@ const HowItWorks = () => {
           href="https://github.com/omamitai/set-detector"
           target="_blank" 
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-set-gray hover:text-set-purple transition-colors text-sm"
+          className="inline-flex items-center gap-2 text-gray-500 hover:text-set-purple transition-colors text-sm"
         >
           <Share2 className="h-4 w-4" />
           <span>Share this tool</span>
