@@ -12,7 +12,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isMobile = useIsMobile();
   
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-300 bg-gradient-to-br from-white via-white to-purple-50/30 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col transition-colors duration-300 bg-gradient-to-br from-white via-purple-50/20 to-purple-100/40 relative overflow-hidden">
       <style>
         {`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
@@ -21,7 +21,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           -webkit-tap-highlight-color: transparent;
           height: 100%;
           overscroll-behavior-y: none;
-          background: linear-gradient(135deg, #fcfcff 0%, #f9f5ff 100%);
+          background: linear-gradient(135deg, #fcfcff 0%, #f3e8ff 100%);
         }
         
         /* Mobile optimizations */

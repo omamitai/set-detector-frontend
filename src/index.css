@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -50,7 +51,7 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
-    background: linear-gradient(135deg, #fcfcff 0%, #f9f5ff 100%);
+    background: linear-gradient(135deg, #fcfcff 0%, #f3e8ff 100%);
   }
   
   /* Refined typography */
@@ -76,8 +77,8 @@
   
   .set-shape-squiggle {
     @apply aspect-square bg-gradient-to-br;
-    /* Refined SET squiggle shape with smooth, gentle curves creating an elongated S/peanut shape */
-    clip-path: path('M50,0 C30,15 20,40 20,50 C20,75 40,90 50,100 C60,90 80,75 80,50 C80,40 70,15 50,0 Z');
+    /* Changed to a triangle shape */
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
   }
   
   /* SET Shape Colors */

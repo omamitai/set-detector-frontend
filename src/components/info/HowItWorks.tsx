@@ -75,7 +75,7 @@ const HowItWorks = () => {
           How It Works
         </h2>
         <p className="text-gray-500 text-sm md:text-base font-sans max-w-md mx-auto">
-          Instantly spot every SET. Just snap, and play smarter.
+          From photo to solution in seconds: Our three-step process finds every valid SET combination
         </p>
       </motion.div>
       
