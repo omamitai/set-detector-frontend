@@ -84,7 +84,7 @@ const HowItWorks = () => {
           <motion.div 
             key={index}
             variants={itemVariants}
-            whileHover={{ y: -5, transition: { duration: 0.8 } }}
+            whileHover={{ y: -3, transition: { duration: 1.2, ease: "easeInOut" } }}
             whileTap={{ scale: 0.98 }}
             className="group"
           >
@@ -101,7 +101,7 @@ const HowItWorks = () => {
               <div className="flex flex-col items-center text-center relative z-10">
                 <div 
                   className={`rounded-full p-3 mb-5 bg-white/25 backdrop-blur-xl
-                   transition-transform duration-700 w-16 h-16 flex items-center justify-center
+                   transition-transform duration-1000 w-16 h-16 flex items-center justify-center
                    shadow-md group-hover:shadow-lg group-hover:scale-105 ${step.iconAnimation}`}
                 >
                   {step.icon}
