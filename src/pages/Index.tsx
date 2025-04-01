@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import ImageUpload from "@/components/upload/ImageUpload";
@@ -88,16 +89,16 @@ const Index = () => {
         className="max-w-6xl mx-auto px-4 md:px-6 py-4 md:py-8"
       >
         <motion.div 
-          className="text-center mb-8"
+          className="text-center mb-6"
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 className="text-2xl md:text-3xl font-medium mb-2 text-gray-800">
+          <h1 className="text-2xl md:text-3xl font-semibold mb-2 text-gray-800 font-poppins">
             SET Game Detector
           </h1>
-          <p className="text-gray-500 max-w-lg mx-auto text-sm md:text-base">
-            Instantly spot every SET. Just snap, and play smarter.
+          <p className="text-gray-500 max-w-md mx-auto text-sm md:text-base">
+            Instantly spot every SET card combination
           </p>
         </motion.div>
         
@@ -107,7 +108,7 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Alert variant="destructive" className="mb-6 max-w-md mx-auto bg-white border border-red-100 text-red-600 shadow-sm rounded-lg">
+            <Alert variant="destructive" className="mb-6 max-w-md mx-auto bg-white border border-red-100 text-red-600 shadow-sm rounded-xl">
               <AlertTriangle className="h-4 w-4 text-red-500" />
               <AlertTitle className="text-red-600 font-medium">No SET Cards Detected</AlertTitle>
               <AlertDescription className="flex flex-col gap-2 text-red-500">

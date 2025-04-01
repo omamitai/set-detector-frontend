@@ -14,7 +14,7 @@ const HowItWorks = () => {
       icon: <Camera className="h-6 w-6 text-white" />,
       title: "Capture",
       description: "Take a clear photo of your SET game cards on a flat surface with good lighting",
-      gradient: "from-rose-400 via-rose-500 to-rose-600",
+      gradient: "from-red-400 via-red-500 to-red-600",
       delay: 0.2,
       iconAnimation: "animate-pulse",
     },

@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { UploadCloud, X, Camera, Image as ImageIcon, Sparkles } from "lucide-react";
@@ -128,20 +129,20 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             transition={{ duration: 0.4 }}
           >
             <Card 
-              className={`overflow-hidden bg-white border border-gray-100 shadow-lg rounded-xl transition-all ${dragActive ? 'ring-1 ring-red-400' : ''}`}
+              className={`overflow-hidden bg-white border border-gray-100 shadow-xl rounded-2xl transition-all ${dragActive ? 'ring-2 ring-red-400' : ''}`}
               {...getRootProps()} 
               onDragEnter={handleDrag}
               onDragLeave={handleDrag}
               onDragOver={handleDrag}
               onDrop={handleDrag}
             >
-              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-5 py-8' : 'p-10 py-16'}`}>
+              <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-6 py-10' : 'p-10 py-16'}`}>
                 {/* Enhanced SET shapes with gradient styling */}
-                <div className="mb-6 flex items-center justify-center gap-6">
+                <div className="mb-8 flex items-center justify-center gap-8">
                   {symbols.map((symbol, index) => (
                     <motion.div
                       key={index}
-                      className={`${symbol.style} text-4xl md:text-5xl font-bold ${symbol.animation}`}
+                      className={`${symbol.style} text-5xl md:text-6xl font-bold ${symbol.animation}`}
                       whileHover={{ 
                         scale: 1.1, 
                         rotate: index % 2 === 0 ? 10 : -10,
@@ -162,7 +163,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 </motion.h3>
                 
                 <motion.p 
-                  className="text-gray-500 mb-6 text-center max-w-sm"
+                  className="text-gray-500 mb-8 text-center max-w-sm"
                   initial={{ opacity: 0.8 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
@@ -196,23 +197,24 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   }}
                 />
                 
-                <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm">
+                <div className="flex flex-col sm:flex-row gap-4 w-full max-w-sm">
                   <Button 
                     onClick={triggerCameraInput}
-                    className="bg-gradient-to-r from-red-500 to-amber-500 text-white rounded-full py-2.5 text-sm w-full shadow-md hover:shadow-lg transition-all hover:-translate-y-1 active:translate-y-0"
+                    variant="ios-primary"
+                    className="rounded-full py-3 text-sm w-full shadow-md"
                     disabled={isProcessing}
                   >
-                    <Camera className="h-4 w-4 mr-2" />
+                    <Camera className="h-5 w-5 mr-2" />
                     <span>Take Photo</span>
                   </Button>
                   
                   <Button 
                     onClick={triggerFileInput}
-                    variant="outline"
-                    className="bg-white/90 backdrop-blur-sm border border-gray-200 text-gray-700 rounded-full py-2.5 text-sm w-full shadow-sm hover:shadow-md transition-all hover:-translate-y-1 active:translate-y-0"
+                    variant="ios"
+                    className="rounded-full py-3 text-sm w-full shadow-md"
                     disabled={isProcessing}
                   >
-                    <ImageIcon className="h-4 w-4 mr-2" />
+                    <ImageIcon className="h-5 w-5 mr-2" />
                     <span>Choose Gallery</span>
                   </Button>
                 </div>
@@ -233,7 +235,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <Card className="overflow-hidden shadow-lg border border-gray-100 rounded-xl bg-white">
+            <Card className="overflow-hidden shadow-xl border border-gray-100 rounded-2xl bg-white">
               <CardContent className="p-0 relative">
                 <div className="relative">
                   <img 
@@ -251,9 +253,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                       className="absolute top-3 right-3"
                     >
                       <Button 
-                        variant="outline"
+                        variant="ios"
                         size="icon"
-                        className="rounded-full bg-white/80 backdrop-blur-sm shadow-md hover:shadow-lg hover:bg-white border border-gray-200"
+                        className="rounded-full bg-white/90 backdrop-blur-xl shadow-md h-10 w-10"
                         onClick={removeImage}
                       >
                         <X className="h-4 w-4 text-gray-600" />
@@ -269,11 +271,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     className="absolute inset-0 flex items-center justify-center"
                   >
                     {/* Processing indicator overlay */}
-                    <div className="absolute inset-0 bg-white/60 backdrop-blur-md"></div>
+                    <div className="absolute inset-0 bg-white/70 backdrop-blur-xl"></div>
                     
                     {/* Enhanced processing indicator */}
                     <motion.div 
-                      className="bg-white/90 backdrop-blur-xl rounded-xl px-5 py-4 shadow-lg flex flex-col items-center gap-3 z-10 max-w-xs border border-gray-100"
+                      className="bg-white/90 backdrop-blur-2xl rounded-2xl px-6 py-5 shadow-2xl flex flex-col items-center gap-4 z-10 max-w-xs border border-gray-100"
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.2, type: "spring", stiffness: 300, damping: 25 }}
@@ -292,7 +294,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                       
                       <Progress value={uploadProgress} className="h-1.5 w-full bg-gray-100" />
                       
-                      <div className="flex items-center justify-center gap-2">
+                      <div className="flex items-center justify-center gap-3">
                         {symbols.map((symbol, index) => (
                           <motion.div
                             key={index}

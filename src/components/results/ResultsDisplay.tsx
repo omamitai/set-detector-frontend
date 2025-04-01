@@ -73,21 +73,21 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
       className="space-y-5"
     >
       <div className="relative">
-        <Card className="rounded-lg overflow-hidden border border-gray-100 shadow-sm bg-white">
+        <Card className="rounded-2xl overflow-hidden border border-gray-100 shadow-xl bg-white">
           <CardContent className="p-0 relative">
             {resultImage && (
               <div className="relative">
                 {/* Sets found badge - more sophisticated styling */}
                 {sets.length > 0 && (
-                  <div className="absolute top-3 right-3 z-10">
+                  <div className="absolute top-4 right-4 z-10">
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.2, duration: 0.3 }}
                     >
                       <Badge 
-                        className="bg-blue-500/90 text-white border-0 
-                                 rounded-full px-3 py-1 shadow-sm flex items-center gap-2"
+                        className="bg-gradient-to-r from-red-500 to-amber-500 text-white border-0 
+                                 rounded-full px-4 py-1.5 shadow-md flex items-center gap-2"
                       >
                         <Sparkles className="h-3.5 w-3.5 text-white/90" />
                         <span className="font-medium text-sm">
@@ -106,12 +106,12 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                   />
                 </div>
                 
-                <div className="absolute bottom-3 right-3 flex gap-2">
+                <div className="absolute bottom-4 right-4 flex gap-2">
                   <Button
-                    variant="secondary"
+                    variant="ios"
                     size={isMobile ? "sm" : "default"}
                     onClick={onReset}
-                    className="gap-1.5 rounded-full bg-white text-xs font-medium shadow-sm hover:bg-gray-50 border border-gray-200"
+                    className="gap-1.5 rounded-full bg-white text-xs font-medium shadow-md hover:bg-gray-50"
                   >
                     <RefreshCw className="h-3.5 w-3.5 text-gray-700" />
                     <span className="font-medium text-gray-700">New Photo</span>
@@ -119,10 +119,10 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                   
                   {navigator.share && (
                     <Button
-                      variant="default"
+                      variant="ios-primary"
                       size={isMobile ? "sm" : "default"}
                       onClick={shareImage}
-                      className="gap-1.5 rounded-full bg-blue-500 text-white text-xs font-medium shadow-sm hover:bg-blue-600 border-0"
+                      className="gap-1.5 rounded-full text-xs font-medium shadow-md"
                     >
                       <Share2 className="h-3.5 w-3.5" />
                       <span className="font-medium">Share</span>
@@ -130,10 +130,10 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                   )}
                   
                   <Button
-                    variant="default"
+                    variant="ios-primary"
                     size={isMobile ? "sm" : "default"}
                     onClick={downloadImage}
-                    className="gap-1.5 rounded-full bg-blue-500 text-white text-xs font-medium shadow-sm hover:bg-blue-600 border-0"
+                    className="gap-1.5 rounded-full text-xs font-medium shadow-md"
                   >
                     <Download className="h-3.5 w-3.5" />
                     <span className="font-medium">Save</span>
@@ -152,7 +152,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
           transition={{ delay: 0.3, duration: 0.4 }}
           className="flex flex-col items-center justify-center p-2"
         >
-          <div className="bg-red-50 border border-red-100 rounded-lg p-3 shadow-sm w-full max-w-sm">
+          <div className="bg-red-50 border border-red-100 rounded-xl p-4 shadow-md w-full max-w-sm">
             <p className="text-red-600 font-medium text-center text-sm">
               No SET cards detected in this image
             </p>
