@@ -74,7 +74,7 @@
     @apply aspect-square rounded-full bg-gradient-to-br;
   }
   
-  /* Triangle shape */
+  /* Triangle shape - fixed for proper display */
   .set-shape-triangle {
     @apply aspect-square bg-gradient-to-br;
     clip-path: polygon(50% 0%, 100% 100%, 0% 100%);

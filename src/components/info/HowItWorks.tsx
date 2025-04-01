@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Camera, Zap, Lightbulb } from "lucide-react";
 import { motion } from "framer-motion";
