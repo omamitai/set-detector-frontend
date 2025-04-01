@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -74,7 +75,7 @@
     @apply aspect-square rounded-full bg-gradient-to-br;
   }
   
-  /* Green triangle shape */
+  /* Green triangle shape - improved */
   .set-shape-triangle {
     @apply aspect-square bg-gradient-to-br;
     clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
@@ -220,6 +221,16 @@
   
   .futuristic-gradient-soft {
     @apply bg-gradient-to-r from-primary-purple/20 via-accent-teal/10 to-accent-pink/10;
+  }
+  
+  /* Safe area utilities for iOS devices */
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0.5rem);
+  }
+  
+  .px-safe {
+    padding-left: env(safe-area-inset-left, 1rem);
+    padding-right: env(safe-area-inset-right, 1rem);
   }
 }
 

@@ -58,7 +58,7 @@ const HowItWorks = () => {
       }
     }
   };
-  return <motion.div variants={containerVariants} initial="hidden" animate="visible" className="w-full max-w-4xl mx-auto px-4 md:px-6 rounded-2xl mt-12 mb-16 relative">
+  return <motion.div variants={containerVariants} initial="hidden" animate="visible" className="w-full max-w-4xl mx-auto px-4 md:px-6 rounded-2xl mt-8 mb-16 relative">
       {/* Background decorative elements for How It Works section */}
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none opacity-[0.03]">
         <div className="set-shape-diamond set-color-red absolute w-32 h-32 -top-10 -right-8 rotate-12"></div>

@@ -22,7 +22,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           -webkit-tap-highlight-color: transparent;
           height: 100%;
           overscroll-behavior-y: none;
-          background: linear-gradient(135deg, #fcfcff 0%, #f3e8ff 100%);
         }
         
         /* Enhanced mobile optimizations */
@@ -47,16 +46,19 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           }
         }
         
-        /* Style the background gradient to start higher up */
-        .bg-gradient-higher {
-          background-image: linear-gradient(to bottom right, rgba(250, 245, 255, 0.9) 0%, rgba(231, 219, 255, 0.6) 35%, rgba(215, 197, 255, 0.4) 100%);
+        /* Improved gradient that starts from the very top */
+        .bg-gradient-full {
+          background-image: linear-gradient(135deg, rgba(250, 245, 255, 0.9) 0%, rgba(231, 219, 255, 0.6) 35%, rgba(215, 197, 255, 0.4) 100%);
           background-attachment: fixed;
+          position: fixed;
+          inset: 0;
+          z-index: -10;
         }
       `}
       </style>
 
-      {/* Enhanced Background for iOS notch compatibility with higher starting point */}
-      <div className="fixed inset-0 bg-gradient-higher -z-10"></div>
+      {/* Improved Background Gradient */}
+      <div className="bg-gradient-full"></div>
 
       {/* Enhanced Background SET Icons with better positioning and subtle animations */}
       <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none opacity-[0.025]">
@@ -129,12 +131,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         />
       </div>
 
-      <main className="flex-grow relative z-10 safe-top pt-6">
+      <main className="flex-grow relative z-10 pt-safe">
         {children}
       </main>
 
       <footer className="border-t border-gray-100 py-3 bg-white/80 backdrop-blur-xl sticky bottom-0 mt-auto z-20 w-full shadow-[0_-1px_3px_rgba(0,0,0,0.05)] px-safe">
-        <div className="container mx-auto px-4 flex justify-between items-center">
+        <div className="container mx-auto px-4 flex flex-wrap justify-between items-center gap-2">
           <div className="flex flex-col xs:flex-row xs:items-center gap-2 xs:gap-4">
             <p className="text-xs text-gray-500 font-sans">
               SET® is a registered trademark of Cannei, LLC.
