@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { UploadCloud, X, Camera, Image as ImageIcon, Sparkles } from "lucide-react";
@@ -13,33 +12,28 @@ interface ImageUploadProps {
   isProcessing: boolean;
 }
 
-// SET Shape components with proper styling
-const SetShapeDiamond = () => (
-  <div className="set-shape-diamond set-color-red w-16 h-16 mx-auto shadow-lg">
-    <div className="w-full h-full flex items-center justify-center">
-      {/* Diamond pattern overlay */}
-      <div className="w-2/3 h-2/3 rounded-full bg-white/20 backdrop-blur-sm"></div>
-    </div>
-  </div>
-);
-
-const SetShapeOval = () => (
-  <div className="set-shape-oval set-color-purple w-16 h-16 mx-auto shadow-lg">
-    <div className="w-full h-full flex items-center justify-center">
-      {/* Oval pattern overlay */}
-      <div className="w-1/2 h-2/3 rounded-full bg-white/20 backdrop-blur-sm"></div>
-    </div>
-  </div>
-);
-
-const SetShapeSquiggle = () => (
-  <div className="set-shape-squiggle set-color-green w-16 h-16 mx-auto shadow-lg">
-    <div className="w-full h-full flex items-center justify-center">
-      {/* Squiggle pattern overlay */}
-      <div className="w-2/3 h-1/2 rounded-full bg-white/20 backdrop-blur-sm transform -rotate-45"></div>
-    </div>
-  </div>
-);
+const SetShapeComponent = ({ type, color, className }) => {
+  const baseClasses = `w-14 h-14 mx-auto shadow-lg flex items-center justify-center ${className}`;
+  const innerCircleClasses = "rounded-full bg-white/20 backdrop-blur-sm";
+  
+  return (
+    <motion.div 
+      className={`set-shape-${type} set-color-${color} ${baseClasses}`}
+      initial={{ opacity: 0.8 }}
+      animate={{ 
+        opacity: [0.8, 1, 0.8],
+        scale: [1, 1.05, 1],
+      }}
+      transition={{ 
+        duration: 3,
+        repeat: Infinity,
+        repeatType: "reverse"
+      }}
+    >
+      <div className={`w-1/2 h-1/2 ${innerCircleClasses}`}></div>
+    </motion.div>
+  );
+};
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
   onImageSelected,
@@ -58,13 +52,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     const file = acceptedFiles[0];
     if (!file) return;
 
-    // Check if file is an image
     if (!file.type.startsWith("image/")) {
       console.error("Please upload an image file");
       return;
     }
 
-    // Check file size (max 10MB)
     if (file.size > 10 * 1024 * 1024) {
       console.error("File size must be less than 10MB");
       return;
@@ -72,7 +64,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     setSelectedFile(file);
     setPreviewUrl(URL.createObjectURL(file));
 
-    // Simulate upload progress
     let progress = 0;
     const interval = setInterval(() => {
       progress += 5;
@@ -80,7 +71,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       if (progress >= 100) {
         clearInterval(interval);
         
-        // Add a small delay to simulate processing
         setTimeout(() => {
           onImageSelected(file);
         }, 300);
@@ -117,12 +107,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     }
   };
   
-  // File selection from gallery/files
   const triggerFileInput = () => {
     fileInputRef.current?.click();
   };
   
-  // Camera capture
   const triggerCameraInput = () => {
     cameraInputRef.current?.click();
   };
@@ -146,43 +134,24 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               onDrop={handleDrag}
             >
               <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-6 py-10' : 'p-10 py-16'}`}>
-                {/* SET card shapes with proper styling */}
-                <div className="mb-8 flex items-center justify-center gap-6">
-                  <motion.div
-                    whileHover={{ 
-                      scale: 1.1, 
-                      rotate: 10,
-                      transition: { duration: 0.3, ease: "easeOut" }
-                    }}
-                    whileTap={{ scale: 0.95 }}
+                <div className="mb-8 flex items-center justify-center gap-8">
+                  <SetShapeComponent 
+                    type="diamond" 
+                    color="red" 
                     className="animate-float"
-                  >
-                    <SetShapeDiamond />
-                  </motion.div>
+                  />
                   
-                  <motion.div
-                    whileHover={{ 
-                      scale: 1.1, 
-                      rotate: -10,
-                      transition: { duration: 0.3, ease: "easeOut" }
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    className="animate-pulse-subtle"
-                  >
-                    <SetShapeOval />
-                  </motion.div>
+                  <SetShapeComponent 
+                    type="oval" 
+                    color="purple" 
+                    className="animate-pulse-subtle" 
+                  />
                   
-                  <motion.div
-                    whileHover={{ 
-                      scale: 1.1, 
-                      rotate: 10,
-                      transition: { duration: 0.3, ease: "easeOut" }
-                    }}
-                    whileTap={{ scale: 0.95 }}
+                  <SetShapeComponent 
+                    type="squiggle" 
+                    color="green" 
                     className="animate-bounce-subtle"
-                  >
-                    <SetShapeSquiggle />
-                  </motion.div>
+                  />
                 </div>
                 
                 <motion.h3 
@@ -201,7 +170,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   Take a clear photo of the cards on a flat surface
                 </motion.p>
                 
-                {/* Hidden inputs */}
                 <input 
                   ref={fileInputRef}
                   type="file"
@@ -300,10 +268,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     animate={{ opacity: 1 }}
                     className="absolute inset-0 flex items-center justify-center"
                   >
-                    {/* Processing indicator overlay */}
                     <div className="absolute inset-0 bg-white/70 backdrop-blur-xl"></div>
                     
-                    {/* Enhanced processing indicator */}
                     <motion.div 
                       className="bg-white/90 backdrop-blur-2xl rounded-2xl px-6 py-5 shadow-2xl flex flex-col items-center gap-4 z-10 max-w-xs border border-gray-100"
                       initial={{ y: 20, opacity: 0 }}

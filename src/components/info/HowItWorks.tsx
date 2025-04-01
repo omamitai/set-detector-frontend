@@ -14,7 +14,7 @@ const HowItWorks = () => {
       icon: <Camera className="h-6 w-6 text-white" />,
       title: "Capture",
       description: "Take a clear photo of your SET game cards on a flat surface with good lighting",
-      gradient: "from-set-red to-set-red-light",
+      gradient: "bg-gradient-to-br from-set-red via-set-red to-set-red-light",
       delay: 0.2,
       iconAnimation: "animate-pulse",
     },
@@ -22,7 +22,7 @@ const HowItWorks = () => {
       icon: <Zap className="h-6 w-6 text-white" />,
       title: "Analyze",
       description: "Our AI instantly detects all cards and identifies their unique attributes",
-      gradient: "from-set-green to-set-green-light",
+      gradient: "bg-gradient-to-br from-set-green via-set-green to-set-green-light",
       delay: 0.3,
       iconAnimation: "animate-bounce-subtle",
     },
@@ -30,7 +30,7 @@ const HowItWorks = () => {
       icon: <Lightbulb className="h-6 w-6 text-white" />,
       title: "Discover",
       description: "See all valid SETs highlighted with detailed explanations in seconds",
-      gradient: "from-set-purple to-set-purple-light",
+      gradient: "bg-gradient-to-br from-set-purple via-set-purple to-set-purple-light",
       delay: 0.4,
       iconAnimation: "animate-shimmer",
     }
@@ -60,6 +60,13 @@ const HowItWorks = () => {
       animate="visible"
       className="w-full max-w-4xl mx-auto px-4 md:px-6 rounded-2xl mt-12 mb-16 relative"
     >
+      {/* Background decorative elements for How It Works section */}
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none opacity-[0.03]">
+        <div className="set-shape-diamond set-color-red absolute w-32 h-32 -top-10 -right-8 rotate-12"></div>
+        <div className="set-shape-oval set-color-purple absolute w-28 h-28 bottom-16 -left-10 rotate-45"></div>
+        <div className="set-shape-squiggle set-color-green absolute w-24 h-24 top-1/3 right-0 -rotate-12"></div>
+      </div>
+      
       <motion.div 
         variants={itemVariants}
         className="text-center mb-8 md:mb-10"
@@ -84,12 +91,12 @@ const HowItWorks = () => {
             <div 
               className={cn(
                 "rounded-xl shadow-lg p-6 h-full border-0 overflow-hidden relative",
-                "bg-gradient-to-br backdrop-blur-md transition-all duration-300",
-                `bg-gradient-to-br ${step.gradient}`
+                "backdrop-blur-md transition-all duration-300",
+                step.gradient
               )}
             >
-              {/* Enhanced glass overlay */}
-              <div className="absolute inset-0 opacity-10 bg-white/30 backdrop-blur-sm group-hover:opacity-25 transition-opacity duration-300" />
+              {/* Enhanced glass overlay with gradient */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/5 opacity-30 backdrop-blur-sm group-hover:opacity-40 transition-opacity duration-300" />
               
               <div className="flex flex-col items-center text-center relative z-10">
                 <div 
