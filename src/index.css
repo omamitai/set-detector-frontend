@@ -75,7 +75,7 @@
     @apply aspect-square rounded-full bg-gradient-to-br;
   }
   
-  /* Green triangle shape - improved */
+  /* Fixed triangle shape */
   .set-shape-triangle {
     @apply aspect-square bg-gradient-to-br;
     clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
@@ -226,6 +226,10 @@
   /* Safe area utilities for iOS devices */
   .pt-safe {
     padding-top: env(safe-area-inset-top, 0.5rem);
+  }
+  
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0.5rem);
   }
   
   .px-safe {

@@ -13,7 +13,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isMobile = useIsMobile();
   
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-300 bg-gradient-to-br from-white via-purple-50/30 to-purple-100/50 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col transition-colors duration-300 relative overflow-hidden">
       <style>
         {`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
@@ -30,11 +30,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             overflow-x: hidden;
           }
           
-          /* Better spacing for iOS devices with notches */
-          .safe-top {
-            padding-top: env(safe-area-inset-top, 20px);
-          }
-          
           body {
             padding-bottom: env(safe-area-inset-bottom, 20px);
           }
@@ -46,18 +41,23 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           }
         }
         
-        /* Improved gradient that starts from the very top */
+        /* Full-screen gradient that starts from the very top-left corner */
         .bg-gradient-full {
           background-image: linear-gradient(135deg, rgba(250, 245, 255, 0.9) 0%, rgba(231, 219, 255, 0.6) 35%, rgba(215, 197, 255, 0.4) 100%);
           background-attachment: fixed;
           position: fixed;
-          inset: 0;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
           z-index: -10;
+          margin: 0;
+          padding: 0;
         }
       `}
       </style>
 
-      {/* Improved Background Gradient */}
+      {/* Improved Background Gradient - positioned to cover notch area */}
       <div className="bg-gradient-full"></div>
 
       {/* Enhanced Background SET Icons with better positioning and subtle animations */}
