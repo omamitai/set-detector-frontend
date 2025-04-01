@@ -22,12 +22,16 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           -webkit-tap-highlight-color: transparent;
           height: 100%;
           overscroll-behavior-y: none;
+          background: transparent !important;
+          margin: 0;
+          padding: 0;
         }
         
         /* Enhanced mobile optimizations */
         @media (max-width: 640px) {
           html, body {
             overflow-x: hidden;
+            background: transparent !important;
           }
           
           body {
@@ -41,7 +45,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           }
         }
         
-        /* Fixed gradient background that properly covers the notch area */
+        /* Fixed gradient background that properly covers the entire screen including notch area */
         .bg-gradient-full {
           background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.99) 0%, rgba(248, 245, 255, 0.85) 35%, rgba(242, 235, 255, 0.7) 100%);
           background-attachment: fixed;
@@ -60,21 +64,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
         /* Fix for iPhone notch area */
         @supports (padding-top: env(safe-area-inset-top)) {
-          /* Clear any default background colors that might be showing in the notch area */
-          html, body {
-            background: transparent !important;
-          }
-          
           .bg-gradient-full {
-            padding-top: env(safe-area-inset-top);
-            padding-left: env(safe-area-inset-left);
-            padding-right: env(safe-area-inset-right);
-            padding-bottom: env(safe-area-inset-bottom);
-            /* These negative margins offset the padding, maintaining full coverage */
-            margin-top: calc(env(safe-area-inset-top) * -1);
-            margin-left: calc(env(safe-area-inset-left) * -1);
-            margin-right: calc(env(safe-area-inset-right) * -1);
-            margin-bottom: calc(env(safe-area-inset-bottom) * -1);
+            padding: 0;
+            margin: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
           }
         }
       `}
@@ -83,7 +79,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Improved Background Gradient - positioned to cover notch area */}
       <div className="bg-gradient-full"></div>
 
-      <main className="flex-grow relative z-10 pt-safe">
+      <main className="flex-grow relative z-10">
         {children}
       </main>
 
