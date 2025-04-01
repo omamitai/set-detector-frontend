@@ -75,7 +75,7 @@
   
   .set-shape-squiggle {
     @apply aspect-square bg-gradient-to-br;
-    clip-path: path("M 75,0 C 150,0 150,100 75,100 C 0,100 0,0 75,0 Z");
+    clip-path: path("M 18,30 C 20,15 40,55 75,35 C 100,20 70,5 50,20 C 35,30 15,0 18,30 Z");
   }
   
   /* SET Shape Colors */
@@ -165,6 +165,10 @@
     animation: pulse 3s ease-in-out infinite;
   }
   
+  .animate-pulse-slow {
+    animation: pulse 5s ease-in-out infinite;
+  }
+  
   .animate-rotate {
     animation: rotate 12s linear infinite;
   }
@@ -177,7 +181,7 @@
       transparent 100%
     );
     background-size: 200% 100%;
-    animation: shimmer 3s linear infinite;
+    animation: shimmer 4s linear infinite;
   }
   
   /* Glassmorphism effects - more refined */

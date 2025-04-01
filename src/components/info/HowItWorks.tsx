@@ -16,12 +16,12 @@ const HowItWorks = () => {
       description: "Take a clear photo of your SET game cards on a flat surface with good lighting",
       gradient: "bg-gradient-to-br from-set-red via-set-red to-set-red-light",
       delay: 0.2,
-      iconAnimation: "animate-pulse",
+      iconAnimation: "animate-pulse-slow",
     },
     {
       icon: <Zap className="h-6 w-6 text-white" />,
       title: "Analyze",
-      description: "Our AI instantly detects all cards and identifies their unique attributes",
+      description: "Our fine-tuned YOLO model locates all cards, then specialized models identify each card's attributes",
       gradient: "bg-gradient-to-br from-set-green via-set-green to-set-green-light",
       delay: 0.3,
       iconAnimation: "animate-bounce-subtle",
@@ -29,7 +29,7 @@ const HowItWorks = () => {
     {
       icon: <Lightbulb className="h-6 w-6 text-white" />,
       title: "Discover",
-      description: "See all valid SETs highlighted with detailed explanations in seconds",
+      description: "Our algorithm identifies all valid SETs by evaluating every possible combination, highlighting them instantly",
       gradient: "bg-gradient-to-br from-set-purple via-set-purple to-set-purple-light",
       delay: 0.4,
       iconAnimation: "animate-shimmer",
@@ -84,25 +84,25 @@ const HowItWorks = () => {
           <motion.div 
             key={index}
             variants={itemVariants}
-            whileHover={{ y: -8, transition: { duration: 0.2 } }}
+            whileHover={{ y: -5, transition: { duration: 0.5 } }}
             whileTap={{ scale: 0.98 }}
             className="group"
           >
             <div 
               className={cn(
                 "rounded-xl shadow-lg p-6 h-full border-0 overflow-hidden relative",
-                "backdrop-blur-md transition-all duration-300",
+                "backdrop-blur-md transition-all duration-500",
                 step.gradient
               )}
             >
               {/* Enhanced glass overlay with gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/5 opacity-30 backdrop-blur-sm group-hover:opacity-40 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-white/5 opacity-30 backdrop-blur-sm group-hover:opacity-40 transition-opacity duration-500" />
               
               <div className="flex flex-col items-center text-center relative z-10">
                 <div 
                   className={`rounded-full p-3 mb-5 bg-white/25 backdrop-blur-xl
-                   transition-transform duration-300 w-16 h-16 flex items-center justify-center
-                   shadow-md group-hover:shadow-lg group-hover:scale-110 ${step.iconAnimation}`}
+                   transition-transform duration-500 w-16 h-16 flex items-center justify-center
+                   shadow-md group-hover:shadow-lg group-hover:scale-105 ${step.iconAnimation}`}
                 >
                   {step.icon}
                 </div>

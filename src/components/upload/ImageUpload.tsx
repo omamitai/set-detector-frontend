@@ -12,9 +12,8 @@ interface ImageUploadProps {
   isProcessing: boolean;
 }
 
-const SetShapeComponent = ({ type, color, className }) => {
-  const baseClasses = `w-14 h-14 mx-auto shadow-lg flex items-center justify-center ${className}`;
-  const innerCircleClasses = "rounded-full bg-white/20 backdrop-blur-sm";
+const SetShapeComponent = ({ type, color, className = "" }) => {
+  const baseClasses = `w-14 h-14 mx-auto flex items-center justify-center ${className}`;
   
   return (
     <motion.div 
@@ -22,15 +21,14 @@ const SetShapeComponent = ({ type, color, className }) => {
       initial={{ opacity: 0.8 }}
       animate={{ 
         opacity: [0.8, 1, 0.8],
-        scale: [1, 1.05, 1],
       }}
       transition={{ 
-        duration: 3,
+        duration: 4,
         repeat: Infinity,
         repeatType: "reverse"
       }}
     >
-      <div className={`w-1/2 h-1/2 ${innerCircleClasses}`}></div>
+      <div className="w-1/2 h-1/2 rounded-full bg-white/20 backdrop-blur-sm"></div>
     </motion.div>
   );
 };
@@ -138,19 +136,19 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   <SetShapeComponent 
                     type="diamond" 
                     color="red" 
-                    className="animate-float"
+                    className="shadow-lg"
                   />
                   
                   <SetShapeComponent 
                     type="oval" 
                     color="purple" 
-                    className="animate-pulse-subtle" 
+                    className="shadow-lg" 
                   />
                   
                   <SetShapeComponent 
                     type="squiggle" 
                     color="green" 
-                    className="animate-bounce-subtle"
+                    className="shadow-lg"
                   />
                 </div>
                 
@@ -165,7 +163,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   className="text-gray-500 mb-8 text-center max-w-sm"
                   initial={{ opacity: 0.8 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
+                  transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
                 >
                   Take a clear photo of the cards on a flat surface
                 </motion.p>
