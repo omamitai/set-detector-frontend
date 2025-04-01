@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
+    --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -13,7 +13,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 350 75% 60%; /* SET Red */
+    --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -22,23 +22,65 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 280 60% 55%; /* SET Purple */
-    --accent-foreground: 210 40% 98%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 350 75% 60%;
+    --ring: 222.2 84% 4.9%;
 
-    --radius: 0.75rem;
-    
-    /* SET card colors - more subtle */
-    --set-red: 350 75% 65%;
-    --set-green: 150 65% 45%;
-    --set-purple: 280 60% 65%;
-    --set-blue: 215 70% 60%;
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222.2 84% 4.9%;
+    --sidebar-primary: 222.2 47.4% 11.2%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 210 40% 96.1%;
+    --sidebar-accent-foreground: 222.2 47.4% 11.2%;
+    --sidebar-border: 214.3 31.8% 91.4%;
+    --sidebar-ring: 222.2 84% 4.9%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+
+    --sidebar-background: 222.2 84% 4.9%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 210 40% 98%;
+    --sidebar-primary-foreground: 222.2 47.4% 11.2%;
+    --sidebar-accent: 217.2 32.6% 17.5%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217.2 32.6% 17.5%;
+    --sidebar-ring: 212.7 26.8% 83.9%;
   }
 }
 
@@ -46,30 +88,33 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
-    background: linear-gradient(135deg, #fcfcff 0%, #f3e8ff 100%);
-  }
-  
-  /* Refined typography */
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-sans font-semibold tracking-tight;
-  }
-  
-  p, a, button, li, span {
-    @apply font-sans;
   }
 }
 
-@layer components {
-  /* SET Card Shape Styling */
+/* SET card shape styles */
+@layer utilities {
+  /* Color variants for SET shapes */
+  .set-color-red {
+    @apply from-set-red to-set-red-light;
+  }
+  
+  .set-color-purple {
+    @apply from-set-purple to-set-purple-light;
+  }
+  
+  .set-color-green {
+    @apply from-set-green to-set-green-light;
+  }
+  
+  /* Diamond shape */
   .set-shape-diamond {
     @apply aspect-square bg-gradient-to-br;
     clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
   }
   
+  /* Oval shape */
   .set-shape-oval {
     @apply aspect-square rounded-full bg-gradient-to-br;
   }
@@ -79,225 +124,22 @@
     @apply aspect-square bg-gradient-to-br;
     clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
   }
-  
-  /* SET Shape Colors - more subtle versions */
-  .set-color-red {
-    @apply from-set-red/90 to-set-red-light/90;
-  }
-  
-  .set-color-purple {
-    @apply from-set-purple/90 to-set-purple-light/90;
-  }
-  
-  .set-color-green {
-    @apply from-set-green/90 to-set-green-light/90;
-  }
-  
-  .set-color-blue {
-    @apply from-set-blue/90 to-set-blue-light/90;
-  }
-  
-  /* SET Card Styling */
-  .set-card {
-    @apply rounded-xl shadow-lg border-0 backdrop-blur-sm bg-white/90;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(243, 244, 246, 0.8));
-    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.1);
-  }
-  
-  .set-card:hover {
-    @apply shadow-xl bg-white/95;
-    transform: translateY(-4px);
-    box-shadow: 0 15px 30px rgba(15, 23, 42, 0.15);
-  }
-  
-  /* Button styles */
-  .set-button-primary {
-    @apply bg-gradient-to-r from-set-red to-set-red-light text-white rounded-2xl shadow-md
-           shadow-set-red/20 border-0 flex items-center justify-center gap-2 
-           transition-all hover:shadow-lg hover:shadow-set-red/30 hover:-translate-y-1 
-           active:translate-y-0 active:scale-95 font-medium py-2.5 px-4;
-  }
-  
-  .set-button-purple {
-    @apply bg-gradient-to-r from-set-purple to-set-purple-light text-white rounded-2xl shadow-md
-           shadow-set-purple/20 border-0 flex items-center justify-center gap-2 
-           transition-all hover:shadow-lg hover:shadow-set-purple/30 hover:-translate-y-1 
-           active:translate-y-0 active:scale-95 font-medium py-2.5 px-4;
-  }
-  
-  .set-button-green {
-    @apply bg-gradient-to-r from-set-green to-set-green-light text-white rounded-2xl shadow-md
-           shadow-set-green/20 border-0 flex items-center justify-center gap-2 
-           transition-all hover:shadow-lg hover:shadow-set-green/30 hover:-translate-y-1 
-           active:translate-y-0 active:scale-95 font-medium py-2.5 px-4;
-  }
-  
-  .set-button-secondary {
-    @apply bg-white/90 backdrop-blur-sm text-gray-700 rounded-2xl shadow-sm border border-gray-100
-           flex items-center justify-center gap-2 transition-all hover:shadow-md hover:-translate-y-1
-           active:scale-95 font-medium py-2.5 px-4;
-  }
-
-  /* Badge styles */
-  .set-badge {
-    @apply rounded-xl px-3 py-1 text-sm font-medium shadow-sm flex items-center gap-1.5;
-  }
-  
-  .set-badge-red {
-    @apply bg-gradient-to-r from-set-red to-set-red-light text-white border-0 set-badge;
-  }
-  
-  .set-badge-purple {
-    @apply bg-gradient-to-r from-set-purple to-set-purple-light text-white border-0 set-badge;
-  }
-  
-  .set-badge-green {
-    @apply bg-gradient-to-r from-set-green to-set-green-light text-white border-0 set-badge;
-  }
 }
 
-@layer utilities {
-  /* Animation utilities */
-  .animate-float {
-    animation: float 5s ease-in-out infinite;
-  }
-  
-  .animate-pulse-subtle {
-    animation: pulse 3s ease-in-out infinite;
-  }
-  
-  .animate-pulse-slow {
-    animation: pulse 5s ease-in-out infinite;
-  }
-  
-  .animate-rotate {
-    animation: rotate 12s linear infinite;
-  }
-  
-  .animate-shimmer {
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.1) 50%,
-      transparent 100%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 4s linear infinite;
-  }
-  
-  /* Glassmorphism effects - more refined */
-  .glass {
-    @apply backdrop-blur-xl bg-white/70 border border-white/20 shadow-xl;
-  }
-  
-  .glass-colored {
-    @apply backdrop-blur-xl bg-gradient-to-br from-white/70 to-white/60 border border-white/20 shadow-xl;
-  }
-  
-  /* Interaction states */
-  .interactive {
-    @apply transition-all duration-300 hover:scale-102 active:scale-95;
-  }
-  
-  /* Common spacing utilities */
-  .section-y-space {
-    @apply py-6 md:py-10;
-  }
-  
-  .card-padding {
-    @apply p-3 md:p-5;
-  }
-  
-  /* New gradient utilities */
-  .purple-gradient {
-    @apply bg-neo-gradient-purple;
-  }
-  
-  .purple-gradient-subtle {
-    @apply bg-gradient-to-r from-primary-purple/20 via-primary-indigo/10 to-primary-blue/5;
-  }
-  
-  .futuristic-gradient-soft {
-    @apply bg-gradient-to-r from-primary-purple/20 via-accent-teal/10 to-accent-pink/10;
-  }
-  
-  /* Safe area utilities for iOS devices */
-  .pt-safe {
-    padding-top: env(safe-area-inset-top, 0.5rem);
-  }
-  
-  .pb-safe {
-    padding-bottom: env(safe-area-inset-bottom, 0.5rem);
-  }
-  
-  .px-safe {
-    padding-left: env(safe-area-inset-left, 1rem);
-    padding-right: env(safe-area-inset-right, 1rem);
-  }
-}
-
-/* Mobile optimizations */
-@media (max-width: 640px) {
-  html, body {
-    overflow-x: hidden;
-  }
-  
-  /* Improved spacing for iOS devices */
-  body {
-    padding-bottom: env(safe-area-inset-bottom, 20px);
-  }
-  
-  /* Better tap targets */
-  button, a, .clickable {
-    min-height: 44px;
-    min-width: 44px;
-  }
-}
-
-/* Add extra small screen breakpoint for footer text alignment */
-@media (min-width: 400px) {
-  .xs\:flex-row {
-    flex-direction: row;
-  }
-  
-  .xs\:items-center {
-    align-items: center;
-  }
-  
-  .xs\:gap-4 {
-    gap: 1rem;
-  }
-}
-
-/* Animations */
-@keyframes float {
+/* Custom animations */
+@keyframes pulse-slow {
   0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
     transform: scale(1);
+    opacity: 0.9;
   }
   50% {
-    opacity: 0.9;
-    transform: scale(1.03);
+    transform: scale(1.05);
+    opacity: 1;
   }
 }
 
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
 }
 
 @keyframes shimmer {
@@ -307,4 +149,29 @@
   100% {
     background-position: 200% 0;
   }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 25%,
+    rgba(255, 255, 255, 0.2) 75%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+@keyframes bounce-subtle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 2s ease-in-out infinite;
 }

@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { UploadCloud, X, Camera, Image as ImageIcon, Sparkles } from "lucide-react";
@@ -12,6 +11,27 @@ interface ImageUploadProps {
   onImageSelected: (file: File) => void;
   isProcessing: boolean;
 }
+
+const SetShapeComponent = ({ type, color, className = "" }) => {
+  const baseClasses = `w-14 h-14 mx-auto flex items-center justify-center ${className}`;
+  
+  return (
+    <motion.div 
+      className={`set-shape-${type} set-color-${color} ${baseClasses}`}
+      initial={{ opacity: 0.8 }}
+      animate={{ 
+        opacity: [0.8, 1, 0.8],
+      }}
+      transition={{ 
+        duration: 4,
+        repeat: Infinity,
+        repeatType: "reverse"
+      }}
+    >
+      <div className="w-1/2 h-1/2 rounded-full bg-white/20 backdrop-blur-sm"></div>
+    </motion.div>
+  );
+};
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
   onImageSelected,
@@ -112,6 +132,26 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               onDrop={handleDrag}
             >
               <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-6 py-10' : 'p-10 py-16'}`}>
+                <div className="mb-8 flex items-center justify-center gap-8">
+                  <SetShapeComponent 
+                    type="diamond" 
+                    color="red" 
+                    className="shadow-lg"
+                  />
+                  
+                  <SetShapeComponent 
+                    type="oval" 
+                    color="purple" 
+                    className="shadow-lg" 
+                  />
+                  
+                  <SetShapeComponent 
+                    type="triangle" 
+                    color="green" 
+                    className="shadow-lg"
+                  />
+                </div>
+                
                 <motion.h3 
                   className="font-medium text-xl md:text-2xl mb-3 text-gray-800 bg-gradient-to-r from-set-red to-set-purple bg-clip-text text-transparent"
                   whileHover={{ scale: 1.02 }}
