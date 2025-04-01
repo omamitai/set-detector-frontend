@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -41,7 +40,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           }
         }
         
-        /* Much more subtle gradient that starts from the very top-left corner */
+        /* Fixed gradient background that properly covers the notch area */
         .bg-gradient-full {
           background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.99) 0%, rgba(248, 245, 255, 0.85) 35%, rgba(242, 235, 255, 0.7) 100%);
           background-attachment: fixed;
@@ -56,9 +55,19 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           width: 100vw;
           height: 100vh;
           height: 100dvh; /* dynamic viewport height - handles mobile browsers better */
-          margin-top: env(safe-area-inset-top, 0);
-          margin-left: env(safe-area-inset-left, 0);
-          margin-right: env(safe-area-inset-right, 0);
+        }
+
+        /* Fix for iPhone notch area */
+        @supports (padding-top: env(safe-area-inset-top)) {
+          .bg-gradient-full {
+            padding-top: env(safe-area-inset-top);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+            /* These negative margins offset the padding, maintaining full coverage */
+            margin-top: calc(env(safe-area-inset-top) * -1);
+            margin-left: calc(env(safe-area-inset-left) * -1);
+            margin-right: calc(env(safe-area-inset-right) * -1);
+          }
         }
       `}
       </style>
