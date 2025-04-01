@@ -1,8 +1,10 @@
+
 import React from "react";
 import { Camera, Zap, Lightbulb } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
+
 const HowItWorks = () => {
   const isMobile = useIsMobile();
 
@@ -61,7 +63,7 @@ const HowItWorks = () => {
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none opacity-[0.03]">
         <div className="set-shape-diamond set-color-red absolute w-32 h-32 -top-10 -right-8 rotate-12"></div>
         <div className="set-shape-oval set-color-purple absolute w-28 h-28 bottom-16 -left-10 rotate-45"></div>
-        <div className="set-shape-squiggle set-color-green absolute w-24 h-24 top-1/3 right-0 -rotate-12"></div>
+        <div className="set-shape-triangle set-color-green absolute w-24 h-24 top-1/3 right-0 -rotate-12"></div>
       </div>
       
       <motion.div variants={itemVariants} className="text-center mb-8 md:mb-10">
@@ -104,4 +106,5 @@ const HowItWorks = () => {
       </div>
     </motion.div>;
 };
+
 export default HowItWorks;

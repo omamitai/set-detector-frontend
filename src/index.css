@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -75,9 +74,9 @@
     @apply aspect-square rounded-full bg-gradient-to-br;
   }
   
-  .set-shape-squiggle {
+  /* Green triangle shape */
+  .set-shape-triangle {
     @apply aspect-square bg-gradient-to-br;
-    /* Changed to a triangle shape */
     clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
   }
   
@@ -237,8 +236,23 @@
   
   /* Better tap targets */
   button, a, .clickable {
-    min-height: 40px;
-    min-width: 40px;
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Add extra small screen breakpoint for footer text alignment */
+@media (min-width: 400px) {
+  .xs\:flex-row {
+    flex-direction: row;
+  }
+  
+  .xs\:items-center {
+    align-items: center;
+  }
+  
+  .xs\:gap-4 {
+    gap: 1rem;
   }
 }
 
