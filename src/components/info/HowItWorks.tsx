@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Camera, Lightbulb, Zap } from "lucide-react";
+import { Camera, Zap, Lightbulb } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -8,13 +8,13 @@ import { useIsMobile } from "@/hooks/use-mobile";
 const HowItWorks = () => {
   const isMobile = useIsMobile();
   
-  // Define steps with enhanced styling and gradients
+  // Define steps with enhanced styling and SET-themed gradients
   const steps = [
     {
       icon: <Camera className="h-6 w-6 text-white" />,
       title: "Capture",
       description: "Take a clear photo of your SET game cards on a flat surface with good lighting",
-      gradient: "from-red-400 via-red-500 to-red-600",
+      gradient: "from-set-red to-set-red-light",
       delay: 0.2,
       iconAnimation: "animate-pulse",
     },
@@ -22,7 +22,7 @@ const HowItWorks = () => {
       icon: <Zap className="h-6 w-6 text-white" />,
       title: "Analyze",
       description: "Our AI instantly detects all cards and identifies their unique attributes",
-      gradient: "from-amber-400 via-amber-500 to-amber-600",
+      gradient: "from-set-green to-set-green-light",
       delay: 0.3,
       iconAnimation: "animate-bounce-subtle",
     },
@@ -30,7 +30,7 @@ const HowItWorks = () => {
       icon: <Lightbulb className="h-6 w-6 text-white" />,
       title: "Discover",
       description: "See all valid SETs highlighted with detailed explanations in seconds",
-      gradient: "from-red-400 via-red-500 to-red-600",
+      gradient: "from-set-purple to-set-purple-light",
       delay: 0.4,
       iconAnimation: "animate-shimmer",
     }
@@ -58,7 +58,7 @@ const HowItWorks = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="w-full max-w-4xl mx-auto px-4 md:px-6 rounded-2xl mt-12 mb-16"
+      className="w-full max-w-4xl mx-auto px-4 md:px-6 rounded-2xl mt-12 mb-16 relative"
     >
       <motion.div 
         variants={itemVariants}

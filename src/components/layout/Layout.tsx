@@ -12,7 +12,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isMobile = useIsMobile();
   
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-300 bg-gray-50">
+    <div className="min-h-screen flex flex-col transition-colors duration-300 bg-gray-50 relative overflow-hidden">
       <style>
         {`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
@@ -44,7 +44,17 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       `}
       </style>
 
-      <main className="flex-grow">
+      {/* Background SET Icons */}
+      <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none opacity-[0.03]">
+        <div className="set-shape-diamond set-color-red absolute w-36 h-36 -top-8 -left-4 rotate-12"></div>
+        <div className="set-shape-oval set-color-purple absolute w-48 h-48 bottom-48 -right-16 rotate-12"></div>
+        <div className="set-shape-squiggle set-color-green absolute w-40 h-40 top-1/3 -left-10 rotate-45"></div>
+        <div className="set-shape-diamond set-color-blue absolute w-32 h-32 bottom-32 left-1/4 -rotate-12"></div>
+        <div className="set-shape-oval set-color-red absolute w-24 h-24 top-64 right-10 rotate-3"></div>
+        <div className="set-shape-squiggle set-color-purple absolute w-36 h-36 bottom-16 left-16 rotate-12"></div>
+      </div>
+
+      <main className="flex-grow relative z-10">
         {children}
       </main>
 
@@ -56,11 +66,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           
           <a 
             href="https://github.com/omamitai" 
-            className="flex items-center justify-center p-2 rounded-full hover:bg-gray-100 transition-colors"
+            className="flex items-center justify-center gap-2 p-2 rounded-full hover:bg-gray-100 transition-colors"
             aria-label="GitHub"
             target="_blank"
             rel="noopener noreferrer"
           >
+            <span className="text-sm text-gray-600 hidden sm:inline">GitHub</span>
             <Github className="h-4 w-4 text-gray-600" />
           </a>
         </div>
