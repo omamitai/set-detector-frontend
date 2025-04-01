@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -13,7 +12,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isMobile = useIsMobile();
   
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-300 bg-gray-50 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col transition-colors duration-300 bg-gradient-to-br from-white via-white to-purple-50/30 relative overflow-hidden">
       <style>
         {`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
@@ -22,7 +21,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           -webkit-tap-highlight-color: transparent;
           height: 100%;
           overscroll-behavior-y: none;
-          background-color: #F9FAFB;
+          background: linear-gradient(135deg, #fcfcff 0%, #f9f5ff 100%);
         }
         
         /* Mobile optimizations */
@@ -76,7 +75,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
         />
 
-        {/* Row 2 */}
+        {/* Rows 2 and 3 */}
         <motion.div 
           className="set-shape-diamond set-color-blue absolute w-28 h-28 top-1/3 left-1/4 -rotate-12"
           initial={{ opacity: 0.7 }}
@@ -96,7 +95,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
         />
 
-        {/* Row 3 */}
         <motion.div 
           className="set-shape-squiggle set-color-purple absolute w-36 h-36 bottom-32 left-10 rotate-75"
           initial={{ opacity: 0.7 }}
@@ -128,7 +126,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               SET® is a registered trademark of Cannei, LLC.
             </p>
             <p className="text-xs text-gray-500 font-sans hidden sm:block">
-              Detector by @omamitai
+              Detector by <a 
+                href="https://github.com/omamitai" 
+                className="underline hover:text-gray-700 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                @omamitai
+              </a>
             </p>
           </div>
           
