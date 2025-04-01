@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -84,14 +85,21 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           }
         }
         
-        /* iOS safe area handling */
+        /* Remove safe area handling that might be interfering with full coverage */
         @supports (padding-top: env(safe-area-inset-top)) {
           .bg-gradient-full {
-            padding-top: env(safe-area-inset-top, 0);
-            padding-right: env(safe-area-inset-right, 0);
-            padding-bottom: env(safe-area-inset-bottom, 0);
-            padding-left: env(safe-area-inset-left, 0);
+            /* Ensure the gradient extends into the safe area */
+            padding: 0;
             margin: 0;
+            /* Critical: position absolute for iOS notch coverage */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Make sure it covers the status bar */
+            top: -env(safe-area-inset-top);
+            padding-top: env(safe-area-inset-top);
           }
           
           .content-safe-area {
