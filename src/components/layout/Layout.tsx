@@ -59,14 +59,21 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
         /* Fix for iPhone notch area */
         @supports (padding-top: env(safe-area-inset-top)) {
+          /* Clear any default background colors that might be showing in the notch area */
+          html, body {
+            background: transparent !important;
+          }
+          
           .bg-gradient-full {
             padding-top: env(safe-area-inset-top);
             padding-left: env(safe-area-inset-left);
             padding-right: env(safe-area-inset-right);
+            padding-bottom: env(safe-area-inset-bottom);
             /* These negative margins offset the padding, maintaining full coverage */
             margin-top: calc(env(safe-area-inset-top) * -1);
             margin-left: calc(env(safe-area-inset-left) * -1);
             margin-right: calc(env(safe-area-inset-right) * -1);
+            margin-bottom: calc(env(safe-area-inset-bottom) * -1);
           }
         }
       `}
