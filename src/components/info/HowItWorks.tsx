@@ -21,7 +21,7 @@ const HowItWorks = () => {
     {
       icon: <Zap className="h-6 w-6 text-white" />,
       title: "Analyze",
-      description: "Our fine-tuned YOLO model locates all cards, then specialized models identify each card's attributes",
+      description: "A fine-tuned YOLO model locates all cards, then specialized models identify each card's attributes",
       gradient: "bg-gradient-to-br from-set-green via-set-green to-set-green-light",
       delay: 0.3,
       iconAnimation: "animate-bounce-subtle",
@@ -29,7 +29,7 @@ const HowItWorks = () => {
     {
       icon: <Lightbulb className="h-6 w-6 text-white" />,
       title: "Discover",
-      description: "Our algorithm identifies all valid SETs by evaluating every possible combination, highlighting them instantly",
+      description: "The algorithm identifies all valid SETs by evaluating every possible combination, highlighting them instantly",
       gradient: "bg-gradient-to-br from-set-purple via-set-purple to-set-purple-light",
       delay: 0.4,
       iconAnimation: "animate-shimmer",
@@ -84,7 +84,7 @@ const HowItWorks = () => {
           <motion.div 
             key={index}
             variants={itemVariants}
-            whileHover={{ y: -5, transition: { duration: 0.5 } }}
+            whileHover={{ y: -5, transition: { duration: 0.8 } }}
             whileTap={{ scale: 0.98 }}
             className="group"
           >
@@ -101,7 +101,7 @@ const HowItWorks = () => {
               <div className="flex flex-col items-center text-center relative z-10">
                 <div 
                   className={`rounded-full p-3 mb-5 bg-white/25 backdrop-blur-xl
-                   transition-transform duration-500 w-16 h-16 flex items-center justify-center
+                   transition-transform duration-700 w-16 h-16 flex items-center justify-center
                    shadow-md group-hover:shadow-lg group-hover:scale-105 ${step.iconAnimation}`}
                 >
                   {step.icon}

@@ -123,9 +123,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       <footer className="border-t border-gray-100 py-3 bg-white/80 backdrop-blur-xl sticky bottom-0 mt-auto z-20 w-full shadow-[0_-1px_3px_rgba(0,0,0,0.05)] px-safe">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <p className="text-xs text-gray-500 font-sans">
-            SET® is a registered trademark of Cannei, LLC.
-          </p>
+          <div className="flex items-center gap-4">
+            <p className="text-xs text-gray-500 font-sans">
+              SET® is a registered trademark of Cannei, LLC.
+            </p>
+            <p className="text-xs text-gray-500 font-sans hidden sm:block">
+              Detector by @omamitai
+            </p>
+          </div>
           
           <a 
             href="https://github.com/omamitai" 

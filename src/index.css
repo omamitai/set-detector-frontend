@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -75,7 +76,7 @@
   
   .set-shape-squiggle {
     @apply aspect-square bg-gradient-to-br;
-    clip-path: path("M 18,30 C 20,15 40,55 75,35 C 100,20 70,5 50,20 C 35,30 15,0 18,30 Z");
+    clip-path: path('M50 0 C15 20, 85 40, 50 75 C15 110, 85 130, 50 150 C85 130, 15 110, 50 75 C85 40, 15 20, 50 0 Z');
   }
   
   /* SET Shape Colors */
