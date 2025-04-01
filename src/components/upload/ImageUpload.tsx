@@ -146,7 +146,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   />
                   
                   <SetShapeComponent 
-                    type="squiggle" 
+                    type="triangle" 
                     color="green" 
                     className="shadow-lg"
                   />
@@ -334,7 +334,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                             }
                           }}
                         >
-                          <div className="set-shape-squiggle set-color-green w-6 h-6"></div>
+                          <div className="set-shape-triangle set-color-green w-6 h-6"></div>
                         </motion.div>
                       </div>
                     </motion.div>
