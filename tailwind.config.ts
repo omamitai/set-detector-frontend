@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -67,7 +66,14 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Updated futuristic color scheme
+				'set-red': '#E14553',      // Bright red
+				'set-purple': '#8A4FD3',   // Rich purple
+				'set-green': '#25A56A',    // Vibrant green
+				'set-blue': '#3A7BD5',     // SET-like blue
+				'set-red-light': '#FF7E89',
+				'set-purple-light': '#B78DF6',
+				'set-green-light': '#5EDF9E',
+				'set-blue-light': '#79A9F2',
 				'primary-purple': '#8B5CF6', 
 				'primary-violet': '#7C3AED',
 				'primary-indigo': '#6366F1',
@@ -176,6 +182,10 @@ export default {
 				'neo-gradient-blue': 'linear-gradient(135deg, #3B82F6, #14B8A6)',
 				'neo-gradient-pink': 'linear-gradient(135deg, #EC4899, #F59E0B)',
 				'neo-card-gradient': 'linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(243, 244, 246, 0.7))',
+				'set-gradient-red': 'linear-gradient(135deg, #E14553, #FF7E89)',
+				'set-gradient-purple': 'linear-gradient(135deg, #8A4FD3, #B78DF6)',
+				'set-gradient-green': 'linear-gradient(135deg, #25A56A, #5EDF9E)',
+				'set-gradient-blue': 'linear-gradient(135deg, #3A7BD5, #79A9F2)',
 			}
 		}
 	},

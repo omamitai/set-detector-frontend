@@ -5,7 +5,7 @@ import ImageUpload from "@/components/upload/ImageUpload";
 import ResultsDisplay from "@/components/results/ResultsDisplay";
 import HowItWorks from "@/components/info/HowItWorks";
 import { detectSets } from "@/services/api";
-import { AlertCircle, RefreshCw, AlertTriangle, Camera, Image as ImageIcon } from "lucide-react";
+import { AlertCircle, RefreshCw, AlertTriangle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -65,28 +65,12 @@ const Index = () => {
     setError(null);
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { 
-        when: "beforeChildren",
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1 }
-  };
-
   return (
     <Layout>
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="max-w-6xl mx-auto px-4 md:px-6 py-4 md:py-8"
+        className="max-w-6xl mx-auto px-4 md:px-6 py-6 md:py-8"
       >
         <motion.div 
           className="text-center mb-6"
@@ -94,7 +78,7 @@ const Index = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 className="text-2xl md:text-3xl font-semibold mb-2 text-gray-800 font-poppins">
+          <h1 className="text-2xl md:text-3xl font-semibold mb-3 bg-gradient-to-r from-set-red via-set-purple to-set-green bg-clip-text text-transparent font-poppins">
             SET Game Detector
           </h1>
           <p className="text-gray-500 max-w-md mx-auto text-sm md:text-base">

@@ -13,6 +13,34 @@ interface ImageUploadProps {
   isProcessing: boolean;
 }
 
+// SET Shape components with proper styling
+const SetShapeDiamond = () => (
+  <div className="set-shape-diamond set-color-red w-16 h-16 mx-auto shadow-lg">
+    <div className="w-full h-full flex items-center justify-center">
+      {/* Diamond pattern overlay */}
+      <div className="w-2/3 h-2/3 rounded-full bg-white/20 backdrop-blur-sm"></div>
+    </div>
+  </div>
+);
+
+const SetShapeOval = () => (
+  <div className="set-shape-oval set-color-purple w-16 h-16 mx-auto shadow-lg">
+    <div className="w-full h-full flex items-center justify-center">
+      {/* Oval pattern overlay */}
+      <div className="w-1/2 h-2/3 rounded-full bg-white/20 backdrop-blur-sm"></div>
+    </div>
+  </div>
+);
+
+const SetShapeSquiggle = () => (
+  <div className="set-shape-squiggle set-color-green w-16 h-16 mx-auto shadow-lg">
+    <div className="w-full h-full flex items-center justify-center">
+      {/* Squiggle pattern overlay */}
+      <div className="w-2/3 h-1/2 rounded-full bg-white/20 backdrop-blur-sm transform -rotate-45"></div>
+    </div>
+  </div>
+);
+
 const ImageUpload: React.FC<ImageUploadProps> = ({
   onImageSelected,
   isProcessing
@@ -25,25 +53,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
   
-  // Enhanced SET shapes with gradient styling and red theme
-  const symbols = [
-    { 
-      shape: "◇", 
-      style: "text-transparent bg-clip-text bg-gradient-to-br from-red-400 to-red-600 drop-shadow-md", 
-      animation: "animate-float" 
-    },
-    { 
-      shape: "○", 
-      style: "text-transparent bg-clip-text bg-gradient-to-br from-amber-400 to-amber-600 drop-shadow-md", 
-      animation: "animate-pulse-subtle" 
-    },
-    { 
-      shape: "△", 
-      style: "text-transparent bg-clip-text bg-gradient-to-br from-rose-400 to-rose-600 drop-shadow-md", 
-      animation: "animate-bounce-subtle" 
-    }
-  ];
-
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (isProcessing) return;
     const file = acceptedFiles[0];
@@ -129,7 +138,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             transition={{ duration: 0.4 }}
           >
             <Card 
-              className={`overflow-hidden bg-white border border-gray-100 shadow-xl rounded-2xl transition-all ${dragActive ? 'ring-2 ring-red-400' : ''}`}
+              className={`overflow-hidden bg-white border border-gray-100 shadow-xl rounded-2xl transition-all ${dragActive ? 'ring-2 ring-set-red' : ''}`}
               {...getRootProps()} 
               onDragEnter={handleDrag}
               onDragLeave={handleDrag}
@@ -137,26 +146,47 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               onDrop={handleDrag}
             >
               <CardContent className={`flex flex-col items-center justify-center ${isMobile ? 'p-6 py-10' : 'p-10 py-16'}`}>
-                {/* Enhanced SET shapes with gradient styling */}
-                <div className="mb-8 flex items-center justify-center gap-8">
-                  {symbols.map((symbol, index) => (
-                    <motion.div
-                      key={index}
-                      className={`${symbol.style} text-5xl md:text-6xl font-bold ${symbol.animation}`}
-                      whileHover={{ 
-                        scale: 1.1, 
-                        rotate: index % 2 === 0 ? 10 : -10,
-                        transition: { duration: 0.3, ease: "easeOut" }
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      {symbol.shape}
-                    </motion.div>
-                  ))}
+                {/* SET card shapes with proper styling */}
+                <div className="mb-8 flex items-center justify-center gap-6">
+                  <motion.div
+                    whileHover={{ 
+                      scale: 1.1, 
+                      rotate: 10,
+                      transition: { duration: 0.3, ease: "easeOut" }
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    className="animate-float"
+                  >
+                    <SetShapeDiamond />
+                  </motion.div>
+                  
+                  <motion.div
+                    whileHover={{ 
+                      scale: 1.1, 
+                      rotate: -10,
+                      transition: { duration: 0.3, ease: "easeOut" }
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    className="animate-pulse-subtle"
+                  >
+                    <SetShapeOval />
+                  </motion.div>
+                  
+                  <motion.div
+                    whileHover={{ 
+                      scale: 1.1, 
+                      rotate: 10,
+                      transition: { duration: 0.3, ease: "easeOut" }
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    className="animate-bounce-subtle"
+                  >
+                    <SetShapeSquiggle />
+                  </motion.div>
                 </div>
                 
                 <motion.h3 
-                  className="font-medium text-xl md:text-2xl mb-3 text-gray-800 bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text text-transparent"
+                  className="font-medium text-xl md:text-2xl mb-3 text-gray-800 bg-gradient-to-r from-set-red to-set-purple bg-clip-text text-transparent"
                   whileHover={{ scale: 1.02 }}
                 >
                   {isDragActive ? "Drop your SET game photo here" : "Upload SET game photo"}
@@ -200,8 +230,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 <div className="flex flex-col sm:flex-row gap-4 w-full max-w-sm">
                   <Button 
                     onClick={triggerCameraInput}
-                    variant="ios-primary"
-                    className="rounded-full py-3 text-sm w-full shadow-md"
+                    variant="primary"
+                    className="rounded-full py-6 text-sm w-full shadow-lg shadow-set-red/20"
                     disabled={isProcessing}
                   >
                     <Camera className="h-5 w-5 mr-2" />
@@ -211,7 +241,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   <Button 
                     onClick={triggerFileInput}
                     variant="ios"
-                    className="rounded-full py-3 text-sm w-full shadow-md"
+                    className="rounded-full py-6 text-sm w-full shadow-lg"
                     disabled={isProcessing}
                   >
                     <ImageIcon className="h-5 w-5 mr-2" />
@@ -287,7 +317,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                             transition: { duration: 2, repeat: Infinity, ease: "linear" }
                           }}
                         >
-                          <Sparkles className="h-5 w-5 text-red-500" />
+                          <Sparkles className="h-5 w-5 text-set-red" />
                         </motion.div>
                         <span className="text-base font-medium text-gray-800">Analyzing SET cards...</span>
                       </div>
@@ -295,24 +325,53 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                       <Progress value={uploadProgress} className="h-1.5 w-full bg-gray-100" />
                       
                       <div className="flex items-center justify-center gap-3">
-                        {symbols.map((symbol, index) => (
-                          <motion.div
-                            key={index}
-                            className={`${symbol.style} text-lg font-bold`}
-                            animate={{ 
-                              scale: [1, 1.2, 1],
-                              opacity: [1, 0.8, 1],
-                              transition: { 
-                                duration: 1.5, 
-                                repeat: Infinity, 
-                                delay: index * 0.3,
-                                ease: "easeInOut"
-                              }
-                            }}
-                          >
-                            {symbol.shape}
-                          </motion.div>
-                        ))}
+                        <motion.div
+                          className="w-6 h-6 text-lg font-bold"
+                          animate={{ 
+                            scale: [1, 1.2, 1],
+                            opacity: [1, 0.8, 1],
+                            transition: { 
+                              duration: 1.5, 
+                              repeat: Infinity, 
+                              delay: 0,
+                              ease: "easeInOut"
+                            }
+                          }}
+                        >
+                          <div className="set-shape-diamond set-color-red w-6 h-6"></div>
+                        </motion.div>
+                        
+                        <motion.div
+                          className="w-6 h-6 text-lg font-bold"
+                          animate={{ 
+                            scale: [1, 1.2, 1],
+                            opacity: [1, 0.8, 1],
+                            transition: { 
+                              duration: 1.5, 
+                              repeat: Infinity, 
+                              delay: 0.3,
+                              ease: "easeInOut"
+                            }
+                          }}
+                        >
+                          <div className="set-shape-oval set-color-purple w-6 h-6"></div>
+                        </motion.div>
+                        
+                        <motion.div
+                          className="w-6 h-6 text-lg font-bold"
+                          animate={{ 
+                            scale: [1, 1.2, 1],
+                            opacity: [1, 0.8, 1],
+                            transition: { 
+                              duration: 1.5, 
+                              repeat: Infinity, 
+                              delay: 0.6,
+                              ease: "easeInOut"
+                            }
+                          }}
+                        >
+                          <div className="set-shape-squiggle set-color-green w-6 h-6"></div>
+                        </motion.div>
                       </div>
                     </motion.div>
                   </motion.div>

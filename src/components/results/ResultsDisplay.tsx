@@ -3,7 +3,7 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { 
-  Download, RefreshCw, Sparkles, Share2
+  Download, RefreshCw, Sparkles
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
@@ -46,25 +46,6 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
     document.body.removeChild(link);
   };
 
-  const shareImage = async () => {
-    if (!resultImage || !navigator.share) return;
-    
-    try {
-      // Convert base64 to blob
-      const response = await fetch(resultImage);
-      const blob = await response.blob();
-      const file = new File([blob], "set-detection.jpg", { type: "image/jpeg" });
-      
-      await navigator.share({
-        title: "SET Game Analysis",
-        text: `I found ${sets.length} SET${sets.length !== 1 ? 's' : ''} in my game!`,
-        files: [file]
-      });
-    } catch (error) {
-      console.error("Error sharing:", error);
-    }
-  };
-
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -86,7 +67,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                       transition={{ delay: 0.2, duration: 0.3 }}
                     >
                       <Badge 
-                        className="bg-gradient-to-r from-red-500 to-amber-500 text-white border-0 
+                        className="bg-gradient-to-r from-set-purple to-set-purple-light text-white border-0 
                                  rounded-full px-4 py-1.5 shadow-md flex items-center gap-2"
                       >
                         <Sparkles className="h-3.5 w-3.5 text-white/90" />
@@ -117,20 +98,8 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                     <span className="font-medium text-gray-700">New Photo</span>
                   </Button>
                   
-                  {navigator.share && (
-                    <Button
-                      variant="ios-primary"
-                      size={isMobile ? "sm" : "default"}
-                      onClick={shareImage}
-                      className="gap-1.5 rounded-full text-xs font-medium shadow-md"
-                    >
-                      <Share2 className="h-3.5 w-3.5" />
-                      <span className="font-medium">Share</span>
-                    </Button>
-                  )}
-                  
                   <Button
-                    variant="ios-primary"
+                    variant="primary"
                     size={isMobile ? "sm" : "default"}
                     onClick={downloadImage}
                     className="gap-1.5 rounded-full text-xs font-medium shadow-md"

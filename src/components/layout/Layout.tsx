@@ -2,8 +2,7 @@
 import React from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Github, Share2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Github } from "lucide-react";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -11,25 +10,6 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isMobile = useIsMobile();
-  
-  // Function to share the tool
-  const handleShare = async () => {
-    try {
-      if (navigator.share) {
-        await navigator.share({
-          title: 'SET Game Detector',
-          text: 'Check out this tool that helps you find SETs in the SET card game!',
-          url: window.location.href,
-        });
-      } else {
-        // Fallback for browsers that don't support Web Share API
-        navigator.clipboard.writeText(window.location.href);
-        alert('Link copied to clipboard!');
-      }
-    } catch (error) {
-      console.error('Error sharing:', error);
-    }
-  };
   
   return (
     <div className="min-h-screen flex flex-col transition-colors duration-300 bg-gray-50">
@@ -57,41 +37,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           
           /* Better tap targets */
           button, a, .clickable {
-            min-height: 40px;
-            min-width: 40px;
+            min-height: 44px;
+            min-width: 44px;
           }
         }
       `}
       </style>
-
-      {/* iOS-style navigation bar with frosted glass effect */}
-      <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-xl border-b border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.05)] px-safe">
-        <div className="container mx-auto px-4 h-14 flex items-center justify-between">
-          <h1 className="text-lg font-semibold bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text text-transparent">SET Detector</h1>
-          
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ios"
-              size="sm"
-              onClick={() => window.open("https://github.com/omamitai", "_blank")}
-              className="rounded-full h-9 px-3.5 text-xs shadow-sm"
-            >
-              <Github className="h-3.5 w-3.5 mr-1.5 text-gray-700" />
-              <span>GitHub</span>
-            </Button>
-            
-            <Button 
-              variant="ios-primary"
-              size="sm"
-              onClick={handleShare}
-              className="rounded-full h-9 px-3.5 text-xs"
-            >
-              <Share2 className="h-3.5 w-3.5 mr-1.5 text-white" />
-              <span>Share</span>
-            </Button>
-          </div>
-        </div>
-      </header>
 
       <main className="flex-grow">
         {children}
@@ -103,12 +54,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             SET® is a registered trademark of Cannei, LLC.
           </p>
           
-          <div className="flex items-center">
-            <a href="https://github.com/omamitai" className="flex items-center text-xs text-gray-500 hover:text-gray-800 transition-colors">
-              <Github className="h-3.5 w-3.5 mr-1.5" />
-              <span>omamitai</span>
-            </a>
-          </div>
+          <a 
+            href="https://github.com/omamitai" 
+            className="flex items-center justify-center p-2 rounded-full hover:bg-gray-100 transition-colors"
+            aria-label="GitHub"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Github className="h-4 w-4 text-gray-600" />
+          </a>
         </div>
       </footer>
       <Toaster />
