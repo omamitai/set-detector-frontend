@@ -35,11 +35,11 @@
 
     --radius: 0.75rem;
     
-    /* SET card colors */
-    --set-red: 350 75% 60%;
-    --set-green: 150 65% 40%;
-    --set-purple: 280 60% 55%;
-    --set-blue: 215 70% 53%;
+    /* SET card colors - more subtle */
+    --set-red: 350 75% 65%;
+    --set-green: 150 65% 45%;
+    --set-purple: 280 60% 65%;
+    --set-blue: 215 70% 60%;
   }
 }
 
@@ -75,27 +75,27 @@
     @apply aspect-square rounded-full bg-gradient-to-br;
   }
   
-  /* Fixed triangle shape */
+  /* Triangle shape - fixed to ensure it displays properly */
   .set-shape-triangle {
     @apply aspect-square bg-gradient-to-br;
     clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
   }
   
-  /* SET Shape Colors */
+  /* SET Shape Colors - more subtle versions */
   .set-color-red {
-    @apply from-set-red to-set-red-light;
+    @apply from-set-red/90 to-set-red-light/90;
   }
   
   .set-color-purple {
-    @apply from-set-purple to-set-purple-light;
+    @apply from-set-purple/90 to-set-purple-light/90;
   }
   
   .set-color-green {
-    @apply from-set-green to-set-green-light;
+    @apply from-set-green/90 to-set-green-light/90;
   }
   
   .set-color-blue {
-    @apply from-set-blue to-set-blue-light;
+    @apply from-set-blue/90 to-set-blue-light/90;
   }
   
   /* SET Card Styling */

@@ -41,9 +41,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           }
         }
         
-        /* Full-screen gradient that starts from the very top-left corner */
+        /* Much more subtle gradient that starts from the very top-left corner */
         .bg-gradient-full {
-          background-image: linear-gradient(135deg, rgba(250, 245, 255, 0.9) 0%, rgba(231, 219, 255, 0.6) 35%, rgba(215, 197, 255, 0.4) 100%);
+          background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.99) 0%, rgba(248, 245, 255, 0.85) 35%, rgba(242, 235, 255, 0.7) 100%);
           background-attachment: fixed;
           position: fixed;
           top: 0;
@@ -53,6 +53,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           z-index: -10;
           margin: 0;
           padding: 0;
+          width: 100vw;
+          height: 100vh;
+          height: 100dvh; /* dynamic viewport height - handles mobile browsers better */
+          margin-top: env(safe-area-inset-top, 0);
+          margin-left: env(safe-area-inset-left, 0);
+          margin-right: env(safe-area-inset-right, 0);
         }
       `}
       </style>
