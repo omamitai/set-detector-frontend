@@ -8,7 +8,7 @@ export interface DetectionResult {
 }
 
 // The new Railway.app API endpoint - updated to match the working HTML example
-const API_BASE_URL = "https://set-game-new-backend-production.up.railway.app";
+const API_BASE_URL = "https://set-detector-backend-production.up.railway.app";
 const API_ENDPOINT = `${API_BASE_URL}/detect_sets`; // Changed from /api/detect to /detect_sets
 const MAX_RETRIES = 3;
 const INITIAL_TIMEOUT = 60000; // 60 seconds
