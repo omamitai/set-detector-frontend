@@ -1,58 +1,24 @@
 import { toast } from "sonner";
 
-interface SetCard {
-  Count: number;
-  Color: string;
-  Fill: string;
-  Shape: string;
-  Coordinates: number[];
-}
-
-interface SetInfo {
-  set_indices: number[];
-  cards: SetCard[];
-}
-
-interface DetectionResult {
-  sets: SetInfo[];
+// Updated DetectionResult interface to only include the result image
+export interface DetectionResult {
   resultImage: string;
 }
 
-// Railway API response structure (matches our backend)
+// Simplified Railway API response structure (only image is expected)
 interface RailwayApiResponse {
   image: string;  // Base64 encoded image
-  sets_found: Array<{
-    set_id: number;
-    cards: Array<{
-      position: number;
-      features: {
-        number: string;
-        color: string;
-        shape: string;
-        shading: string;
-      }
-    }>
-  }>;
-  all_cards: Array<{
-    position: number;
-    features: {
-      number: string;
-      color: string;
-      shape: string;
-      shading: string;
-    }
-  }>;
 }
 
-// The Railway.app API endpoint
-const API_ENDPOINT = "https://set-game-api-production.up.railway.app/api/detect";
+// The new Railway.app API endpoint
+const API_ENDPOINT = "https://set-game-new-backend-production.up.railway.app/api/detect";
 const MAX_RETRIES = 3;
 const INITIAL_TIMEOUT = 60000; // 60 seconds
 
 /**
  * Sends an image to the SET detector API with retry logic
  * @param image The image file containing SET cards
- * @returns Processed image with detected sets and card information
+ * @returns Processed image with detected set information (image only)
  */
 export async function detectSets(image: File): Promise<DetectionResult> {
   let retryCount = 0;
@@ -66,7 +32,7 @@ export async function detectSets(image: File): Promise<DetectionResult> {
       
       console.log(`Sending image to API for processing (attempt ${retryCount + 1}/${MAX_RETRIES})...`);
       
-      // Add a timeout to the fetch request - increase timeout slightly for each retry
+      // Increase timeout slightly for each retry
       const timeout = INITIAL_TIMEOUT + (retryCount * 15000); // Add 15s per retry
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), timeout);
@@ -76,52 +42,32 @@ export async function detectSets(image: File): Promise<DetectionResult> {
         method: "POST",
         body: formData,
         signal: controller.signal,
-        // Don't include credentials with wildcard CORS
-        credentials: 'omit'
+        credentials: 'omit' // Don't include credentials with wildcard CORS
       });
       
       clearTimeout(timeoutId);
       
       if (!response.ok) {
-        // Handle different error status codes
+        // Attempt to extract a detailed error message
         let errorMessage = `API error: ${response.status}`;
         try {
-          // Try to get more detailed error from response
           const errorData = await response.json();
           errorMessage = errorData.detail || errorMessage;
         } catch (e) {
-          // If can't parse JSON, use status text
           errorMessage = `API error: ${response.statusText || response.status}`;
         }
-        
         throw new Error(errorMessage);
       }
       
       // Process successful response
       const data = await response.json() as RailwayApiResponse;
       
-      // Check if we got the expected data
-      if (!data.image || !data.sets_found) {
-        throw new Error("Invalid response format from API. Missing required fields.");
+      // Ensure we received the expected image
+      if (!data.image) {
+        throw new Error("Invalid response format from API. Missing image field.");
       }
       
-      // Transform the Railway API response into the format expected by the frontend
       return {
-        sets: data.sets_found.map((setInfo) => {
-          return {
-            set_indices: setInfo.cards.map(card => card.position),
-            cards: setInfo.cards.map((card) => {
-              return {
-                Count: parseInt(card.features.number),
-                Color: card.features.color,
-                Fill: card.features.shading,
-                Shape: card.features.shape,
-                // Use default coordinates since backend doesn't provide them
-                Coordinates: [0, 0, 100, 100]
-              };
-            })
-          };
-        }),
         resultImage: `data:image/jpeg;base64,${data.image}`
       };
       
@@ -132,7 +78,7 @@ export async function detectSets(image: File): Promise<DetectionResult> {
       // Handle specific error types
       if (error instanceof DOMException && error.name === "AbortError") {
         lastError = new Error(`Request timed out after ${INITIAL_TIMEOUT + (retryCount * 15000)}ms. The server is taking longer than expected to respond.`);
-      } else if (error instanceof TypeError && error.message.includes("NetworkError") || error.message.includes("Failed to fetch")) {
+      } else if (error instanceof TypeError && (error.message.includes("NetworkError") || error.message.includes("Failed to fetch"))) {
         lastError = new Error("Network error. This might be a CORS issue or connection problem. Please check your browser console for details.");
       }
       
@@ -142,14 +88,14 @@ export async function detectSets(image: File): Promise<DetectionResult> {
       // If we have more retries left, wait before retrying
       if (retryCount < MAX_RETRIES) {
         const waitTime = Math.min(2 ** retryCount * 1000, 10000); // Exponential backoff with max of 10s
-        console.log(`Retrying in ${waitTime/1000} seconds...`);
+        console.log(`Retrying in ${waitTime / 1000} seconds...`);
         toast.info(`Processing taking longer than expected. Retrying... (${retryCount}/${MAX_RETRIES})`);
         await new Promise(resolve => setTimeout(resolve, waitTime));
       }
     }
   }
   
-  // If we've exhausted all retries, throw the last error
+  // If all retries are exhausted, throw the last encountered error
   if (lastError) {
     throw new Error(`Failed after ${MAX_RETRIES} attempts: ${lastError.message}`);
   } else {
