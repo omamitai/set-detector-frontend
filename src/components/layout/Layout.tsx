@@ -45,6 +45,11 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       min-height: 44px;
       min-width: 44px;
     }
+    
+    /* Improved footer spacing on mobile */
+    footer {
+      padding-bottom: calc(env(safe-area-inset-bottom, 16px) + 12px) !important;
+    }
   }
   
   /* Fixed gradient background that properly covers the entire screen including notch area */

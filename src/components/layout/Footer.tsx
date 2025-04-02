@@ -7,14 +7,16 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="w-full py-3 px-4 mt-auto bg-white/80 backdrop-blur-md border-t border-gray-100 shadow-sm">
-      <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-600">
-        <div className="flex flex-col text-center sm:text-left">
+    <footer className="w-full py-4 px-4 mt-auto bg-white/80 backdrop-blur-md border-t border-gray-100 shadow-sm">
+      <div className="container mx-auto flex flex-col items-center justify-center gap-3 text-sm">
+        {/* Trademark info */}
+        <div className="text-center text-gray-600">
           <span>SET® is a registered trademark of Cannei, LLC.</span>
         </div>
         
-        <div className="flex flex-col sm:flex-row items-center gap-4 mt-2 sm:mt-0">
-          <div className="flex items-center">
+        {/* Creator info with better styling */}
+        <div className="flex flex-col sm:flex-row items-center gap-3 mt-1">
+          <div className="flex items-center text-gray-600">
             <span>SET Detector by </span>
             <a
               href="https://github.com/omamitai"
@@ -26,13 +28,14 @@ const Footer = () => {
             </a>
           </div>
           
+          {/* GitHub button with improved styling */}
           <a 
             href="https://github.com/omamitai/set-detector"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors duration-200 hover:shadow-sm"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors duration-200 hover:shadow-sm"
           >
-            <Github size={14} className="text-primary-purple" />
+            <Github size={16} className="text-primary-purple" />
             <span className="font-medium">Source Code</span>
           </a>
         </div>
