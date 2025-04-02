@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Footer from './Footer';
 
@@ -6,14 +7,13 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <>
       <div className="bg-gradient-full"></div>
       <div className="min-h-screen flex flex-col">
-        <main className="flex-1 pb-4">
+        <main className="flex-1 pb-4 overflow-x-hidden">
           {children}
         </main>
         <Footer />
       </div>
       
-      <style>
-        {`
+      <style jsx global>{`
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
   
   body {
@@ -23,6 +23,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     background-color: transparent !important;
     margin: 0;
     padding: 0;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   /* Enhanced mobile optimizations */
@@ -58,6 +61,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     width: 100vw; 
     height: 100vh;
     height: 100dvh; /* dynamic viewport height - handles mobile browsers better */
+    will-change: transform; /* performance optimization for GPU acceleration */
   }
 
   /* Fix for iPhone notch area */
@@ -74,8 +78,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       bottom: 0;
     }
   }
-`}
-      </style>
+      `}</style>
     </>
   );
 };

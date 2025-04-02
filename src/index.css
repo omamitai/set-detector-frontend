@@ -91,6 +91,8 @@
   }
   body {
     @apply bg-background text-foreground;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
   }
   
   /* Fix for mobile notch area */
@@ -103,6 +105,7 @@
     width: 100%;
     position: relative;
     overflow-x: hidden;
+    touch-action: manipulation; /* improves touch behavior */
   }
   
   /* Fix for iOS notch area */
@@ -120,6 +123,13 @@
     
     .pb-safe {
       padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+  }
+
+  /* Optimize touch actions for mobile */
+  @media (max-width: 768px) {
+    input, button, a {
+      touch-action: manipulation;
     }
   }
 }
@@ -143,21 +153,24 @@
   .set-shape-diamond {
     @apply aspect-square bg-gradient-to-br;
     clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    will-change: transform; /* performance hint */
   }
   
   /* Oval shape */
   .set-shape-oval {
     @apply aspect-square rounded-full bg-gradient-to-br;
+    will-change: transform; /* performance hint */
   }
   
   /* Triangle shape - fixed for proper display */
   .set-shape-triangle {
     @apply aspect-square bg-gradient-to-br;
     clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    will-change: transform; /* performance hint */
   }
 }
 
-/* Custom animations */
+/* Custom animations - optimized for performance */
 @keyframes pulse-slow {
   0%, 100% {
     transform: scale(1);
@@ -171,6 +184,7 @@
 
 .animate-pulse-slow {
   animation: pulse-slow 3s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 @keyframes shimmer {
@@ -192,6 +206,7 @@
   );
   background-size: 200% 100%;
   animation: shimmer 3s infinite;
+  will-change: background-position;
 }
 
 @keyframes bounce-subtle {
@@ -205,4 +220,10 @@
 
 .animate-bounce-subtle {
   animation: bounce-subtle 2s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Faster transitions for UI elements */
+.transition-fast {
+  transition-duration: 150ms !important;
 }
