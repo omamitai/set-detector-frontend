@@ -1,3 +1,4 @@
+
 /* Find this in src/components/layout/Layout.tsx and update just this style block */
 <style>
   {`
@@ -7,7 +8,7 @@
     -webkit-tap-highlight-color: transparent;
     height: 100%;
     overscroll-behavior-y: none;
-    background: transparent !important;
+    background-color: transparent !important;
     margin: 0;
     padding: 0;
   }
@@ -16,7 +17,7 @@
   @media (max-width: 640px) {
     html, body {
       overflow-x: hidden;
-      background: transparent !important;
+      background-color: transparent !important;
     }
     
     body {
@@ -32,7 +33,7 @@
   
   /* Fixed gradient background that properly covers the entire screen including notch area */
   .bg-gradient-full {
-    background-image: linear-gradient(135deg, rgba(248, 245, 255, 0.85) 0%, rgba(242, 235, 255, 0.7) 100%);
+    background: linear-gradient(135deg, rgba(248, 245, 255, 0.85) 0%, rgba(242, 235, 255, 0.7) 100%);
     background-attachment: fixed;
     position: fixed;
     top: 0;
@@ -50,7 +51,10 @@
   /* Fix for iPhone notch area */
   @supports (padding-top: env(safe-area-inset-top)) {
     .bg-gradient-full {
-      padding: 0;
+      padding-top: env(safe-area-inset-top);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+      padding-bottom: env(safe-area-inset-bottom);
       margin: 0;
       top: 0;
       left: 0;
