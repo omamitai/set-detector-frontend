@@ -7,37 +7,43 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="w-full py-4 px-4 mt-auto bg-white/80 backdrop-blur-md border-t border-gray-100 shadow-sm">
-      <div className="container mx-auto flex flex-col items-center justify-center gap-3 text-sm">
-        {/* Trademark info */}
-        <div className="text-center text-gray-600">
-          <span>SET® is a registered trademark of Cannei, LLC.</span>
-        </div>
-        
-        {/* Creator info with better styling */}
-        <div className="flex flex-col sm:flex-row items-center gap-3 mt-1">
-          <div className="flex items-center text-gray-600">
-            <span>SET Detector by </span>
-            <a
-              href="https://github.com/omamitai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-1 font-medium text-primary-purple hover:text-primary-violet transition-colors"
-            >
-              @omamitai
-            </a>
+    <footer className="w-full py-5 px-4 mt-auto bg-white/90 backdrop-blur-md border-t border-gray-100">
+      <div className="container max-w-4xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          {/* Left side with SET trademark */}
+          <div className="flex items-center">
+            <span className="text-sm text-gray-600">
+              SET® is a registered trademark of Cannei, LLC.
+            </span>
           </div>
           
-          {/* GitHub button with improved styling */}
-          <a 
-            href="https://github.com/omamitai/set-detector"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors duration-200 hover:shadow-sm"
-          >
-            <Github size={16} className="text-primary-purple" />
-            <span className="font-medium">Source Code</span>
-          </a>
+          {/* Right side with author and GitHub link */}
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="flex items-center text-sm text-gray-600">
+              <span>Created by </span>
+              <a
+                href="https://github.com/omamitai"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-1 font-medium text-primary-purple hover:text-primary-violet transition-colors"
+              >
+                @omamitai
+              </a>
+            </div>
+            
+            <a 
+              href="https://github.com/omamitai/set-detector"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full 
+                bg-white border border-gray-200 hover:bg-gray-50 
+                text-gray-700 text-sm font-medium shadow-sm
+                transition-all duration-200 hover:shadow"
+            >
+              <Github size={15} className="text-primary-purple" />
+              <span>Source</span>
+            </a>
+          </div>
         </div>
       </div>
     </footer>

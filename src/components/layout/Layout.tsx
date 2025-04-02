@@ -48,7 +48,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     
     /* Improved footer spacing on mobile */
     footer {
-      padding-bottom: calc(env(safe-area-inset-bottom, 16px) + 12px) !important;
+      padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
     }
   }
   
