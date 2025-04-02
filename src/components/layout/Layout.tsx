@@ -1,4 +1,6 @@
+
 import React from 'react';
+import Footer from './Footer';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
@@ -8,6 +10,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <main className="flex-1 pb-4 overflow-x-hidden">
           {children}
         </main>
+        <Footer />
       </div>
       
       <style>

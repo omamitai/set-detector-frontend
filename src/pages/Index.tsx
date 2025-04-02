@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import ImageUpload from "@/components/upload/ImageUpload";
@@ -115,7 +114,7 @@ const Index = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 className="text-2xl md:text-3xl font-semibold mb-3 bg-gradient-to-r from-set-red via-set-purple to-set-green bg-clip-text text-transparent font-poppins">
+          <h1 className="text-2xl md:text-3xl font-semibold mb-3 bg-gradient-to-r from-set-red via-set-purple to-primary-indigo bg-clip-text text-transparent font-poppins">
             SET Game Detector
           </h1>
           <p className="text-gray-500 max-w-md mx-auto text-sm md:text-base">
