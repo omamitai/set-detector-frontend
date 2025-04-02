@@ -1,12 +1,16 @@
 
 import React from 'react';
+import Footer from './Footer';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <>
       <div className="bg-gradient-full"></div>
-      <div className="min-h-screen">
-        {children}
+      <div className="min-h-screen flex flex-col">
+        <main className="flex-1">
+          {children}
+        </main>
+        <Footer />
       </div>
       
       <style>
@@ -78,4 +82,3 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 };
 
 export default Layout;
-
