@@ -1,7 +1,16 @@
 
-/* Find this in src/components/layout/Layout.tsx and update just this style block */
-<style>
-  {`
+import React from 'react';
+
+const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return (
+    <>
+      <div className="bg-gradient-full"></div>
+      <div className="min-h-screen">
+        {children}
+      </div>
+      
+      <style>
+        {`
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
   
   body {
@@ -63,4 +72,9 @@
     }
   }
 `}
-</style>
+      </style>
+    </>
+  );
+};
+
+export default Layout;
