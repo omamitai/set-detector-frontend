@@ -7,13 +7,9 @@ export interface DetectionResult {
   sets?: any[]; // Optional for backward compatibility
 }
 
-// Simplified Railway API response structure (only image is expected)
-interface RailwayApiResponse {
-  image: string;  // Base64 encoded image
-}
-
-// The new Railway.app API endpoint
-const API_ENDPOINT = "https://set-game-new-backend-production.up.railway.app/api/detect";
+// The new Railway.app API endpoint - updated to match the working HTML example
+const API_BASE_URL = "https://set-game-new-backend-production.up.railway.app";
+const API_ENDPOINT = `${API_BASE_URL}/detect_sets`; // Changed from /api/detect to /detect_sets
 const MAX_RETRIES = 3;
 const INITIAL_TIMEOUT = 60000; // 60 seconds
 
@@ -45,6 +41,7 @@ export async function detectSets(image: File): Promise<DetectionResult> {
       formData.append("file", image);
       
       console.log(`Sending image to API for processing (attempt ${retryCount + 1}/${MAX_RETRIES})...`);
+      console.log(`Using endpoint: ${API_ENDPOINT}`);
       
       // Increase timeout slightly for each retry
       const timeout = INITIAL_TIMEOUT + (retryCount * 15000); // Add 15s per retry
@@ -65,8 +62,8 @@ export async function detectSets(image: File): Promise<DetectionResult> {
         // Attempt to extract a detailed error message
         let errorMessage = `API error: ${response.status}`;
         try {
-          const errorData = await response.json();
-          errorMessage = errorData.detail || errorMessage;
+          const errorText = await response.text();
+          errorMessage = errorText || errorMessage;
         } catch (e) {
           errorMessage = `API error: ${response.statusText || response.status}`;
         }
@@ -74,15 +71,12 @@ export async function detectSets(image: File): Promise<DetectionResult> {
       }
       
       // Process successful response
-      const data = await response.json() as RailwayApiResponse;
-      
-      // Ensure we received the expected image
-      if (!data.image) {
-        throw new Error("Invalid response format from API. Missing image field.");
-      }
+      // Instead of expecting JSON, we expect a blob/image directly (like in the HTML example)
+      const blob = await response.blob();
+      const imageUrl = URL.createObjectURL(blob);
       
       return {
-        resultImage: `data:image/jpeg;base64,${data.image}`
+        resultImage: imageUrl
       };
       
     } catch (error) {
