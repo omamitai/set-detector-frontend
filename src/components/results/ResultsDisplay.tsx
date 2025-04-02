@@ -3,11 +3,12 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { 
-  Download, RefreshCw, Sparkles
+  Download, RefreshCw, Sparkles, Share2
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { toast } from "sonner";
 
 interface SetCard {
   Count: number;
@@ -44,6 +45,33 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    
+    toast.success("Image saved successfully");
+  };
+  
+  const shareImage = async () => {
+    if (!resultImage || !navigator.share) {
+      toast.error("Sharing not supported on this device");
+      return;
+    }
+    
+    try {
+      // Convert base64 to blob
+      const response = await fetch(resultImage);
+      const blob = await response.blob();
+      const file = new File([blob], "set-detection.jpg", { type: "image/jpeg" });
+      
+      await navigator.share({
+        title: "SET Game Detection",
+        text: `I found ${sets.length} SET${sets.length !== 1 ? 's' : ''} in my game!`,
+        files: [file]
+      });
+      
+      toast.success("Shared successfully");
+    } catch (error) {
+      console.error("Error sharing:", error);
+      toast.error("Failed to share image");
+    }
   };
 
   return (
@@ -59,7 +87,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
             {resultImage && (
               <div className="relative">
                 {/* Sets found badge - more sophisticated styling */}
-                {sets.length > 0 && (
+                {sets && sets.length > 0 && (
                   <div className="absolute top-4 right-4 z-10">
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
@@ -84,6 +112,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                     src={resultImage}
                     alt="Detected sets"
                     className="w-full h-auto object-contain max-h-[70vh] p-2"
+                    loading="eager"
                   />
                 </div>
                 
@@ -97,6 +126,19 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                     <RefreshCw className="h-3.5 w-3.5 text-gray-700" />
                     <span className="font-medium text-gray-700">New Photo</span>
                   </Button>
+                  
+                  {/* Share button on supported devices */}
+                  {navigator.share && (
+                    <Button
+                      variant="primary"
+                      size={isMobile ? "sm" : "default"}
+                      onClick={shareImage}
+                      className="gap-1.5 rounded-full text-xs font-medium shadow-md"
+                    >
+                      <Share2 className="h-3.5 w-3.5" />
+                      <span className="font-medium">Share</span>
+                    </Button>
+                  )}
                   
                   <Button
                     variant="primary"
@@ -114,7 +156,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
         </Card>
       </div>
       
-      {sets.length === 0 && resultImage && (
+      {sets && sets.length === 0 && resultImage && (
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

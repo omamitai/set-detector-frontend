@@ -1,0 +1,22 @@
+
+{
+  "short_name": "SET Detector",
+  "name": "SET Card Game Detector",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "rgba(248, 245, 255, 0.85)",
+  "background_color": "rgba(248, 245, 255, 0.85)",
+  "orientation": "portrait"
+}
