@@ -57,7 +57,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           z-index: -10;
           margin: 0;
           padding: 0;
-          width: 100vw;
+          width: 100vw; 
           height: 100vh;
           height: 100dvh; /* dynamic viewport height - handles mobile browsers better */
         }
