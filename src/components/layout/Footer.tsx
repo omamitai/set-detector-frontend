@@ -19,13 +19,13 @@ const Footer = () => {
           
           {/* Right side with author and GitHub link */}
           <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center text-sm text-gray-600">
-              <span>Created by </span>
+            <div className="flex items-center text-sm text-gray-600 whitespace-nowrap">
+              <span className="inline-block">Created by</span>
               <a
                 href="https://github.com/omamitai"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="ml-1 font-medium text-primary-purple hover:text-primary-violet transition-colors"
+                className="ml-1 font-medium text-primary-purple hover:text-primary-violet transition-colors inline-block"
               >
                 @omamitai
               </a>
