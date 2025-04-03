@@ -1,10 +1,12 @@
-
 import { toast } from "sonner";
 
-// Updated DetectionResult interface to only include the result image
+// Updated DetectionResult interface to include the new metadata from our API
 export interface DetectionResult {
   resultImage: string;
-  sets?: any[]; // Optional for backward compatibility
+  status: "success" | "no_cards" | "no_sets" | "error";
+  cardsDetected: number;
+  setsFound: number;
+  message: string;
 }
 
 // The Railway.app API endpoint
@@ -14,9 +16,42 @@ const MAX_RETRIES = 3;
 const INITIAL_TIMEOUT = 60000; // 60 seconds
 
 /**
+ * Converts a base64 string to a blob URL for displaying images
+ * @param base64Data Base64-encoded string (without data URI prefix)
+ * @param contentType MIME type of the image
+ * @returns URL for the blob
+ */
+function base64ToURL(base64Data: string, contentType: string = "image/jpeg"): string {
+  try {
+    // Convert base64 to binary
+    const byteCharacters = atob(base64Data);
+    const byteArrays = [];
+    
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+      const slice = byteCharacters.slice(offset, offset + 512);
+      const byteNumbers = new Array(slice.length);
+      
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+    
+    // Create blob and URL
+    const blob = new Blob(byteArrays, { type: contentType });
+    return URL.createObjectURL(blob);
+  } catch (error) {
+    console.error("Error converting base64 to URL:", error);
+    throw new Error("Failed to process the image data");
+  }
+}
+
+/**
  * Sends an image to the SET detector API with retry logic
  * @param image The image file containing SET cards
- * @returns Processed image with detected set information
+ * @returns Processed image with detected set information and metadata
  */
 export async function detectSets(image: File): Promise<DetectionResult> {
   let retryCount = 0;
@@ -75,15 +110,35 @@ export async function detectSets(image: File): Promise<DetectionResult> {
         throw new Error(errorMessage);
       }
       
-      // Process successful response - expect a blob/image directly
-      const blob = await response.blob();
-      const imageUrl = URL.createObjectURL(blob);
+      // Process successful response - now expecting JSON instead of blob
+      const responseData = await response.json();
       
-      toast.success("SET detection complete!");
+      // Validate the response structure
+      if (!responseData || typeof responseData !== 'object') {
+        throw new Error("Invalid response format received from server");
+      }
       
+      // Extract base64 image data and convert to URL
+      const imageUrl = responseData.image_data 
+        ? base64ToURL(responseData.image_data) 
+        : '';
+        
+      // Show appropriate toast based on status
+      if (responseData.status === "success") {
+        toast.success(`${responseData.message}`);
+      } else if (responseData.status === "no_cards") {
+        toast.warning("No SET cards detected in the image");
+      } else if (responseData.status === "no_sets") {
+        toast.info("No valid SET combinations found");
+      }
+      
+      // Return the processed result
       return {
         resultImage: imageUrl,
-        sets: [] // Return empty array so the no cards detected message can be shown
+        status: responseData.status,
+        cardsDetected: responseData.cards_detected,
+        setsFound: responseData.sets_found,
+        message: responseData.message
       };
       
     } catch (error) {
