@@ -1,3 +1,4 @@
+
 import { toast } from "sonner";
 
 // Updated DetectionResult interface to include the new metadata from our API
@@ -125,11 +126,11 @@ export async function detectSets(image: File): Promise<DetectionResult> {
         
       // Show appropriate toast based on status
       if (responseData.status === "success") {
-        toast.success(`${responseData.message}`);
+        toast.success(`Found ${responseData.sets_found} SET${responseData.sets_found !== 1 ? 's' : ''}!`);
       } else if (responseData.status === "no_cards") {
-        toast.warning("No SET cards detected in the image");
+        toast.warning("Hmm, are you certain you snapped a SET board? I see no cards here!");
       } else if (responseData.status === "no_sets") {
-        toast.info("No valid SET combinations found");
+        toast.info("Cards detected, but no SETs found—better luck next time!");
       }
       
       // Return the processed result

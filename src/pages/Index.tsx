@@ -12,23 +12,12 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
-interface SetCard {
-  Count: number;
-  Color: string;
-  Fill: string;
-  Shape: string;
-  Coordinates: number[];
-}
-
-interface SetInfo {
-  set_indices: number[];
-  cards: SetCard[];
-}
-
 const Index = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [resultImage, setResultImage] = useState<string | null>(null);
-  const [detectedSets, setDetectedSets] = useState<SetInfo[]>([]);
+  const [status, setStatus] = useState<"success" | "no_cards" | "no_sets" | "error" | null>(null);
+  const [cardsDetected, setCardsDetected] = useState(0);
+  const [setsFound, setSetsFound] = useState(0);
   const [activeTab, setActiveTab] = useState<string>("upload");
   const [error, setError] = useState<string | null>(null);
   const isMobile = useIsMobile();
@@ -36,18 +25,25 @@ const Index = () => {
   // Check for saved results when component mounts
   useEffect(() => {
     const savedImage = localStorage.getItem('setDetectorResultImage');
-    const savedSets = localStorage.getItem('setDetectorSets');
+    const savedStatus = localStorage.getItem('setDetectorStatus');
+    const savedCardsDetected = localStorage.getItem('setDetectorCardsDetected');
+    const savedSetsFound = localStorage.getItem('setDetectorSetsFound');
     
     if (savedImage) {
       setResultImage(savedImage);
-      if (savedSets) {
-        try {
-          setDetectedSets(JSON.parse(savedSets));
-        } catch (e) {
-          console.error("Error parsing saved sets:", e);
-          setDetectedSets([]);
-        }
+      
+      if (savedStatus) {
+        setStatus(savedStatus as "success" | "no_cards" | "no_sets" | "error");
       }
+      
+      if (savedCardsDetected) {
+        setCardsDetected(parseInt(savedCardsDetected, 10));
+      }
+      
+      if (savedSetsFound) {
+        setSetsFound(parseInt(savedSetsFound, 10));
+      }
+      
       setActiveTab("results");
     }
   }, []);
@@ -61,32 +57,22 @@ const Index = () => {
       
       // Save results to localStorage for persistence
       localStorage.setItem('setDetectorResultImage', result.resultImage);
+      localStorage.setItem('setDetectorStatus', result.status);
+      localStorage.setItem('setDetectorCardsDetected', result.cardsDetected.toString());
+      localStorage.setItem('setDetectorSetsFound', result.setsFound.toString());
       
       setResultImage(result.resultImage);
-      
-      // Handle potential undefined sets in API response
-      if (result.sets) {
-        setDetectedSets(result.sets);
-        localStorage.setItem('setDetectorSets', JSON.stringify(result.sets));
-      } else {
-        // Default to empty array for no sets detected case
-        setDetectedSets([]);
-        localStorage.setItem('setDetectorSets', JSON.stringify([]));
-      }
+      setStatus(result.status);
+      setCardsDetected(result.cardsDetected);
+      setSetsFound(result.setsFound);
       
       setActiveTab("results");
-      toast.success("Image processed successfully!");
       
     } catch (error) {
       console.error("Error processing image:", error);
       
       const errorMessage = error instanceof Error ? error.message : String(error);
-      
-      if (errorMessage.includes("No cards detected")) {
-        setError("Couldn't detect any SET cards in your image. Are you sure this is a SET board? Try taking a clearer picture with good lighting.");
-      } else {
-        setError(errorMessage);
-      }
+      setError(errorMessage);
     } finally {
       setIsProcessing(false);
     }
@@ -94,13 +80,17 @@ const Index = () => {
 
   const handleReset = () => {
     setResultImage(null);
-    setDetectedSets([]);
+    setStatus(null);
+    setCardsDetected(0);
+    setSetsFound(0);
     setActiveTab("upload");
     setError(null);
     
     // Clear saved results
     localStorage.removeItem('setDetectorResultImage');
-    localStorage.removeItem('setDetectorSets');
+    localStorage.removeItem('setDetectorStatus');
+    localStorage.removeItem('setDetectorCardsDetected');
+    localStorage.removeItem('setDetectorSetsFound');
   };
 
   return (
@@ -134,7 +124,7 @@ const Index = () => {
             >
               <Alert variant="destructive" className="mb-6 max-w-md mx-auto bg-white border border-red-100 text-red-600 shadow-sm rounded-xl">
                 <AlertTriangle className="h-4 w-4 text-red-500" />
-                <AlertTitle className="text-red-600 font-medium">No SET Cards Detected</AlertTitle>
+                <AlertTitle className="text-red-600 font-medium">Processing Error</AlertTitle>
                 <AlertDescription className="flex flex-col gap-2 text-red-500">
                   <span>{error}</span>
                   <Button 
@@ -198,7 +188,9 @@ const Index = () => {
                 >
                   <ResultsDisplay
                     resultImage={resultImage}
-                    sets={detectedSets}
+                    status={status}
+                    cardsDetected={cardsDetected}
+                    setsFound={setsFound}
                     onReset={handleReset}
                   />
                 </motion.div>

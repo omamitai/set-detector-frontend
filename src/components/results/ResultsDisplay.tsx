@@ -10,28 +10,19 @@ import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "sonner";
 
-interface SetCard {
-  Count: number;
-  Color: string;
-  Fill: string;
-  Shape: string;
-  Coordinates: number[];
-}
-
-interface SetInfo {
-  set_indices: number[];
-  cards: SetCard[];
-}
-
 interface ResultsDisplayProps {
   resultImage: string | null;
-  sets: SetInfo[];
+  status: "success" | "no_cards" | "no_sets" | "error" | null;
+  cardsDetected: number;
+  setsFound: number;
   onReset: () => void;
 }
 
 const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
   resultImage,
-  sets,
+  status,
+  cardsDetected,
+  setsFound,
   onReset,
 }) => {
   const isMobile = useIsMobile();
@@ -63,7 +54,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
       
       await navigator.share({
         title: "SET Game Detection",
-        text: `I found ${sets.length} SET${sets.length !== 1 ? 's' : ''} in my game!`,
+        text: `I found ${setsFound} SET${setsFound !== 1 ? 's' : ''} in my game!`,
         files: [file]
       });
       
@@ -74,8 +65,8 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
     }
   };
 
-  // Check if we have a valid result image but explicitly no sets
-  const noSetsDetected = resultImage && sets && sets.length === 0;
+  const isNoCardsDetected = status === "no_cards" && cardsDetected === 0;
+  const isNoSetsFound = status === "no_sets" || (cardsDetected > 0 && setsFound === 0);
 
   return (
     <motion.div 
@@ -89,8 +80,8 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
           <CardContent className="p-0 relative">
             {resultImage && (
               <div className="relative">
-                {/* Sets found badge - only show when sets are found */}
-                {sets && sets.length > 0 && (
+                {/* Sets found badge - only show when sets are actually found */}
+                {setsFound > 0 && (
                   <div className="absolute top-4 right-4 z-10">
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
@@ -103,7 +94,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                       >
                         <Sparkles className="h-3.5 w-3.5 text-white/90" />
                         <span className="font-medium text-sm">
-                          {sets.length} SET{sets.length !== 1 ? "s" : ""} detected
+                          {setsFound} SET{setsFound !== 1 ? "s" : ""} found
                         </span>
                       </Badge>
                     </motion.div>
@@ -160,7 +151,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
       </div>
       
       {/* Only show "No SET cards detected" message when explicitly confirmed */}
-      {noSetsDetected && (
+      {isNoCardsDetected && (
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -170,6 +161,22 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
           <div className="bg-red-50 border border-red-100 rounded-xl p-4 shadow-md w-full max-w-sm">
             <p className="text-red-600 font-medium text-center text-sm">
               No SET cards detected in this image
+            </p>
+          </div>
+        </motion.div>
+      )}
+      
+      {/* Show "No SETs found" message when cards are detected but no SETs are found */}
+      {isNoSetsFound && cardsDetected > 0 && (
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.4 }}
+          className="flex flex-col items-center justify-center p-2"
+        >
+          <div className="bg-amber-50 border border-amber-100 rounded-xl p-4 shadow-md w-full max-w-sm">
+            <p className="text-amber-600 font-medium text-center text-sm">
+              {cardsDetected} cards detected, but no SETs found—better luck next time!
             </p>
           </div>
         </motion.div>
