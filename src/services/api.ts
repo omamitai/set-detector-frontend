@@ -124,16 +124,7 @@ export async function detectSets(image: File): Promise<DetectionResult> {
         ? base64ToURL(responseData.image_data) 
         : '';
         
-      // Show appropriate toast based on status
-      if (responseData.status === "success") {
-        toast.success(`Found ${responseData.sets_found} SET${responseData.sets_found !== 1 ? 's' : ''}!`);
-      } else if (responseData.status === "no_cards") {
-        toast.warning("Hmm, are you certain you snapped a SET board? I see no cards here!");
-      } else if (responseData.status === "no_sets") {
-        toast.info("Cards detected, but no SETs found—better luck next time!");
-      }
-      
-      // Return the processed result
+      // Return the processed result without showing toasts
       return {
         resultImage: imageUrl,
         status: responseData.status,

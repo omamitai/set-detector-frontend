@@ -18,6 +18,7 @@ const Index = () => {
   const [status, setStatus] = useState<"success" | "no_cards" | "no_sets" | "error" | null>(null);
   const [cardsDetected, setCardsDetected] = useState(0);
   const [setsFound, setSetsFound] = useState(0);
+  const [message, setMessage] = useState<string>("");
   const [activeTab, setActiveTab] = useState<string>("upload");
   const [error, setError] = useState<string | null>(null);
   const isMobile = useIsMobile();
@@ -28,6 +29,7 @@ const Index = () => {
     const savedStatus = localStorage.getItem('setDetectorStatus');
     const savedCardsDetected = localStorage.getItem('setDetectorCardsDetected');
     const savedSetsFound = localStorage.getItem('setDetectorSetsFound');
+    const savedMessage = localStorage.getItem('setDetectorMessage');
     
     if (savedImage) {
       setResultImage(savedImage);
@@ -42,6 +44,10 @@ const Index = () => {
       
       if (savedSetsFound) {
         setSetsFound(parseInt(savedSetsFound, 10));
+      }
+
+      if (savedMessage) {
+        setMessage(savedMessage);
       }
       
       setActiveTab("results");
@@ -60,11 +66,13 @@ const Index = () => {
       localStorage.setItem('setDetectorStatus', result.status);
       localStorage.setItem('setDetectorCardsDetected', result.cardsDetected.toString());
       localStorage.setItem('setDetectorSetsFound', result.setsFound.toString());
+      localStorage.setItem('setDetectorMessage', result.message);
       
       setResultImage(result.resultImage);
       setStatus(result.status);
       setCardsDetected(result.cardsDetected);
       setSetsFound(result.setsFound);
+      setMessage(result.message);
       
       setActiveTab("results");
       
@@ -83,6 +91,7 @@ const Index = () => {
     setStatus(null);
     setCardsDetected(0);
     setSetsFound(0);
+    setMessage("");
     setActiveTab("upload");
     setError(null);
     
@@ -91,6 +100,7 @@ const Index = () => {
     localStorage.removeItem('setDetectorStatus');
     localStorage.removeItem('setDetectorCardsDetected');
     localStorage.removeItem('setDetectorSetsFound');
+    localStorage.removeItem('setDetectorMessage');
   };
 
   return (
@@ -191,6 +201,7 @@ const Index = () => {
                     status={status}
                     cardsDetected={cardsDetected}
                     setsFound={setsFound}
+                    message={message}
                     onReset={handleReset}
                   />
                 </motion.div>

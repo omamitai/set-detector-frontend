@@ -15,6 +15,7 @@ interface ResultsDisplayProps {
   status: "success" | "no_cards" | "no_sets" | "error" | null;
   cardsDetected: number;
   setsFound: number;
+  message: string;
   onReset: () => void;
 }
 
@@ -23,6 +24,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
   status,
   cardsDetected,
   setsFound,
+  message,
   onReset,
 }) => {
   const isMobile = useIsMobile();
@@ -150,33 +152,17 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
         </Card>
       </div>
       
-      {/* Only show "No SET cards detected" message when explicitly confirmed */}
-      {isNoCardsDetected && (
+      {/* Display message based on status */}
+      {(isNoCardsDetected || isNoSetsFound) && (
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.4 }}
           className="flex flex-col items-center justify-center p-2"
         >
-          <div className="bg-red-50 border border-red-100 rounded-xl p-4 shadow-md w-full max-w-sm">
-            <p className="text-red-600 font-medium text-center text-sm">
-              No SET cards detected in this image
-            </p>
-          </div>
-        </motion.div>
-      )}
-      
-      {/* Show "No SETs found" message when cards are detected but no SETs are found */}
-      {isNoSetsFound && cardsDetected > 0 && (
-        <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.4 }}
-          className="flex flex-col items-center justify-center p-2"
-        >
-          <div className="bg-amber-50 border border-amber-100 rounded-xl p-4 shadow-md w-full max-w-sm">
-            <p className="text-amber-600 font-medium text-center text-sm">
-              {cardsDetected} cards detected, but no SETs found—better luck next time!
+          <div className={`${isNoCardsDetected ? 'bg-red-50 border-red-100' : 'bg-amber-50 border-amber-100'} border rounded-xl p-4 shadow-md w-full max-w-sm`}>
+            <p className={`${isNoCardsDetected ? 'text-red-600' : 'text-amber-600'} font-medium text-center text-sm`}>
+              {message}
             </p>
           </div>
         </motion.div>
