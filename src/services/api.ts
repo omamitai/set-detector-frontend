@@ -7,16 +7,16 @@ export interface DetectionResult {
   sets?: any[]; // Optional for backward compatibility
 }
 
-// The new Railway.app API endpoint - updated to match the working HTML example
+// The Railway.app API endpoint
 const API_BASE_URL = "https://set-backend-optimized-production.up.railway.app";
-const API_ENDPOINT = `${API_BASE_URL}/detect_sets`; // Changed from /api/detect to /detect_sets
+const API_ENDPOINT = `${API_BASE_URL}/detect_sets`;
 const MAX_RETRIES = 3;
 const INITIAL_TIMEOUT = 60000; // 60 seconds
 
 /**
  * Sends an image to the SET detector API with retry logic
  * @param image The image file containing SET cards
- * @returns Processed image with detected set information (image only)
+ * @returns Processed image with detected set information
  */
 export async function detectSets(image: File): Promise<DetectionResult> {
   let retryCount = 0;
@@ -41,12 +41,16 @@ export async function detectSets(image: File): Promise<DetectionResult> {
       formData.append("file", image);
       
       console.log(`Sending image to API for processing (attempt ${retryCount + 1}/${MAX_RETRIES})...`);
-      console.log(`Using endpoint: ${API_ENDPOINT}`);
       
       // Increase timeout slightly for each retry
       const timeout = INITIAL_TIMEOUT + (retryCount * 15000); // Add 15s per retry
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), timeout);
+      
+      // Show processing toast
+      const toastId = toast.loading("Processing your SET game image...", {
+        duration: timeout,
+      });
       
       // Make the request
       const response = await fetch(API_ENDPOINT, {
@@ -57,6 +61,7 @@ export async function detectSets(image: File): Promise<DetectionResult> {
       });
       
       clearTimeout(timeoutId);
+      toast.dismiss(toastId);
       
       if (!response.ok) {
         // Attempt to extract a detailed error message
@@ -70,10 +75,11 @@ export async function detectSets(image: File): Promise<DetectionResult> {
         throw new Error(errorMessage);
       }
       
-      // Process successful response
-      // Instead of expecting JSON, we expect a blob/image directly (like in the HTML example)
+      // Process successful response - expect a blob/image directly
       const blob = await response.blob();
       const imageUrl = URL.createObjectURL(blob);
+      
+      toast.success("SET detection complete!");
       
       return {
         resultImage: imageUrl

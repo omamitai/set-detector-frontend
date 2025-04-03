@@ -56,7 +56,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
     }
     
     try {
-      // Convert base64 to blob
+      // Convert blob URL to actual blob for sharing
       const response = await fetch(resultImage);
       const blob = await response.blob();
       const file = new File([blob], "set-detection.jpg", { type: "image/jpeg" });
