@@ -82,7 +82,8 @@ export async function detectSets(image: File): Promise<DetectionResult> {
       toast.success("SET detection complete!");
       
       return {
-        resultImage: imageUrl
+        resultImage: imageUrl,
+        sets: [] // Return empty array so the no cards detected message can be shown
       };
       
     } catch (error) {

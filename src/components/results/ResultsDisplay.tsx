@@ -74,6 +74,9 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
     }
   };
 
+  // Check if we have a valid result image but explicitly no sets
+  const noSetsDetected = resultImage && sets && sets.length === 0;
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -86,7 +89,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
           <CardContent className="p-0 relative">
             {resultImage && (
               <div className="relative">
-                {/* Sets found badge - more sophisticated styling */}
+                {/* Sets found badge - only show when sets are found */}
                 {sets && sets.length > 0 && (
                   <div className="absolute top-4 right-4 z-10">
                     <motion.div
@@ -107,11 +110,11 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                   </div>
                 )}
                 
-                <div className="relative overflow-hidden">
+                <div className="relative overflow-hidden flex justify-center">
                   <img
                     src={resultImage}
                     alt="Detected sets"
-                    className="w-full h-auto object-contain max-h-[70vh] p-2"
+                    className="max-w-full h-auto object-contain max-h-[70vh] p-2"
                     loading="eager"
                   />
                 </div>
@@ -156,7 +159,8 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
         </Card>
       </div>
       
-      {sets && sets.length === 0 && resultImage && (
+      {/* Only show "No SET cards detected" message when explicitly confirmed */}
+      {noSetsDetected && (
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import ImageUpload from "@/components/upload/ImageUpload";
@@ -68,6 +69,7 @@ const Index = () => {
         setDetectedSets(result.sets);
         localStorage.setItem('setDetectorSets', JSON.stringify(result.sets));
       } else {
+        // Default to empty array for no sets detected case
         setDetectedSets([]);
         localStorage.setItem('setDetectorSets', JSON.stringify([]));
       }

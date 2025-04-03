@@ -12,7 +12,7 @@ const Footer = () => {
         <div className="flex flex-col items-center gap-4">
           {/* Trademark and creator section */}
           <div className="text-sm text-gray-600 text-center">
-            SET® is a registered trademark of Cannei, LLC. Created by{' '}
+            SET® is a registered trademark of Cannei, LLC. Detector created by{' '}
             <a
               href="https://github.com/omamitai"
               target="_blank"
