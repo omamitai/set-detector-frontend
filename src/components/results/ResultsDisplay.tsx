@@ -3,9 +3,8 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { 
-  Download, RefreshCw, Sparkles, Share2
+  Download, RefreshCw, Share2
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "sonner";

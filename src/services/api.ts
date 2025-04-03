@@ -8,7 +8,7 @@ export interface DetectionResult {
   message: string;
 }
 
-// The Railway.app API endpoint
+// The SET detector API endpoint
 const API_BASE_URL = "https://set-detector-backend-production.up.railway.app";
 const API_ENDPOINT = `${API_BASE_URL}/detect_sets`;
 const MAX_RETRIES = 3;
@@ -16,9 +16,6 @@ const INITIAL_TIMEOUT = 60000; // 60 seconds
 
 /**
  * Converts a base64 string to a blob URL for displaying images
- * @param base64Data Base64-encoded string (without data URI prefix)
- * @param contentType MIME type of the image
- * @returns URL for the blob
  */
 function base64ToURL(base64Data: string, contentType: string = "image/jpeg"): string {
   try {
@@ -49,8 +46,6 @@ function base64ToURL(base64Data: string, contentType: string = "image/jpeg"): st
 
 /**
  * Sends an image to the SET detector API with retry logic
- * @param image The image file containing SET cards
- * @returns Processed image with detected set information and metadata
  */
 export async function detectSets(image: File): Promise<DetectionResult> {
   let retryCount = 0;
@@ -79,7 +74,7 @@ export async function detectSets(image: File): Promise<DetectionResult> {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), timeout);
       
-      // Make the request without showing toast
+      // Make the request
       const response = await fetch(API_ENDPOINT, {
         method: "POST",
         body: formData,
@@ -101,7 +96,7 @@ export async function detectSets(image: File): Promise<DetectionResult> {
         throw new Error(errorMessage);
       }
       
-      // Process successful response - now expecting JSON instead of blob
+      // Process successful response - expecting JSON
       const responseData = await response.json();
       
       // Validate the response structure
@@ -114,7 +109,7 @@ export async function detectSets(image: File): Promise<DetectionResult> {
         ? base64ToURL(responseData.image_data) 
         : '';
         
-      // Return the processed result without showing toasts
+      // Return the processed result
       return {
         resultImage: imageUrl,
         status: responseData.status,
@@ -127,7 +122,7 @@ export async function detectSets(image: File): Promise<DetectionResult> {
       lastError = error instanceof Error ? error : new Error(String(error));
       console.error(`Error in detectSets function (attempt ${retryCount + 1}):`, error);
       
-      // Handle specific error types without displaying toasts
+      // Handle specific error types
       if (error instanceof DOMException && error.name === "AbortError") {
         lastError = new Error(`Request timed out after ${INITIAL_TIMEOUT + (retryCount * 15000)}ms. The server is taking longer than expected to respond.`);
       } else if (error instanceof TypeError && (error.message.includes("NetworkError") || error.message.includes("Failed to fetch"))) {
