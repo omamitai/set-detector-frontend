@@ -9,7 +9,7 @@ export interface DetectionResult {
 }
 
 // The Railway.app API endpoint
-const API_BASE_URL = "https://set-backend-optimized-production.up.railway.app";
+const API_BASE_URL = "https://set-detector-backend-production.up.railway.app";
 const API_ENDPOINT = `${API_BASE_URL}/detect_sets`;
 const MAX_RETRIES = 3;
 const INITIAL_TIMEOUT = 60000; // 60 seconds
