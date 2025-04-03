@@ -67,6 +67,21 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
     }
   };
 
+  // Determine which whimsical message to display based on status
+  const getWhimsicalMessage = () => {
+    if (status === "no_cards") {
+      return "Hmm, are you certain you snapped a SET board? I see no cards here!";
+    } else if (status === "no_sets" || (cardsDetected > 0 && setsFound === 0)) {
+      return "Cards detected, but no SETs found—better luck next time!";
+    } else if (status === "success" && setsFound > 0) {
+      return `Eureka! Found ${setsFound} SET${setsFound !== 1 ? 's' : ''} in your game!`;
+    } else if (status === "error") {
+      return "Oops! Something went wrong. Maybe try another photo?";
+    }
+    return "";
+  };
+
+  const whimsicalMessage = getWhimsicalMessage();
   const isNoCardsDetected = status === "no_cards" && cardsDetected === 0;
   const isNoSetsFound = status === "no_sets" || (cardsDetected > 0 && setsFound === 0);
 
@@ -82,27 +97,6 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
           <CardContent className="p-0 relative">
             {resultImage && (
               <div className="relative">
-                {/* Sets found badge - only show when sets are actually found */}
-                {setsFound > 0 && (
-                  <div className="absolute top-4 right-4 z-10">
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.2, duration: 0.3 }}
-                    >
-                      <Badge 
-                        className="bg-gradient-to-r from-set-purple to-set-purple-light text-white border-0 
-                                 rounded-full px-4 py-1.5 shadow-md flex items-center gap-2"
-                      >
-                        <Sparkles className="h-3.5 w-3.5 text-white/90" />
-                        <span className="font-medium text-sm">
-                          {setsFound} SET{setsFound !== 1 ? "s" : ""} found
-                        </span>
-                      </Badge>
-                    </motion.div>
-                  </div>
-                )}
-                
                 <div className="relative overflow-hidden flex justify-center">
                   <img
                     src={resultImage}
@@ -152,17 +146,17 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
         </Card>
       </div>
       
-      {/* Display message based on status */}
-      {(isNoCardsDetected || isNoSetsFound) && (
+      {/* Display whimsical message */}
+      {whimsicalMessage && (
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.4 }}
           className="flex flex-col items-center justify-center p-2"
         >
-          <div className={`${isNoCardsDetected ? 'bg-red-50 border-red-100' : 'bg-amber-50 border-amber-100'} border rounded-xl p-4 shadow-md w-full max-w-sm`}>
-            <p className={`${isNoCardsDetected ? 'text-red-600' : 'text-amber-600'} font-medium text-center text-sm`}>
-              {message}
+          <div className={`${isNoCardsDetected ? 'bg-red-50 border-red-100' : isNoSetsFound ? 'bg-amber-50 border-amber-100' : 'bg-green-50 border-green-100'} border rounded-xl p-4 shadow-md w-full max-w-sm`}>
+            <p className={`${isNoCardsDetected ? 'text-red-600' : isNoSetsFound ? 'text-amber-600' : 'text-green-600'} font-medium text-center text-sm`}>
+              {whimsicalMessage}
             </p>
           </div>
         </motion.div>
