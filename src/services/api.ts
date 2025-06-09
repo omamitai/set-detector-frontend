@@ -1,5 +1,5 @@
 
-// Updated DetectionResult interface to include the new metadata from our API
+// Updated DetectionResult interface to match our API
 export interface DetectionResult {
   resultImage: string;
   status: "success" | "no_cards" | "no_sets" | "error";
@@ -19,7 +19,6 @@ const INITIAL_TIMEOUT = 60000; // 60 seconds
  */
 function base64ToURL(base64Data: string, contentType: string = "image/jpeg"): string {
   try {
-    // Convert base64 to binary
     const byteCharacters = atob(base64Data);
     const byteArrays = [];
     
@@ -35,7 +34,6 @@ function base64ToURL(base64Data: string, contentType: string = "image/jpeg"): st
       byteArrays.push(byteArray);
     }
     
-    // Create blob and URL
     const blob = new Blob(byteArrays, { type: contentType });
     return URL.createObjectURL(blob);
   } catch (error) {
@@ -63,29 +61,25 @@ export async function detectSets(image: File): Promise<DetectionResult> {
   
   while (retryCount < MAX_RETRIES) {
     try {
-      // Create a FormData object to send the image
       const formData = new FormData();
       formData.append("file", image);
       
-      console.log(`Sending image to API for processing (attempt ${retryCount + 1}/${MAX_RETRIES})...`);
+      console.log(`Processing image (attempt ${retryCount + 1}/${MAX_RETRIES})...`);
       
-      // Increase timeout slightly for each retry
-      const timeout = INITIAL_TIMEOUT + (retryCount * 15000); // Add 15s per retry
+      const timeout = INITIAL_TIMEOUT + (retryCount * 15000);
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), timeout);
       
-      // Make the request
       const response = await fetch(API_ENDPOINT, {
         method: "POST",
         body: formData,
         signal: controller.signal,
-        credentials: 'omit' // Don't include credentials with wildcard CORS
+        credentials: 'omit'
       });
       
       clearTimeout(timeoutId);
       
       if (!response.ok) {
-        // Attempt to extract a detailed error message
         let errorMessage = `API error: ${response.status}`;
         try {
           const errorText = await response.text();
@@ -96,20 +90,16 @@ export async function detectSets(image: File): Promise<DetectionResult> {
         throw new Error(errorMessage);
       }
       
-      // Process successful response - expecting JSON
       const responseData = await response.json();
       
-      // Validate the response structure
       if (!responseData || typeof responseData !== 'object') {
         throw new Error("Invalid response format received from server");
       }
       
-      // Extract base64 image data and convert to URL
       const imageUrl = responseData.image_data 
         ? base64ToURL(responseData.image_data) 
         : '';
         
-      // Return the processed result
       return {
         resultImage: imageUrl,
         status: responseData.status,
@@ -120,28 +110,24 @@ export async function detectSets(image: File): Promise<DetectionResult> {
       
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
-      console.error(`Error in detectSets function (attempt ${retryCount + 1}):`, error);
+      console.error(`Error processing image (attempt ${retryCount + 1}):`, error);
       
-      // Handle specific error types
       if (error instanceof DOMException && error.name === "AbortError") {
-        lastError = new Error(`Request timed out after ${INITIAL_TIMEOUT + (retryCount * 15000)}ms. The server is taking longer than expected to respond.`);
+        lastError = new Error(`Request timed out after ${INITIAL_TIMEOUT + (retryCount * 15000)}ms. Please try again.`);
       } else if (error instanceof TypeError && (error.message.includes("NetworkError") || error.message.includes("Failed to fetch"))) {
-        lastError = new Error("Network error. This might be a connection problem. Please check your internet connection.");
+        lastError = new Error("Network error. Please check your connection and try again.");
       }
       
-      // Increment retry counter
       retryCount++;
       
-      // If we have more retries left, wait before retrying
       if (retryCount < MAX_RETRIES) {
-        const waitTime = Math.min(2 ** retryCount * 1000, 10000); // Exponential backoff with max of 10s
+        const waitTime = Math.min(2 ** retryCount * 1000, 10000);
         console.log(`Retrying in ${waitTime / 1000} seconds...`);
         await new Promise(resolve => setTimeout(resolve, waitTime));
       }
     }
   }
   
-  // If all retries are exhausted, throw the last encountered error
   if (lastError) {
     throw new Error(`Failed after ${MAX_RETRIES} attempts: ${lastError.message}`);
   } else {
