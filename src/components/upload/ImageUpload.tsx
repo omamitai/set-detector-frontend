@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
-import { X, Camera, Image as ImageIcon, Sparkles, Circle, Diamond, Rectangle } from "lucide-react";
+import { X, Camera, Image as ImageIcon, Sparkles, Circle, Diamond, RectangleHorizontal } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -75,7 +75,7 @@ const SetGameIcons = () => {
           ease: "easeInOut"
         }}
       >
-        <Rectangle className="w-12 h-12 text-set-green fill-set-green/20" strokeWidth={3} />
+        <RectangleHorizontal className="w-12 h-12 text-set-green fill-set-green/20" strokeWidth={3} />
       </motion.div>
     </motion.div>
   );
