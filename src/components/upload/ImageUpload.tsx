@@ -1,7 +1,6 @@
-
 import React, { useState, useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
-import { X, Camera, Image as ImageIcon, Sparkles } from "lucide-react";
+import { X, Camera, Image as ImageIcon, Sparkles, Circle, Diamond, Rectangle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -13,39 +12,71 @@ interface ImageUploadProps {
   isProcessing: boolean;
 }
 
-// Enhanced animated SET shape component with better performance
-const SetShapeComponent = ({ type, color, delay = 0 }) => {
-  const shapeClasses = {
-    diamond: "set-shape-diamond",
-    oval: "set-shape-oval", 
-    triangle: "set-shape-triangle"
-  };
-  
-  const colorClasses = {
-    red: "set-color-red",
-    purple: "set-color-purple",
-    green: "set-color-green"
-  };
-  
+// SET game icons component with animated colors
+const SetGameIcons = () => {
   return (
     <motion.div 
-      className={`w-16 h-16 ${shapeClasses[type]} ${colorClasses[color]} relative`}
-      initial={{ opacity: 0, scale: 0.8, y: 10 }}
-      animate={{ 
-        opacity: [0.8, 1, 0.8],
-        scale: [1, 1.1, 1],
-        y: [0, -4, 0]
-      }}
-      transition={{ 
-        duration: 4,
-        delay,
-        repeat: Infinity,
-        repeatType: "reverse",
-        ease: "easeInOut"
-      }}
+      className="mb-10 flex items-center justify-center gap-8"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.2, duration: 0.6 }}
     >
-      <div className="absolute inset-0 bg-white/20 backdrop-blur-sm rounded-full opacity-0 animate-pulse" 
-           style={{ animationDelay: `${delay}s` }} />
+      <motion.div
+        className="flex flex-col items-center gap-2"
+        initial={{ opacity: 0, scale: 0.8, y: 10 }}
+        animate={{ 
+          opacity: [0.8, 1, 0.8],
+          scale: [1, 1.1, 1],
+          y: [0, -4, 0]
+        }}
+        transition={{ 
+          duration: 4,
+          delay: 0,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeInOut"
+        }}
+      >
+        <Circle className="w-12 h-12 text-set-red fill-set-red/20" strokeWidth={3} />
+      </motion.div>
+      
+      <motion.div
+        className="flex flex-col items-center gap-2"
+        initial={{ opacity: 0, scale: 0.8, y: 10 }}
+        animate={{ 
+          opacity: [0.8, 1, 0.8],
+          scale: [1, 1.1, 1],
+          y: [0, -4, 0]
+        }}
+        transition={{ 
+          duration: 4,
+          delay: 0.5,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeInOut"
+        }}
+      >
+        <Diamond className="w-12 h-12 text-set-purple fill-set-purple/20" strokeWidth={3} />
+      </motion.div>
+      
+      <motion.div
+        className="flex flex-col items-center gap-2"
+        initial={{ opacity: 0, scale: 0.8, y: 10 }}
+        animate={{ 
+          opacity: [0.8, 1, 0.8],
+          scale: [1, 1.1, 1],
+          y: [0, -4, 0]
+        }}
+        transition={{ 
+          duration: 4,
+          delay: 1,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeInOut"
+        }}
+      >
+        <Rectangle className="w-12 h-12 text-set-green fill-set-green/20" strokeWidth={3} />
+      </motion.div>
     </motion.div>
   );
 };
@@ -79,7 +110,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     setPreviewUrl(URL.createObjectURL(file));
     setIsDragOver(false);
 
-    // Smooth progress animation with better timing
     let progress = 0;
     const interval = setInterval(() => {
       progress += 12;
@@ -137,17 +167,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 flex flex-col items-center justify-center relative
                 ${isMobile ? 'p-8 py-16' : 'p-12 py-20'}
               `}>
-                {/* Enhanced animated SET shapes with staggered animation */}
-                <motion.div 
-                  className="mb-10 flex items-center justify-center gap-8"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.6 }}
-                >
-                  <SetShapeComponent type="diamond" color="red" delay={0} />
-                  <SetShapeComponent type="oval" color="purple" delay={0.5} />
-                  <SetShapeComponent type="triangle" color="green" delay={1} />
-                </motion.div>
+                {/* SET game icons */}
+                <SetGameIcons />
                 
                 {/* Improved title with better typography */}
                 <motion.div
@@ -310,7 +331,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   )}
                 </div>
                 
-                {/* Enhanced processing overlay */}
                 {isProcessing && (
                   <motion.div 
                     initial={{ opacity: 0 }}
