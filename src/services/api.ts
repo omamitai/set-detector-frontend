@@ -1,5 +1,5 @@
 
-// Updated DetectionResult interface to match our API
+// Updated DetectionResult interface
 export interface DetectionResult {
   resultImage: string;
   status: "success" | "no_cards" | "no_sets" | "error";
@@ -8,17 +8,23 @@ export interface DetectionResult {
   message: string;
 }
 
-// The SET detector API endpoint
+// Enhanced API configuration
 const API_BASE_URL = "https://set-detector-backend-production.up.railway.app";
 const API_ENDPOINT = `${API_BASE_URL}/detect_sets`;
 const MAX_RETRIES = 3;
-const INITIAL_TIMEOUT = 60000; // 60 seconds
+const INITIAL_TIMEOUT = 45000; // 45 seconds
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 /**
- * Converts a base64 string to a blob URL for displaying images
+ * Enhanced base64 to URL conversion with better error handling
  */
 function base64ToURL(base64Data: string, contentType: string = "image/jpeg"): string {
   try {
+    // Validate base64 data
+    if (!base64Data || typeof base64Data !== 'string') {
+      throw new Error("Invalid base64 data provided");
+    }
+    
     const byteCharacters = atob(base64Data);
     const byteArrays = [];
     
@@ -43,21 +49,42 @@ function base64ToURL(base64Data: string, contentType: string = "image/jpeg"): st
 }
 
 /**
- * Sends an image to the SET detector API with retry logic
+ * Enhanced image validation
+ */
+function validateImage(image: File): void {
+  if (!image || !(image instanceof File)) {
+    throw new Error("Please select a valid image file.");
+  }
+  
+  if (!image.type.startsWith("image/")) {
+    throw new Error("Invalid file type. Please select an image file (JPEG, PNG, GIF, WebP, or HEIC).");
+  }
+  
+  if (image.size > MAX_FILE_SIZE) {
+    const sizeMB = (MAX_FILE_SIZE / (1024 * 1024)).toFixed(0);
+    throw new Error(`Image too large. Please select an image smaller than ${sizeMB}MB.`);
+  }
+  
+  if (image.size === 0) {
+    throw new Error("Image file appears to be corrupted or empty.");
+  }
+}
+
+/**
+ * Enhanced retry logic with exponential backoff
+ */
+async function wait(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/**
+ * Enhanced SET detection API with improved error handling and performance
  */
 export async function detectSets(image: File): Promise<DetectionResult> {
+  validateImage(image);
+  
   let retryCount = 0;
   let lastError: Error | null = null;
-  
-  // Validate image before sending
-  if (!image.type.startsWith("image/")) {
-    throw new Error("Invalid file type. Please select an image.");
-  }
-  
-  // Check file size (max 10MB)
-  if (image.size > 10 * 1024 * 1024) {
-    throw new Error("Image too large. Please select an image smaller than 10MB.");
-  }
   
   while (retryCount < MAX_RETRIES) {
     try {
@@ -66,6 +93,7 @@ export async function detectSets(image: File): Promise<DetectionResult> {
       
       console.log(`Processing image (attempt ${retryCount + 1}/${MAX_RETRIES})...`);
       
+      // Progressive timeout increase
       const timeout = INITIAL_TIMEOUT + (retryCount * 15000);
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), timeout);
@@ -74,26 +102,69 @@ export async function detectSets(image: File): Promise<DetectionResult> {
         method: "POST",
         body: formData,
         signal: controller.signal,
-        credentials: 'omit'
+        credentials: 'omit',
+        // Add cache control headers
+        headers: {
+          'Cache-Control': 'no-cache',
+        }
       });
       
       clearTimeout(timeoutId);
       
       if (!response.ok) {
-        let errorMessage = `API error: ${response.status}`;
+        let errorMessage = `Server error (${response.status})`;
+        
         try {
           const errorText = await response.text();
-          errorMessage = errorText || errorMessage;
+          if (errorText && errorText.trim()) {
+            errorMessage = errorText;
+          } else {
+            errorMessage = response.statusText || errorMessage;
+          }
         } catch (e) {
-          errorMessage = `API error: ${response.statusText || response.status}`;
+          // Use status-based error messages
+          switch (response.status) {
+            case 413:
+              errorMessage = "Image file is too large. Please try a smaller image.";
+              break;
+            case 415:
+              errorMessage = "Unsupported image format. Please use JPEG, PNG, or WebP.";
+              break;
+            case 429:
+              errorMessage = "Too many requests. Please wait a moment and try again.";
+              break;
+            case 500:
+              errorMessage = "Server error. Please try again in a moment.";
+              break;
+            case 503:
+              errorMessage = "Service temporarily unavailable. Please try again later.";
+              break;
+            default:
+              errorMessage = `Server error (${response.status}). Please try again.`;
+          }
         }
+        
         throw new Error(errorMessage);
       }
       
       const responseData = await response.json();
       
+      // Enhanced response validation
       if (!responseData || typeof responseData !== 'object') {
         throw new Error("Invalid response format received from server");
+      }
+      
+      // Validate required fields
+      if (typeof responseData.status !== 'string') {
+        throw new Error("Invalid response: missing status field");
+      }
+      
+      if (typeof responseData.cards_detected !== 'number') {
+        throw new Error("Invalid response: missing cards detected count");
+      }
+      
+      if (typeof responseData.sets_found !== 'number') {
+        throw new Error("Invalid response: missing sets found count");
       }
       
       const imageUrl = responseData.image_data 
@@ -105,25 +176,40 @@ export async function detectSets(image: File): Promise<DetectionResult> {
         status: responseData.status,
         cardsDetected: responseData.cards_detected,
         setsFound: responseData.sets_found,
-        message: responseData.message
+        message: responseData.message || ""
       };
       
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
       console.error(`Error processing image (attempt ${retryCount + 1}):`, error);
       
+      // Enhanced error handling
       if (error instanceof DOMException && error.name === "AbortError") {
-        lastError = new Error(`Request timed out after ${INITIAL_TIMEOUT + (retryCount * 15000)}ms. Please try again.`);
-      } else if (error instanceof TypeError && (error.message.includes("NetworkError") || error.message.includes("Failed to fetch"))) {
-        lastError = new Error("Network error. Please check your connection and try again.");
+        lastError = new Error(`Request timed out after ${(INITIAL_TIMEOUT + (retryCount * 15000)) / 1000} seconds. Please try again with a smaller image.`);
+      } else if (error instanceof TypeError && 
+                 (error.message.includes("NetworkError") || 
+                  error.message.includes("Failed to fetch") ||
+                  error.message.includes("Load failed"))) {
+        lastError = new Error("Network error. Please check your internet connection and try again.");
       }
       
       retryCount++;
       
+      // Don't retry on certain errors
+      if (lastError.message.includes("Invalid file type") ||
+          lastError.message.includes("too large") ||
+          lastError.message.includes("corrupted")) {
+        break;
+      }
+      
       if (retryCount < MAX_RETRIES) {
-        const waitTime = Math.min(2 ** retryCount * 1000, 10000);
-        console.log(`Retrying in ${waitTime / 1000} seconds...`);
-        await new Promise(resolve => setTimeout(resolve, waitTime));
+        // Exponential backoff with jitter
+        const baseWaitTime = Math.min(2 ** retryCount * 1000, 10000);
+        const jitter = Math.random() * 1000;
+        const waitTime = baseWaitTime + jitter;
+        
+        console.log(`Retrying in ${Math.round(waitTime / 1000)} seconds...`);
+        await wait(waitTime);
       }
     }
   }

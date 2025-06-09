@@ -48,32 +48,23 @@
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
-
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-
     --sidebar-background: 222.2 84% 4.9%;
     --sidebar-foreground: 210 40% 98%;
     --sidebar-primary: 210 40% 98%;
@@ -89,13 +80,16 @@
   * {
     @apply border-border;
   }
+  
   body {
     @apply bg-background text-foreground;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
   
-  /* Fix for mobile notch area */
+  /* Enhanced mobile and browser compatibility */
   html, body, #root {
     min-height: 100%;
     height: 100%;
@@ -105,10 +99,14 @@
     width: 100%;
     position: relative;
     overflow-x: hidden;
-    touch-action: manipulation; /* improves touch behavior */
+    touch-action: manipulation;
+    /* Disable pull-to-refresh on mobile */
+    overscroll-behavior-y: contain;
+    /* Better scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
   }
   
-  /* Fix for iOS notch area */
+  /* Enhanced iOS notch support */
   @supports (padding-top: env(safe-area-inset-top)) {
     body {
       padding-top: 0;
@@ -126,65 +124,84 @@
     }
   }
 
-  /* Optimize touch actions for mobile */
+  /* Enhanced touch optimization for mobile */
   @media (max-width: 768px) {
     input, button, a {
       touch-action: manipulation;
+      /* Prevent double-tap zoom */
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    
+    /* Better tap highlighting */
+    button {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
     }
   }
 }
 
-/* SET card shape styles */
+/* Enhanced SET card shape styles with better browser support */
 @layer utilities {
-  /* Color variants for SET shapes */
+  /* Color variants for SET shapes with improved gradients */
   .set-color-red {
-    @apply from-set-red to-set-red-light;
+    @apply bg-gradient-to-br from-set-red to-set-red-light;
+    background-image: linear-gradient(135deg, #E14553 0%, #FF7E89 100%);
   }
   
   .set-color-purple {
-    @apply from-set-purple to-set-purple-light;
+    @apply bg-gradient-to-br from-set-purple to-set-purple-light;
+    background-image: linear-gradient(135deg, #8A4FD3 0%, #B78DF6 100%);
   }
   
   .set-color-green {
-    @apply from-set-green to-set-green-light;
+    @apply bg-gradient-to-br from-set-green to-set-green-light;
+    background-image: linear-gradient(135deg, #25A56A 0%, #5EDF9E 100%);
   }
   
-  /* Diamond shape */
+  /* Enhanced diamond shape with better browser support */
   .set-shape-diamond {
-    @apply aspect-square bg-gradient-to-br;
+    @apply aspect-square;
+    background: inherit;
     clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-    will-change: transform; /* performance hint */
+    /* Fallback for older browsers */
+    -webkit-clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    will-change: transform, opacity;
+    transform: translateZ(0); /* Force hardware acceleration */
   }
   
-  /* Oval shape */
+  /* Enhanced oval shape */
   .set-shape-oval {
-    @apply aspect-square rounded-full bg-gradient-to-br;
-    will-change: transform; /* performance hint */
+    @apply aspect-square rounded-full;
+    background: inherit;
+    will-change: transform, opacity;
+    transform: translateZ(0);
   }
   
-  /* Triangle shape - fixed for proper display */
+  /* Enhanced triangle shape with better browser support */
   .set-shape-triangle {
-    @apply aspect-square bg-gradient-to-br;
+    @apply aspect-square;
+    background: inherit;
     clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-    will-change: transform; /* performance hint */
+    -webkit-clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    will-change: transform, opacity;
+    transform: translateZ(0);
   }
 }
 
-/* Custom animations - optimized for performance */
+/* Enhanced animations with better performance */
 @keyframes pulse-slow {
   0%, 100% {
-    transform: scale(1);
+    transform: scale3d(1, 1, 1);
     opacity: 0.9;
   }
   50% {
-    transform: scale(1.05);
+    transform: scale3d(1.05, 1.05, 1);
     opacity: 1;
   }
-}
-
-.animate-pulse-slow {
-  animation: pulse-slow 3s ease-in-out infinite;
-  will-change: transform, opacity;
 }
 
 @keyframes shimmer {
@@ -194,6 +211,30 @@
   100% {
     background-position: 200% 0;
   }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -3px, 0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+/* Performance optimized animations */
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 .animate-shimmer {
@@ -209,21 +250,50 @@
   will-change: background-position;
 }
 
-@keyframes bounce-subtle {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-3px);
-  }
-}
-
 .animate-bounce-subtle {
   animation: bounce-subtle 2s ease-in-out infinite;
   will-change: transform;
 }
 
-/* Faster transitions for UI elements */
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Enhanced transitions with hardware acceleration */
 .transition-fast {
   transition-duration: 150ms !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+/* Enhanced shadow utilities */
+.shadow-3xl {
+  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Better focus styles for accessibility */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-set-purple focus:ring-offset-2;
+}
+
+/* Smooth scrolling for better UX */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prefers reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

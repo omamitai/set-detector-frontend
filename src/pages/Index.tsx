@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Layout from "@/components/layout/Layout";
 import ImageUpload from "@/components/upload/ImageUpload";
 import ResultsDisplay from "@/components/results/ResultsDisplay";
@@ -17,24 +17,37 @@ const Index = () => {
   const [cardsDetected, setCardsDetected] = useState(0);
   const [setsFound, setSetsFound] = useState(0);
   const [message, setMessage] = useState<string>("");
-  const [activeTab, setActiveTab] = useState<string>("upload");
   const [error, setError] = useState<string | null>(null);
   
-  // Load saved results on component mount
+  // Memoize active tab calculation
+  const activeTab = useMemo(() => {
+    return resultImage ? "results" : "upload";
+  }, [resultImage]);
+  
+  // Load saved results on component mount with error handling
   useEffect(() => {
-    const savedImage = localStorage.getItem('setDetectorResultImage');
-    const savedStatus = localStorage.getItem('setDetectorStatus');
-    const savedCardsDetected = localStorage.getItem('setDetectorCardsDetected');
-    const savedSetsFound = localStorage.getItem('setDetectorSetsFound');
-    const savedMessage = localStorage.getItem('setDetectorMessage');
-    
-    if (savedImage) {
-      setResultImage(savedImage);
-      setStatus(savedStatus as "success" | "no_cards" | "no_sets" | "error");
-      setCardsDetected(parseInt(savedCardsDetected || '0', 10));
-      setSetsFound(parseInt(savedSetsFound || '0', 10));
-      setMessage(savedMessage || '');
-      setActiveTab("results");
+    try {
+      const savedImage = localStorage.getItem('setDetectorResultImage');
+      const savedStatus = localStorage.getItem('setDetectorStatus');
+      const savedCardsDetected = localStorage.getItem('setDetectorCardsDetected');
+      const savedSetsFound = localStorage.getItem('setDetectorSetsFound');
+      const savedMessage = localStorage.getItem('setDetectorMessage');
+      
+      if (savedImage && savedStatus) {
+        setResultImage(savedImage);
+        setStatus(savedStatus as "success" | "no_cards" | "no_sets" | "error");
+        setCardsDetected(parseInt(savedCardsDetected || '0', 10));
+        setSetsFound(parseInt(savedSetsFound || '0', 10));
+        setMessage(savedMessage || '');
+      }
+    } catch (error) {
+      console.error("Error loading saved results:", error);
+      // Clear corrupted localStorage data
+      localStorage.removeItem('setDetectorResultImage');
+      localStorage.removeItem('setDetectorStatus');
+      localStorage.removeItem('setDetectorCardsDetected');
+      localStorage.removeItem('setDetectorSetsFound');
+      localStorage.removeItem('setDetectorMessage');
     }
   }, []);
 
@@ -45,19 +58,22 @@ const Index = () => {
       
       const result = await detectSets(file);
       
-      // Save results to localStorage
-      localStorage.setItem('setDetectorResultImage', result.resultImage);
-      localStorage.setItem('setDetectorStatus', result.status);
-      localStorage.setItem('setDetectorCardsDetected', result.cardsDetected.toString());
-      localStorage.setItem('setDetectorSetsFound', result.setsFound.toString());
-      localStorage.setItem('setDetectorMessage', result.message);
+      // Save results to localStorage with error handling
+      try {
+        localStorage.setItem('setDetectorResultImage', result.resultImage);
+        localStorage.setItem('setDetectorStatus', result.status);
+        localStorage.setItem('setDetectorCardsDetected', result.cardsDetected.toString());
+        localStorage.setItem('setDetectorSetsFound', result.setsFound.toString());
+        localStorage.setItem('setDetectorMessage', result.message);
+      } catch (storageError) {
+        console.warn("Could not save to localStorage:", storageError);
+      }
       
       setResultImage(result.resultImage);
       setStatus(result.status);
       setCardsDetected(result.cardsDetected);
       setSetsFound(result.setsFound);
       setMessage(result.message);
-      setActiveTab("results");
       
     } catch (error) {
       console.error("Error processing image:", error);
@@ -74,15 +90,18 @@ const Index = () => {
     setCardsDetected(0);
     setSetsFound(0);
     setMessage("");
-    setActiveTab("upload");
     setError(null);
     
-    // Clear localStorage
-    localStorage.removeItem('setDetectorResultImage');
-    localStorage.removeItem('setDetectorStatus');
-    localStorage.removeItem('setDetectorCardsDetected');
-    localStorage.removeItem('setDetectorSetsFound');
-    localStorage.removeItem('setDetectorMessage');
+    // Clear localStorage with error handling
+    try {
+      localStorage.removeItem('setDetectorResultImage');
+      localStorage.removeItem('setDetectorStatus');
+      localStorage.removeItem('setDetectorCardsDetected');
+      localStorage.removeItem('setDetectorSetsFound');
+      localStorage.removeItem('setDetectorMessage');
+    } catch (error) {
+      console.warn("Could not clear localStorage:", error);
+    }
   };
 
   return (
@@ -90,44 +109,45 @@ const Index = () => {
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
         className="max-w-6xl mx-auto px-4 md:px-6 py-6 md:py-8"
       >
-        {/* Header */}
+        {/* Enhanced header with better typography */}
         <motion.div 
-          className="text-center mb-8"
-          initial={{ y: 10, opacity: 0 }}
+          className="text-center mb-10"
+          initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h1 className="text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-set-red via-set-purple to-set-green bg-clip-text text-transparent font-poppins">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-set-red via-set-purple to-set-green bg-clip-text text-transparent font-poppins leading-tight">
             SET Game Detector
           </h1>
-          <p className="text-gray-600 max-w-lg mx-auto text-sm md:text-base">
-            Instantly spot every SET card combination in your game
+          <p className="text-gray-600 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
+            Instantly spot every SET card combination in your game with AI-powered detection
           </p>
         </motion.div>
         
-        {/* Error Alert */}
+        {/* Enhanced error alert */}
         <AnimatePresence mode="wait">
           {error && (
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
-              <Alert variant="destructive" className="mb-6 max-w-md mx-auto bg-white border border-red-100 text-red-600 shadow-sm rounded-xl">
-                <AlertTriangle className="h-4 w-4 text-red-500" />
-                <AlertTitle className="text-red-600 font-medium">Processing Error</AlertTitle>
-                <AlertDescription className="flex flex-col gap-3 text-red-500">
-                  <span className="text-sm">{error}</span>
+              <Alert variant="destructive" className="mb-8 max-w-lg mx-auto bg-white/95 backdrop-blur-sm border-2 border-red-100 text-red-600 shadow-xl rounded-2xl">
+                <AlertTriangle className="h-5 w-5 text-red-500" />
+                <AlertTitle className="text-red-600 font-semibold text-lg">Processing Error</AlertTitle>
+                <AlertDescription className="flex flex-col gap-4 text-red-500">
+                  <span className="text-sm leading-relaxed">{error}</span>
                   <Button 
                     variant="outline" 
                     size="sm" 
                     onClick={handleReset} 
-                    className="self-end flex items-center gap-1.5 border-red-100 text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                    className="self-end flex items-center gap-2 border-red-200 text-red-600 hover:bg-red-50 rounded-xl transition-all hover:scale-105"
                   >
-                    <RefreshCw className="h-3.5 w-3.5" />
+                    <RefreshCw className="h-4 w-4" />
                     Try Again
                   </Button>
                 </AlertDescription>
@@ -136,17 +156,17 @@ const Index = () => {
           )}
         </AnimatePresence>
         
-        {/* Main Content */}
-        <div className="max-w-md mx-auto md:max-w-4xl">
+        {/* Enhanced main content with smoother transitions */}
+        <div className="max-w-md mx-auto md:max-w-5xl">
           <AnimatePresence mode="wait">
             {activeTab === "upload" ? (
               <motion.div 
                 key="upload"
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-12"
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="space-y-16"
               >
                 <ImageUpload 
                   onImageSelected={handleImageSelected}
@@ -157,11 +177,11 @@ const Index = () => {
             ) : (
               <motion.div 
                 key="results"
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-12"
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="space-y-16"
               >
                 <ResultsDisplay
                   resultImage={resultImage}
